@@ -278,6 +278,10 @@ When you send information the data goes down the stack on your machine side, the
 ##### OSI vs TCP IP model
 
 <table>
+	<tr>
+	<th colspan="3"> OSI </th>
+	<th colspan="3"> TCP/IP </th>
+  </tr>
   <tr>
     <th>Layer Number</th>
     <th>PDU</th>
@@ -336,13 +340,39 @@ When you send information the data goes down the stack on your machine side, the
 
 ##### Encapsulation
 
-||||||Sender||
-|-|-|-|-|-|-|-|
-|Application|||||User data|
-|Transport|||L 4 Header|Other Header|User data||
-|Internet||L 3 Header|L 4 Header|Other Header|User data||
-|Link|L 2 Header|L 3 Header|L 4 Header|Other Header|User data|Trailer|
+<table border=0 rules=none>
+<tr>
+	<td >Application</td>		
+	<td colspan="4" ></td>		
+	<td>User data</td>		
+	<td rowspan="3"> </td>
+</tr>
+<tr>
+	<td> Transport </td>
+	<td colspan="2"> </td>
+	<td> L4 header </td>
+	<td> Other Header</td>
+	<td> User data </td>
 
+</tr>
+<tr>
+	<td> Internet </td>
+	<td></td>
+	<td> L3 Header
+	<td> L4 header </td>
+	<td> Other Header</td>
+	<td> User data </td>
+</tr>
+<tr>
+	<td> Link </td>
+	<td> L2 Header
+	<td> L3 Header
+	<td> L4 header </td>
+	<td> Other Header</td>
+	<td> User data </td>
+	<td> Trailer </td>
+</tr>
+</table>
 
 ## Module 2 - Establishing internet connectivity 
 
