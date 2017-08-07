@@ -98,15 +98,15 @@ There are varying types of applications, such as:
     * Older Models e.g. Used by Proprietary Software
     * Standards-based Models e.g. Used by Multivendor Software (OSI, TCP/IP Models)
 * OSI Model
-    | OSI Model   |
-    | :----------:|
-    | Application |
-    | Presentation|
-    | Session     |
-    | Transport   |
-    | Network     |
-    | Data Link   |
-    | Physical    |
+| OSI Model   |
+| :----------:|
+| Application |
+| Presentation|
+| Session     |
+| Transport   |
+| Network     |
+| Data Link   |
+| Physical    |
         
     * The OSI Model is a layer-based reference model that provides functions and services that can occur at each layer.
     * It describes the interaction between each layer above and below it.
@@ -115,31 +115,31 @@ There are varying types of applications, such as:
         * Session - Port numbers are present in both sending and recieving capacities. e.g. Internet requests will be sent to port 80, but will be recieved on veryiong port numbers dependant on my Session ID
 	* 
 * TCP/IP Model
-    | TCP/IP Model|
-    | :----------:|
-    | Application |
-    | Transport   |
-    | Internet    |
-    | Data Link   |
+| TCP/IP Model|
+| :----------:|
+| Application |
+| Transport   |
+| Internet    |
+| Data Link   |
     
     * The layer of the TCP/IP Model map onto the OSI model as follows:
-    | OSI Model                         | TCP/IP Model|
-    | :--------------------------------:| :----------:|
-    | Application, Presentation, Session| Application |
-    | Transport                         | Transport   |
-    | Network                           | Internet    |
-    | Data Link & Physical              | Link        |
+| OSI Model                         | TCP/IP Model|
+| :--------------------------------:| :----------:|
+| Application, Presentation, Session| Application |
+| Transport                         | Transport   |
+| Network                           | Internet    |
+| Data Link & Physical              | Link        |
     
     * The layer functions are as follows:
 
 * Peer-to-Peer Communications
     * At each layer of communciation a different Protocol Data Unit (PDU) is used, for example:
-    | Sender     | PDU    | Reciever   |
-    | :---------:| :-----:| :---------:|
-    | Application| Data   | Application|
-    | Transport  | Segment| Transport  |
-    | Internet   | Packet | Internet   |
-    | Link       | Frame  | Link       |
+| Sender     | PDU    | Reciever   |
+| :---------:| :-----:| :---------:|
+| Application| Data   | Application|
+| Transport  | Segment| Transport  |
+| Internet   | Packet | Internet   |
+| Link       | Frame  | Link       |
 
 ### Module 2: Establishing internet connectivity
 
