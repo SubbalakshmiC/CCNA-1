@@ -116,6 +116,7 @@ There are varying types of applications, such as:
         * Session - Port numbers are present in both sending and recieving capacities. e.g. Internet requests will be sent to port 80, but will be recieved on veryiong port numbers dependant on my Session ID
 	* 
 * TCP/IP Model
+
 | TCP/IP Model|
 | :----------:|
 | Application |
@@ -124,6 +125,7 @@ There are varying types of applications, such as:
 | Data Link   |
     
     * The layer of the TCP/IP Model map onto the OSI model as follows:
+
 | OSI Model                         | TCP/IP Model|
 | :--------------------------------:| :----------:|
 | Application, Presentation, Session| Application |
@@ -135,6 +137,7 @@ There are varying types of applications, such as:
 
 * Peer-to-Peer Communications
     * At each layer of communciation a different Protocol Data Unit (PDU) is used, for example:
+
 | Sender     | PDU    | Reciever   |
 | :---------:| :-----:| :---------:|
 | Application| Data   | Application|
