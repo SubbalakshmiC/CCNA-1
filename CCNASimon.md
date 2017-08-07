@@ -105,6 +105,8 @@ Legend:
 
 ##### Impact of User Applications on the Network
 
+QoS - Quality of Service: A way of the network knowing how important traffic is
+
 * Batch Applications - Applications that run in the background
 	* FTP (File Transfer Protocol) TCP, TFTP (Trivial File Transfer Protocol) UDP, inventory updates
 	* No direct human interaction
@@ -117,6 +119,8 @@ Legend:
 	* VoIP, video
 	* Human-to-human interaction
 	* End-to-end latency critical
+
+#### Understanding the Host-to-Host Communication Model
 
 ### Module 2 - Establishing Internet Connectivity
 
