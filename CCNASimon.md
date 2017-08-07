@@ -52,15 +52,14 @@ Use to connect a selection of end devices to other end devices (PC's, IP Phones 
 			* etc (All of the cables)
 		* Wireless
 	* Connectors for Network Media - The plugs on the end of cables
-		* RJ45
+		* RJ-45 (Registered Jack)
 		* Fibre Connectors (IDK what they are called)
 		* etc (All of the plugs) 
 * Switches - Devices that endpoints typically connect to
 * Routers - Used to connect networks, does the 'routing' between networks
 * WLAN Controller - Used to do administrattion on multiple AP's
-* AP's - 
-* WLAN Devices
-* Firewalls
+* AP's (Access point's) - Allows wirelles devices to connect to a wired network 
+* WLAN Devices - Connect wireless devices to a network, WLAN NIC converts wirless signals to PC language
 
 
 
