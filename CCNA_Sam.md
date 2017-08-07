@@ -157,6 +157,17 @@ There are varying types of applications, such as:
 |↓|Link       |Frame  |Link       |
 
 #### Encapsulation and De-Encapsulation
+* Encapsulation is a process that occurs within the OSI and TCP/IP Models
+* Within the OSI Model, it occurs as follows:
+    * The application layer recieved the user data, and adds a header before sending it to the presentation layer
+    * The presentation layer adds its own header before transmissing to the session layer
+    * This process continues down the stack and at the data link layer, a trailer is added
+    * At the destination this is unpacked one layer at a time, and the data is thn passed up to the PDU on the layer above
+
+|      |      |      |         |Data|   |
+|      |      |L4 Hdr|Other Hdr|Data|   |
+|      |L3 Hdr|L4 Hdr|Other Hdr|Data|   |
+|L2 Hdr|L3 Hdr|L4 Hdr|Other Hdr|Data|FCS|
 
 ### Module 2: Establishing internet connectivity
 
