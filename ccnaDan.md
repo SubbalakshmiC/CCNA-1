@@ -275,6 +275,75 @@ When you send information the data goes down the stack on your machine side, the
 |Internet | 2 | network | Packet
 |Link | 1 | data link and physical | Frame
 
+##### OSI vs TCP IP model
+
+<table>
+  <tr>
+    <th>Layer Number</th>
+    <th>PDU</th>
+    <th>Layer Name</th>
+    <th>Layer Name</th>
+    <th>PDU</th>
+    <th>Layer Number</th>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td rowspan="3">Messages</td>
+    <td>Application</td>
+    <td rowspan="3">Application</td>
+    <td rowspan="3">Data</td>
+    <td rowspan="3">4</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Presentation</td>
+  </tr>
+  <tr>
+    <td>5</td>
+  	<td>Session</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Segment</td>
+  	<td>Transport</td>
+  	<td>Transport</td>
+    <td>Segment</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Packet</t>
+  	<td>Network</td>
+  	<td>Internet</td>
+    <td>Packet</t>
+    <td>2</t>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Frame</td>
+  	<td>Data Link</td>
+    <td rowspan="2">Link</td>
+    <td rowspan="2">Frame</td>
+    <td rowspan="2">1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+  	<td>Physical</td>
+    <td>Bit</td>
+  </tr>
+</table>
+
+
+##### Encapsulation
+
+||||||Sender||
+|-|-|-|-|-|-|-|
+|Application|||||User data|
+|Transport|||L 4 Header|Other Header|User data||
+|Internet||L 3 Header|L 4 Header|Other Header|User data||
+|Link|L 2 Header|L 3 Header|L 4 Header|Other Header|User data|Trailer|
+
+
 ## Module 2 - Establishing internet connectivity 
 
 ## Module 3 - Summary challenge
