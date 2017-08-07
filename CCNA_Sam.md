@@ -1,14 +1,15 @@
 # CCNA Notes
 ---
 # ICND1
-# General Notes
+## General Notes
 
-## Timeline
+### Timeline
 * 2 Weeks Training (Week 1 GPK, Week 2 BFL)
+
 * 1 Week self study
 * Exam at the end of W3
 
-## Course Goals
+### Course Goals
 * Describe network fundementals and implement a simple LAN
 * Establish Network fundementals
 * Expand a small network to a medium-sized routing-enmabled network
@@ -18,17 +19,29 @@
 ### Extra Content
 * CEF: Cisco Express Forwarding
 
-## Exercise Types:
+### Exercise Types:
 * Challenge Exercises
 * Discovery Extercises
 
-## Certified Mock Exam Questions:
+### Certified Mock Exam Questions:
 * MeasureUp
 * Bolan.com (?)
 
-## Modules
+## Module Notes
 
 ### Module 1: Building a Simple Network
+### Physical Components of a Network
+* Networks carry data in varying environments.
+* Large networks may be multi-location, e.g. Home Office, Branchg Office, Main Office & Mobile all on a single network.
+* Mobile Networks are composed of:
+    * Endpoints - PCs, servers, printers etc.
+    * Interconnections - NICs, Network Media (e.g. UTP or STP in varying categories) & Connectors (e.g. RJ-i45)
+    * Switches - Endpoints connect to these, and they can share a common network
+    * Routers - Select the best route for traffic from one network to another
+    * WLAN Devices - Connect Wireless Devices to a network
+    * APs - Allow wireless devices to communciate with a wired network
+    * WLAN Controllers - Devices that network admins can use to manage APs in large quantities
+    * Firewalls - Network security systems that control and monitor incoming and outgoing traffic based on provided rules
 
 ### Module 2: Establishing internet connectivity
 
