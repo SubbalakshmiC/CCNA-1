@@ -187,6 +187,65 @@ a network allows people access to information. for example allows you to access 
 
 ### Understanding the Host-to-Host communications model
 	
+OSI standard model
+
+At the top there is the software that you are using, e.g. Word, firefox and so on
+
+|| Layer name | Layer Number | purpose
+|-|------|-|-|
+|↓| Application | 7 | Used to enable the software that wants to talk to the network stack and enables it to do so
+|↓| Presentation | 6 | defines how the data is encoded and represented and contains information on the file type. Also things like encryption and compression. This additional information is stored as metadata
+|↓| Session | 5 | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session and then translated to the correct machine by the router.
+|↓| Transport | 4 | defines how the data is to be transported across the network, TCP and UDP
+|↓| Network | 3 |
+|↓| Data Link | 2 |
+|↓| Physical | 1 |
+
+##### Application
+* allows the software to access the network stack
+
+##### Presentation
+* tell you how information has been encoded
+* tells you about how the file has been encrypted so that it can be unencrypted
+* compression so that the file is smaller and faster
+	* must compress video as it is SO big when not compressed
+
+##### Session
+* keeps the session of the network connection alive ensures that you will still have access to it correctly
+* when you have multiple tabs open this will send it to the correct tab that requested that information 
+* e.g. when you request information from chrome the data will be sent to chrome on the machine
+* every connection that you have will come in through a unique port number but it will go out through the normal one
+* Outgoing will always be port 80 for example, but incoming will be a unique port number for a certain session like 23424 but this is then mapped to your internal ip address by the router
+
+##### Transport
+* defines how the data is to be transported across the network
+* TCP = reliably 
+	* TCP Transmission Control Protocol
+	
+	###### three way handshake
+	|Client|Server|
+	|--|--|
+	|SYN ↘| |
+	| | ↙ SYN - ACK |
+	|ACK ↘| |
+	
+	* are you ready to get the data
+	* yes I am
+	* I am sending the data
+	* go ahead
+	* are you getting the data
+	* I am
+	* did you get all the data
+	* yes
+* UDP = unreliably
+	* HERE IS THE DATA TAKE IT
+	* AHHHHHHH OK
+
+##### Network
+##### data link
+##### physical
+
+When you send information the data goes down the stack on your machine side, then at its destination it goes back up the stack.
 
 
 ## Module 2 - Establishing internet connectivity 
