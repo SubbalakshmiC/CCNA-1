@@ -18,22 +18,24 @@ In ICND 1 we will do:
 
 > CEF Cisco express forwarding will be in the routing section maybe....
 
+## Pointers from apprentices
+  
+* Don't leave it to the last minute
+* older apprentices will be more that happy to help you
+* It's actually worth it, even if you go into sales
+* you will have NO time if you leave it too late as when you start rotations you will have to drop something
+* reach out to anyone if you need help, your co workers, other apprentices or any one really
+* keep going, don't stop looking at the content for a month as you will forget it 
+
 ## Exam notes
 
 * MUST PASS EXAM IF YOU WANT TO CONTINUE
- 
 * 300 marks for turning up
- 
 * Exam is out of 1000
- 
 * 90 minutes
- 
 * 825 or something to pass
- 
 * Cannot go back to a previous question
- 
 * Instant results when the time it up
- 
 * Exam is valid for 3 years when you get it
 
 ## Module 1 - building a simple network
@@ -50,6 +52,7 @@ a network allows people access to information. for example allows you to access 
   * Endpoints
   	* The end user machines - IP phones - laptops - desktops and so on
 	* can connect with either wire or wireless 
+		* wireless must connect to the netowrk through a wireless access point
   * Interconnections
   	* Network media
 		* ethernet cable
@@ -83,6 +86,52 @@ a network allows people access to information. for example allows you to access 
   * AP's
   * WLAN controller
   * Firewall
+
+#### Characteristics of a network
+
+* Topology
+	* bus
+
+		![bus topology image](https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/BusNetwork.svg/220px-BusNetwork.svg.png)
+		* anyone can acess anyone elses data
+	* ring
+
+		![ring topology image](https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/RingNetwork.svg/220px-RingNetwork.svg.png)
+	* star
+
+		![star topology image](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/StarNetwork.svg/220px-StarNetwork.svg.png)
+		* This is how a switch works internally 
+	* mesh
+
+		![mesh topology image](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/NetworkTopology-FullyConnected.png/220px-NetworkTopology-FullyConnected.png)
+		* This is how a router works internally to find the best way 
+	* physical topology
+		* This is how the cables and the devices are actually laid out physically aroud the building 
+		* basically what you can see with the cables
+	* logical topology 
+		* Inside the devices you get the logical topolopy
+		* its how the infomation flows between devices
+* Speed
+	* in a building the speed if fast
+	* outside of a building it is generally slower
+* Cost
+	* when you get the cisco stuff in a network there is only a one off cost, not an ongoing one
+* Security
+	* if its all alone then there is no real need for security
+	* if its public then you need security
+* Availability
+	* how well people can actually access it
+	* can you access the network when you are away from the office
+		* mobile users
+		* VPN
+* Scalability
+	* how able is the network able to scale up to new users
+* Reliability
+	* [ (minutes in a year) - (Downtime) ] / 525600 * 100 = percentage up time
+		* e.g. (525600 - 15) / 525600 * 100 = 99.9971% uptime
+#### Interoperating a network diagram
+
+
 
 ## Module 2 - Establishing internet connectivity 
 
