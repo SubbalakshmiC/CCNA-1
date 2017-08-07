@@ -98,6 +98,7 @@ There are varying types of applications, such as:
     * Older Models e.g. Used by Proprietary Software
     * Standards-based Models e.g. Used by Multivendor Software (OSI, TCP/IP Models)
 * OSI Model
+
 | OSI Model   |
 | :----------:|
 | Application |
