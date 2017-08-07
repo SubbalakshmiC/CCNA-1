@@ -1,9 +1,6 @@
 # CCNA stuff 
 > let's do this!!!
 ---
----
----
----
 # Course introduction  
 
 > 2 weeks for learning ICND1 - 
