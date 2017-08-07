@@ -1,6 +1,8 @@
 # CCNA stuff 
 > lets do this!!!
 ---
+Mike - 07767636022
+rob - 07789956956
 # Course introduction  
 
 > 2 weeks for learning ICND1 - 
