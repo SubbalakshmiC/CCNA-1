@@ -131,6 +131,8 @@ Without this all applications would have to manually connect to hardware.
 
 Way to remember: Please Do Not Throw Sausage Pizza Away (PDNTSPA)
 
+The model helps to troubleshoot and to create new protocols and applications.
+
 ###### 7 - Application - messages
 
 Interface to enable applications that want network services to be able to talk to the network stack.
