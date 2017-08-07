@@ -131,6 +131,19 @@ a network allows people access to information. for example allows you to access 
 		* e.g. (525600 - 15) / 525600 * 100 = 99.9971% uptime
 #### Interoperating a network diagram
 
+* thick red lines = a physical Ethernet connection 
+	* can be Ethernet or fibre
+* IP address 
+	* 32 bit binary number
+	* made of network and host sections
+		* basically street name and house number
+* interface
+	* This is the where you plug the devices in to the networking component
+	* FA = (Fa)st Ethernet
+		* max speed is 100 Mbp/s
+	* Gi = (Gi)gabit
+		* max speed is 1,000 Mbp/s
+	
 
 
 ## Module 2 - Establishing internet connectivity 
