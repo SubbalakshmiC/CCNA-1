@@ -30,10 +30,12 @@
 ## Module Notes
 
 ### Module 1: Building a Simple Network
-#### Physical Components of a Network
+#### What is a Network?
 * Networks carry data in varying environments.
 * Large networks may be multi-location, e.g. Home Office, Branchg Office, Main Office & Mobile all on a single network.
-* Mobile Networks are composed of:
+
+#### Physical Components of a Network
+* Networks are composed of:
     * Endpoints - PCs, servers, printers etc.
     * Interconnections - NICs, Network Media (e.g. UTP or STP in varying categories) & Connectors (e.g. RJ-i45)
     * Switches - Endpoints connect to these, and they can share a common network
@@ -90,6 +92,54 @@ There are varying types of applications, such as:
 	* e.g. VoIP, Video calling
         * Human-Human interaction
 * QoS (Quality of Service) is important. It allows for the granting of higher priority to different types of data e.g. VoIP Packets.
+
+#### Host-to-Host Communications
+* Varying types of host-to-host models exist:
+    * Older Models e.g. Used by Proprietary Software
+    * Standards-based Models e.g. Used by Multivendor Software (OSI, TCP/IP Models)
+* OSI Model
+    |OSI Model   |
+    |:----------:|
+    |Application |
+    |Presentation|
+    |Session     |
+    |Transport   |
+    |Network     |
+    |Data Link   |
+    |Physical    |
+        
+    * The OSI Model is a layer-based reference model that provides functions and services that can occur at each layer.
+    * It describes the interaction between each layer above and below it.
+    * It is standards based, allowing vendors a set of standards that ensure compatability between various types of network technology worldwide.
+    * The layer functions are as follows: 
+        * Session - Port numbers are present in both sending and recieving capacities. e.g. Internet requests will be sent to port 80, but will be recieved on veryiong port numbers dependant on my Session ID
+	* 
+* TCP/IP Model
+    |TCP/IP Model|
+    |:----------:|
+    |Application |
+    |Transport   |
+    |Internet    |
+    |Data Link   |
+    
+    * The layer of the TCP/IP Model map onto the OSI model as follows:
+    |OSI Model                         |TCP/IP Model|
+    |:--------------------------------:|:----------:|
+    |Application, Presentation, Session|Application |
+    |Transport                         |Transport   |
+    |Network                           |Internet    |
+    |Data Link & Physical              |Link        |
+    
+    * The layer functions are as follows:
+
+* Peer-to-Peer Communications
+    * At each layer of communciation a different Protocol Data Unit (PDU) is used, for example:
+    |Sender     |PDU    |Reciever   |
+    |:---------:|:-----:|:---------:|
+    |Application|Data   |Application|
+    |Transport  |Segment|Transport  |
+    |Internet   |Packet |Internet   |
+    |Link       |Frame  |Link       |
 
 ### Module 2: Establishing internet connectivity
 
