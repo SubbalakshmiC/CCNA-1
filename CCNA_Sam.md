@@ -100,7 +100,7 @@ There are varying types of applications, such as:
 * OSI Model
 
 | ↓| OSI Model   |
-| ↓| :----------:|
+| -| :----------:|
 | ↓| Application |
 | ↓| Presentation|
 | ↓| Session     |
@@ -118,7 +118,7 @@ There are varying types of applications, such as:
 * TCP/IP Model
 
 | ↓| TCP/IP Model|
-| ↓| :----------:|
+| -| :----------:|
 | ↓| Application |
 | ↓| Transport   |
 | ↓| Internet    |
@@ -127,7 +127,7 @@ There are varying types of applications, such as:
     * The layer of the TCP/IP Model map onto the OSI model as follows:
 
 | ↓| OSI Model                         | TCP/IP Model|
-| ↓| :--------------------------------:| :----------:|
+| -| :--------------------------------:| :----------:|
 | ↓| Application, Presentation, Session| Application |
 | ↓| Transport                         | Transport   |
 | ↓| Network                           | Internet    |
@@ -139,7 +139,7 @@ There are varying types of applications, such as:
     * At each layer of communciation a different Protocol Data Unit (PDU) is used, for example:
 
 | ↓| Sender     | PDU    | Reciever   |
-| ↓| :---------:| :-----:| :---------:|
+| -| :---------:| :-----:| :---------:|
 | ↓| Application| Data   | Application|
 | ↓| Transport  | Segment| Transport  |
 | ↓| Internet   | Packet | Internet   |
