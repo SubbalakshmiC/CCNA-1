@@ -27,6 +27,43 @@ Boot camp begins!
 
 ### Module 1 - Building a simple network
 
+#### Exploring the functions of a network
+A network allows a connection of one thing to another.
+Could be a one person to another (bus network etc) or more examples.
+Allows the connection of multiple sites (places).
+Also allows the connection of mobile workers or working from home.
+Networks could be private (such as in a home or office) or a public network (such as the ones supplied by BT etc.).
+Use to connect a selection of end devices to other end devices (PC's, IP Phones Servers, Printers etc.) or network equipment (WAP, Router, Switch etc.).
+
+##### Network Components
+* Firewall - Monitor and control incoming and outgoing traffic
+* Endpoints - PC's etc
+* Interconnections - Used to connect devices together
+	* NIC - Translate computer data into a format that can be sent over the network
+	* Network Media - Transmits signals from one device to another
+		* Cables - The physical wires 
+			* UTP (Unsheilded Twisted Pair) - Used for short distances
+				* Includes different CATegories
+				* E.G. Cat 6
+			* Fibre Optic - Immune to interference, Used for long distance
+				* Single mode fibre
+				* Multi mode fibre 
+			* Coaxial
+			* etc (All of the cables)
+		* Wireless
+	* Connectors for Network Media - The plugs on the end of cables
+		* RJ45
+		* Fibre Connectors (IDK what they are called)
+		* etc (All of the plugs) 
+* Switches - Devices that endpoints typically connect to
+* Routers - Used to connect networks, does the 'routing' between networks
+* WLAN Controller - Used to do administrattion on multiple AP's
+* AP's - 
+* WLAN Devices
+* Firewalls
+
+
+
 ### Module 2 - Establishing Internet Connectivity
 
 ### Module 3 - Summary Challenge
