@@ -344,8 +344,8 @@ When you send information the data goes down the stack on your machine side, the
   </tr>
   <tr>
     <td>1</td>
-  	<td>Physical</td>
     <td>Bit</td>
+  	<td>Physical</td>
   </tr>
 </table>
 
