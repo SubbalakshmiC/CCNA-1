@@ -108,13 +108,13 @@ There are varying types of applications, such as:
 | Network     |
 | Data Link   |
 | Physical    |
-        
+
     * The OSI Model is a layer-based reference model that provides functions and services that can occur at each layer.
     * It describes the interaction between each layer above and below it.
     * It is standards based, allowing vendors a set of standards that ensure compatability between various types of network technology worldwide.
     * The layer functions are as follows: 
         * Session - Port numbers are present in both sending and recieving capacities. e.g. Internet requests will be sent to port 80, but will be recieved on veryiong port numbers dependant on my Session ID
-	* 
+ 
 * TCP/IP Model
 
 | TCP/IP Model|
@@ -123,7 +123,7 @@ There are varying types of applications, such as:
 | Transport   |
 | Internet    |
 | Data Link   |
-    
+
     * The layer of the TCP/IP Model map onto the OSI model as follows:
 
 | OSI Model                         | TCP/IP Model|
@@ -132,7 +132,7 @@ There are varying types of applications, such as:
 | Transport                         | Transport   |
 | Network                           | Internet    |
 | Data Link & Physical              | Link        |
-    
+
     * The layer functions are as follows:
 
 * Peer-to-Peer Communications
