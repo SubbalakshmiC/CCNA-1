@@ -126,13 +126,16 @@ QoS - Quality of Service: A way of the network knowing how important traffic is
 
 Open Systems Interconnect
 
+Used to stop duplication.
+Without this all applications would have to manually connect to hardware.
+
 Way to remember: Please Do Not Throw Sausage Pizza Away (PDNTSPA)
 
-###### 7 - Application
+###### 7 - Application - messages
 
 Interface to enable applications that want network services to be able to talk to the network stack.
 
-###### 6 - Presentation
+###### 6 - Presentation - messages
 
 Presents the data into either the above or below layers. 
 How the data is encoded (RLE etc.).
@@ -142,7 +145,7 @@ Information about the compression and encoding etc. needs to be sent with the da
 This is where file types are handled and they are used to show this.
 Metadata will also be used to store this.
 
-###### 5 - Session
+###### 5 - Session - messages
 
 This layer in summary controls network session management.
 This is used to manage for example: different tabs within an application.
@@ -153,7 +156,7 @@ This should not be confused with outgoing port numbers.
 For example: all outgoing http sessions will be going to port 80, however, this is not the incoming port of the network.
 This will be something completely different, and will be recorded so that the correct data will be sent back to the correct session.
 
-###### 4 - Transport
+###### 4 - Transport - segments
 
 This layer defines how data will be transported across the network.
 It runs end to end connectivity.
@@ -161,11 +164,27 @@ This is where the TCP (Transmittion Control Protocol - Reliable - Connectionfull
 TCP is used when you need to ensure that all of the data gets there, e.g. file transfer.
 UDP is used when the connection needs to be fast and not reliable, e.g. Live streams.
 
-###### 3 - Network
+###### 3 - Network - packets
 
-###### 2 - Data Link
+Responsible for network to network connectivity.
+This is where addressing happens.
+Main function is to get the data from your PC to the destination it needs to go.
+A very common protocol of this layer is IP (internet protocol).
+This is the protocol that manages all of the addresses of devices within a network.
+This is the layer that routers work on.
 
-###### 1 - Physical
+###### 2 - Data Link - frames
+
+Responsible for device to device connectivity.
+This is where physical addressing happens (MAC addresses - Media Access Control).
+Every device will have a NIC, and each of those will have a unique MAC address.
+This is where switches work.
+This layer also includes error detection.
+
+###### 1 - Physical - bits
+
+This layer is essentially the wire, or wires that the data travels along.
+This does not necessarily mean on or off, but could be as different voltages.
 
 ### Module 2 - Establishing Internet Connectivity
 
