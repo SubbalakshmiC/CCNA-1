@@ -42,7 +42,7 @@ Use to connect a selection of end devices to other end devices (PC's, IP Phones 
 	* NIC - Translate computer data into a format that can be sent over the network
 	* Network Media - Transmits signals from one device to another
 		* Cables - The physical wires 
-			* UTP (Unsheilded Twisted Pair) - Used for short distances
+			* UTP (Unsheilded Twisted Pair) - Used for short distances (100m Max)
 				* Includes different CATegories
 				* E.G. Cat 6
 			* Fibre Optic - Immune to interference, Used for long distance
@@ -61,7 +61,45 @@ Use to connect a selection of end devices to other end devices (PC's, IP Phones 
 * AP's (Access point's) - Allows wirelles devices to connect to a wired network 
 * WLAN Devices - Connect wireless devices to a network, WLAN NIC converts wirless signals to PC language
 
+##### Characteristics of a network
+Characteristics:
+* Topology - Design of the network
+	* Physical - The arrangement of physical cables and devices
+	* Logical - The path that the data actually travels upon
+* Speed - Bits per second
+* Cost - How much to install the network
+* Security - How secure is the network
+* Availability - Where you can reach the network from
+* Scalability - How easily can the network grow (new devices added)
+* Reliability - The amount of time that the network is up - (minutes in a year - minutes of down time) / minutes in a year * 100
 
+##### Physical VS Logical Topologies
+
+Physical topology is the cabling and devices that you can see.
+
+Logical topology is the path that data takes within the network to get to the desired destination.
+
+Primary physical topologies:
+
+* Bus - Single back bone, single point of failure, many clashes (CSMA/CD)
+* Ring - Can only speak to devices next to eachother, not very secure
+* Star - Centralised network device to send/receive traffic, good but expensive
+* Mesh - Usually used by router networks, lots of cabling needed however has fallbacks (one path breaks, new one can be used)
+
+##### Interpreting a Network Diagram
+
+A network digram is basically a drawing of the network.
+There are specific symbols and details the specify certain aspects of the network.
+
+Legend:
+
+* Thick red line - Ethernet Link
+	* Fibre
+	* UTP
+* IP Address - Tells you the IP address of the specific device or sets of devices
+* Interface - Tells you the interface/port that a wire is plugged into on a device
+	* Fa - Fast Ethernet (max - 100Mb/s)
+	* Gi - Gigabit Ethernet (max - 1000Mb/s)
 
 ### Module 2 - Establishing Internet Connectivity
 
