@@ -96,10 +96,27 @@ Legend:
 * Thick red line - Ethernet Link
 	* Fibre
 	* UTP
+* Lightning red line - Serial Link
 * IP Address - Tells you the IP address of the specific device or sets of devices
 * Interface - Tells you the interface/port that a wire is plugged into on a device
 	* Fa - Fast Ethernet (max - 100Mb/s)
 	* Gi - Gigabit Ethernet (max - 1000Mb/s)
+	* S - Serial (1-2 Mb/s) Used to manage network devives usually
+
+##### Impact of User Applications on the Network
+
+* Batch Applications - Applications that run in the background
+	* FTP (File Transfer Protocol) TCP, TFTP (Trivial File Transfer Protocol) UDP, inventory updates
+	* No direct human interaction
+	* Bandwidth important but not critical
+* Interactive Applications
+	* Inventory inquiry
+	* Human-to-machine interaction
+	* Human waiting for response, not critical however annoying
+* Real-time Applications
+	* VoIP, video
+	* Human-to-human interaction
+	* End-to-end latency critical
 
 ### Module 2 - Establishing Internet Connectivity
 
