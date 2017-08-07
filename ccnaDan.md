@@ -1,5 +1,5 @@
 # CCNA stuff 
-> let's do this!!!
+> lets do this!!!
 ---
 # Course introduction  
 
@@ -20,12 +20,12 @@ In ICND 1 we will do:
 
 ## Pointers from apprentices
   
-* Don't leave it to the last minute
+* Dont leave it to the last minute
 * older apprentices will be more that happy to help you
-* It's actually worth it, even if you go into sales
+* Its actually worth it, even if you go into sales
 * you will have NO time if you leave it too late as when you start rotations you will have to drop something
 * reach out to anyone if you need help, your co workers, other apprentices or any one really
-* keep going, don't stop looking at the content for a month as you will forget it 
+* keep going, dont stop looking at the content for a month as you will forget it 
 
 ## Exam notes
 
@@ -49,6 +49,7 @@ a network allows people access to information. for example allows you to access 
   * Firewall
   	* filters the traffic to only allow what you want / what it good
 	* filters from outside in, the outgoing is not normally filtered 
+	* a firewall is basically a router
   * Endpoints
   	* The end user machines - IP phones - laptops - desktops and so on
 	* can connect with either wire or wireless 
@@ -62,7 +63,7 @@ a network allows people access to information. for example allows you to access 
 			* simple = small glass inside
 			* multi mode = bigger
 			* immune to interference 
-			* used for when over long distance (100m - km's)
+			* used for when over long distance (100m - kms)
 			* split in two, one for send one for reiceive 
 		* or coaxial
 			* sinple copper core, used for internet in street
@@ -83,7 +84,7 @@ a network allows people access to information. for example allows you to access 
 	* allow different parts of the building to speak with each other as they connect a small geographical location
   * Routers
   * WLAN devices
-  * AP's
+  * APs
   * WLAN controller
   * Firewall
 
@@ -131,7 +132,7 @@ a network allows people access to information. for example allows you to access 
 * Reliability
 	* the dependability of the network devices
 		* cheap stuff will break so dont use them
-		* e.g. SSD's will last longer and won't fail as much as hard drives
+		* e.g. SSDs will last longer and wont fail as much as hard drives
 #### Interoperating a network diagram
 
 * thick red lines = a physical Ethernet connection 
@@ -176,7 +177,7 @@ a network allows people access to information. for example allows you to access 
 * Interactive applications
 	* Human to Computer communication
 	* Inventory inquiry
-	* Human waiting time is important but they can wait a bit for the computer as long as they don't have to wait too long
+	* Human waiting time is important but they can wait a bit for the computer as long as they dont have to wait too long
 * Real time applications
 	* Human to Human communication
 	* 100ms
@@ -191,15 +192,15 @@ OSI standard model
 
 At the top there is the software that you are using, e.g. Word, firefox and so on
 
-|| Layer name | Layer Number | purpose
-|-|------|-|-|
-|↓| Application | 7 | Used to enable the software that wants to talk to the network stack and enables it to do so
-|↓| Presentation | 6 | defines how the data is encoded and represented and contains information on the file type. Also things like encryption and compression. This additional information is stored as metadata
-|↓| Session | 5 | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session and then translated to the correct machine by the router.
-|↓| Transport | 4 | defines how the data is to be transported across the network, TCP and UDP
-|↓| Network | 3 |
-|↓| Data Link | 2 |
-|↓| Physical | 1 |
+|| Layer name | Layer Number | purpose | PDU
+|-|------|-|-|-|
+|↓| Application | 7 | Used to enable the software that wants to talk to the network stack and enables it to do so. The user interface for the network stack | messages
+|↓| Presentation | 6 | defines how the data is encoded and represented and contains information on the file type. Also things like encryption and compression. This additional information is stored as metadata | messages
+|↓| Session | 5 | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session and then translated to the correct machine by the router. | messages
+|↓| Transport | 4 | defines how the data is to be transported across the network, implements TCP and UDP | segments
+|↓| Network | 3 | Network to network connectivity. handles ip addresses. Routers | packets
+|↓| Data Link | 2 | Device to device connectivity. handles MAC addresses. Switches. only works on a local network this is how ARP is used | frames
+|↓| Physical | 1 | How the data is represented on the raw media. e.g. ±5 volts, LED on for x miliseconds (encoding, need a clock to know when a signal ends) | bits
 
 ##### Application
 * allows the software to access the network stack
@@ -242,8 +243,22 @@ At the top there is the software that you are using, e.g. Word, firefox and so o
 	* AHHHHHHH OK
 
 ##### Network
+	* Network to network connectivity 
+	* mainly deals with addressing
+	* get the data from your computer on the network that you are on to the network that you want to get the data to
+		* get the data from one logical address to another
 ##### data link
+	* Device to device connectivity 
+	* MAC addresses
+	* physical addressing
+	* to access by MAC you need to be on the same local network (on a switch)
+		* ARP will take ip and convert to MAC
 ##### physical
+	* the actual cable 
+	* copper vs fibre vs wireless
+	* take the data and represent it in on and off signals
+		* copper = elestric signal high (+5v) -> 1
+		* fibre = light on for x microseconds
 
 When you send information the data goes down the stack on your machine side, then at its destination it goes back up the stack.
 
