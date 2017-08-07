@@ -148,8 +148,39 @@ a network allows people access to information. for example allows you to access 
 		* very slow
 		* speed is up to 2 Mbp/s
 		* generally used to power just a command line interface and not to do much networking
+			* used to manage devices
+	* the ports will be labelled by the port type and then number
+		* for example a port could be called:
+			* Fa0/12 - the 12th ethernet port
+			* Fa0/7 - the 7th ethernet port
+			* Gi0/1
+			* S0/0
 	
+#### Impact of user applications on the network
 
+* batch applications
+	* Computer to computer communication
+	* these are done one after another with a conclusive start and finish
+	* No direct human interaction
+		* just two machines talking to eachother
+	* Bandwidth is important but not critical
+		* the machines can just work in the backgroud when the network is slow
+	* examples include
+		* FTP - File Transfer Protocol
+		* TFTP - Trivial File Transfer Protocol
+		* inventory updates
+		* SCP
+* Interactive applications
+	* Human to Computer communication
+	* Inventory inquiry
+	* Human waiting time is important but they can wait a bit for the computer as long as they don't have to wait too long
+* Real time applications
+	* Human to Human communication
+	* 100ms
+	* VoIP, video and so on
+	* Needs a lot of bandwidth and priority
+* QOS (Quality Of Service)
+	* how well the network can actually prioritise the different applications types
 
 ## Module 2 - Establishing internet connectivity 
 
