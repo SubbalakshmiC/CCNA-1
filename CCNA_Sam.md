@@ -60,12 +60,12 @@ Network characteristics are as follows:
     * Bus - Every workstation is connected to the main network medium. Each device is directly connected to another
     ![Bus Topology](https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/BusNetwork.svg/527px-BusNetwork.svg.png)
     * Ring - Each device is cabled together in a ring, so that the last device is connected to the first, etc.
-    ![Ring Topology](https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/RingNetwork.svg/527px-RingNetwork.svg.png)
+    ![Ring Topology](https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/RingNetwork.svg/440px-RingNetwork.svg.png)
     * Star - The most common type of topology. A central device is connected to all of the endpoints and other network devices
-    ![Star Topology](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/StarNetwork.svg/527px-StarNetwork.svg.png)
+    ![Star Topology](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/StarNetwork.svg/440px-StarNetwork.svg.png)
     * Mesh - Every device is connected to one another, allowing higher redundancy tollerences
-    ![Mesh Topology](https://upload.wikimedia.org/wikipedia/commons/3/3c/NetworkTopology-FullyConnected.png)
-* Logical Topologies - The path that the data follows within a network
+    ![Mesh Topology](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/NetworkTopology-FullyConnected.png/440px-NetworkTopology-FullyConnected.png)
+    * Logical Topologies - The path that the data follows within a network
 
 #### Interpreting a network diagram
 * Various connection interfaces are used in a netowork. On a network diagram they are denoted as follows:
