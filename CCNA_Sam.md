@@ -58,12 +58,13 @@ Network characteristics are as follows:
 #### Physical vs. Logical Topology
 * Physical Topologies
     * Bus - Every workstation is connected to the main network medium. Each device is directly connected to another
-    [Bus Topology](https://en.wikipedia.org/wiki/File:BusNetwork.svg)
+    ![Bus Topology](https://en.wikipedia.org/wiki/File:BusNetwork.svg)
     * Ring - Each device is cabled together in a ring, so that the last device is connected to the first, etc.
-    [Ring Topology](https://en.wikipedia.org/wiki/File:RingNetwork.svg)
+    ![Ring Topology](https://en.wikipedia.org/wiki/File:RingNetwork.svg)
     * Star - The most common type of topology. A central device is connected to all of the endpoints and other network devices
-    [Mesh Topology](https://en.wikipedia.org/wiki/File:NetworkTopology-FullyConnected.png)
+    ![Star Topology](https://en.wikipedia.org/wiki/File:StarNetwork.svg)
     * Mesh - Every device is connected to one another, allowing higher redundancy tollerences
+    ![Mesh Topology](https://en.wikipedia.org/wiki/File:NetworkTopology-FullyConnected.png)
 * Logical Topologies - The path that the data follows within a network
 
 #### Interpreting a network diagram
