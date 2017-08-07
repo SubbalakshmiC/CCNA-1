@@ -194,13 +194,13 @@ At the top there is the software that you are using, e.g. Word, firefox and so o
 
 || Layer name | Layer Number | purpose | PDU
 |-|------|-|-|-|
-|↓| Application | 7 | Used to enable the software that wants to talk to the network stack and enables it to do so. The user interface for the network stack | messages
-|↓| Presentation | 6 | defines how the data is encoded and represented and contains information on the file type. Also things like encryption and compression. This additional information is stored as metadata | messages
-|↓| Session | 5 | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session and then translated to the correct machine by the router. | messages
-|↓| Transport | 4 | defines how the data is to be transported across the network, implements TCP and UDP | segments
-|↓| Network | 3 | Network to network connectivity. handles ip addresses. Routers | packets
-|↓| Data Link | 2 | Device to device connectivity. handles MAC addresses. Switches. only works on a local network this is how ARP is used | frames
-|↓| Physical | 1 | How the data is represented on the raw media. e.g. ±5 volts, LED on for x miliseconds (encoding, need a clock to know when a signal ends) | bits
+|↓| Application | 7 | Used to enable the software that wants to talk to the network stack and enables it to do so. The user interface for the network stack | Messages
+|↓| Presentation | 6 | defines how the data is encoded and represented and contains information on the file type. Also things like encryption and compression. This additional information is stored as metadata | Messages
+|↓| Session | 5 | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session and then translated to the correct machine by the router. | Messages
+|↓| Transport | 4 | defines how the data is to be transported across the network, implements TCP and UDP | Segments
+|↓| Network | 3 | Network to network connectivity. handles ip addresses. Routers | Packets
+|↓| Data Link | 2 | Device to device connectivity. handles MAC addresses. Switches. only works on a local network this is how ARP is used | Frames
+|↓| Physical | 1 | How the data is represented on the raw media. e.g. ±5 volts, LED on for x miliseconds (encoding, need a clock to know when a signal ends) | Bits
 
 ##### Application
 * allows the software to access the network stack
@@ -243,25 +243,35 @@ At the top there is the software that you are using, e.g. Word, firefox and so o
 	* AHHHHHHH OK
 
 ##### Network
-	* Network to network connectivity 
-	* mainly deals with addressing
-	* get the data from your computer on the network that you are on to the network that you want to get the data to
+* Network to network connectivity 
+* mainly deals with addressing
+* get the data from your computer on the network that you are on to the network that you want to get the data to
 		* get the data from one logical address to another
 ##### data link
-	* Device to device connectivity 
-	* MAC addresses
-	* physical addressing
-	* to access by MAC you need to be on the same local network (on a switch)
-		* ARP will take ip and convert to MAC
+* Device to device connectivity 
+* MAC addresses
+* physical addressing
+* to access by MAC you need to be on the same local network (on a switch)
+	* ARP will take IP and convert to MAC
 ##### physical
-	* the actual cable 
-	* copper vs fibre vs wireless
-	* take the data and represent it in on and off signals
-		* copper = elestric signal high (+5v) -> 1
-		* fibre = light on for x microseconds
+* the actual cable 
+* copper vs fibre vs wireless
+* take the data and represent it in on and off signals
+	* copper = electric signal high (+5V) -> 1
+	* fibre = light on for x microseconds
+
+* data is encapsulated with headers at the front and then trailer at the end
 
 When you send information the data goes down the stack on your machine side, then at its destination it goes back up the stack.
 
+##### TCP IP model
+
+| Layer name | layer Number | purpose | PDU |
+|-|-|-|-|
+|Application | 4 | Application, presentation and session| Data
+|Transport | 3 | Transport | Segment
+|Internet | 2 | network | Packet
+|Link | 1 | data link and physical | Frame
 
 ## Module 2 - Establishing internet connectivity 
 
