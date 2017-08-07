@@ -143,6 +143,11 @@ a network allows people access to information. for example allows you to access 
 		* max speed is 100 Mbp/s
 	* Gi = (Gi)gabit
 		* max speed is 1,000 Mbp/s
+	* S = (S)erial
+		* its old, but still around and you still need to know about it
+		* very slow
+		* speed is up to 2 Mbp/s
+		* generally used to power just a command line interface and not to do much networking
 	
 
 
