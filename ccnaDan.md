@@ -198,7 +198,7 @@ At the top there is the software that you are using, e.g. Word, firefox and so o
 |-|------|-|-|-|
 |↓| Application | 7 | Used to enable the software that wants to talk to the network stack and enables it to do so. The user interface for the network stack | Messages
 |↓| Presentation | 6 | defines how the data is encoded and represented and contains information on the file type. Also things like encryption and compression. This additional information is stored as metadata | Messages
-|↓| Session | 5 | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session and then translated to the correct machine by the router. | Messages
+|↓| Session | 5 | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session a then translated to the correct machine by the router. | Messages
 |↓| Transport | 4 | defines how the data is to be transported across the network, implements TCP and UDP | Segments
 |↓| Network | 3 | Network to network connectivity. handles ip addresses. Routers | Packets
 |↓| Data Link | 2 | Device to device connectivity. handles MAC addresses. Switches. only works on a local network this is how ARP is used | Frames
@@ -274,6 +274,18 @@ When you send information the data goes down the stack on your machine side, the
 |Transport | 3 | Transport | Segment
 |Internet | 2 | network | Packet
 |Link | 1 | data link and physical | Frame
+##### OSI summary
+| Layer name | purpose 
+|------|-|
+| Application  | Used to enable the software that wants to talk to the network stack and enables it to do so. The user interface for the network stack 
+| Presentation  | defines how the data is encoded and represented and contains information on the file type. Also things like encryption and compression. This additional information is stored as metadata 
+| Session | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session and then translated to the correct machine by the router. 
+| Transport  | defines how the data is to be transported across the network, implements TCP and UDP 
+| Network  | Network to network connectivity. handles ip addresses. Routers 
+| Data Link  | Device to device connectivity. handles MAC addresses. Switches. only works on a local network this is how ARP is used
+| Physical  | How the data is represented on the raw media. e.g. ±5 volts, LED on for x miliseconds (encoding, need a clock to know when a signal ends) 
+
+
 
 ##### OSI vs TCP IP model
 
