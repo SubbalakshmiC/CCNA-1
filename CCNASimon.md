@@ -69,9 +69,9 @@ Characteristics:
 * Speed - Bits per second
 * Cost - How much to install the network
 * Security - How secure is the network
-* Availability - Where you can reach the network from
+* Availability - The amount of time that the network is up - (minutes in a year - minutes of down time) / minutes in a year * 100
 * Scalability - How easily can the network grow (new devices added)
-* Reliability - The amount of time that the network is up - (minutes in a year - minutes of down time) / minutes in a year * 100
+* Reliability - How likely the devices on the netwokr are to break (SSD's are more reliable than HDD's)
 
 ##### Physical VS Logical Topologies
 
@@ -121,6 +121,51 @@ QoS - Quality of Service: A way of the network knowing how important traffic is
 	* End-to-end latency critical
 
 #### Understanding the Host-to-Host Communication Model
+
+##### OSI Model
+
+Open Systems Interconnect
+
+Way to remember: Please Do Not Throw Sausage Pizza Away (PDNTSPA)
+
+###### 7 - Application
+
+Interface to enable applications that want network services to be able to talk to the network stack.
+
+###### 6 - Presentation
+
+Presents the data into either the above or below layers. 
+How the data is encoded (RLE etc.).
+Also where encryption and decryption takes place.
+Compression will also sbe handled here.
+Information about the compression and encoding etc. needs to be sent with the data.
+This is where file types are handled and they are used to show this.
+Metadata will also be used to store this.
+
+###### 5 - Session
+
+This layer in summary controls network session management.
+This is used to manage for example: different tabs within an application.
+Each session has a port number assosciated with it.
+This allows incoming connections connections to be routed to the correct application and the correct session within that application.
+This is an incoming port number.
+This should not be confused with outgoing port numbers.
+For example: all outgoing http sessions will be going to port 80, however, this is not the incoming port of the network.
+This will be something completely different, and will be recorded so that the correct data will be sent back to the correct session.
+
+###### 4 - Transport
+
+This layer defines how data will be transported across the network.
+It runs end to end connectivity.
+This is where the TCP (Transmittion Control Protocol - Reliable - Connectionfull - 3-way handshake - SYN SYN&ACK SYN) or UDP (User Datagram Protocol - Unreliable or Best Effort) is set up.
+TCP is used when you need to ensure that all of the data gets there, e.g. file transfer.
+UDP is used when the connection needs to be fast and not reliable, e.g. Live streams.
+
+###### 3 - Network
+
+###### 2 - Data Link
+
+###### 1 - Physical
 
 ### Module 2 - Establishing Internet Connectivity
 
