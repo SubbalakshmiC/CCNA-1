@@ -162,14 +162,17 @@ There are varying types of applications, such as:
     * The application layer recieved the user data, and adds a header before sending it to the presentation layer
     * The presentation layer adds its own header before transmissing to the session layer
     * This process continues down the stack and at the data link layer, a trailer is added
-    * At the destination this is unpacked one layer at a time, and the data is thn passed up to the PDU on the layer above
+    * At Layer 2 the trailer is ususally the FCS - Used to check for errors in transmission
+    * At the destination this is unpacked one layer at a time, and the data is then passed up to the PDU on the layer above
 
-|L2 |L3 |L4 |Other|    |   |
-|---|---|---|-----|----|---|
-|   |   |   |     |Data|   |
-|   |   |Hdr|Hdr  |Data|   |
-|   |Hdr|Hdr|Hdr  |Data|   |
-|Hdr|Hdr|Hdr|Hdr  |Data|FCS|
+|L2 |L3 |L4 |Other|    |Trailer|
+|---|---|---|-----|----|-------|
+|   |   |   |     |Data|       |
+|   |   |Hdr|Hdr  |Data|       |
+|   |Hdr|Hdr|Hdr  |Data|       |
+|Hdr|Hdr|Hdr|Hdr  |Data|FCS    |
+
+('Hdr' meaning Header)
 
 ### Module 2: Establishing internet connectivity
 
