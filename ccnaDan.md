@@ -124,11 +124,14 @@ a network allows people access to information. for example allows you to access 
 	* can you access the network when you are away from the office
 		* mobile users
 		* VPN
+	* [ (minutes in a year) - (Downtime) ] / 525600 * 100 = percentage up time
+		* e.g. (525600 - 15) / 525600 * 100 = 99.9971% uptime
 * Scalability
 	* how able is the network able to scale up to new users
 * Reliability
-	* [ (minutes in a year) - (Downtime) ] / 525600 * 100 = percentage up time
-		* e.g. (525600 - 15) / 525600 * 100 = 99.9971% uptime
+	* the dependability of the network devices
+		* cheap stuff will break so dont use them
+		* e.g. SSD's will last longer and won't fail as much as hard drives
 #### Interoperating a network diagram
 
 * thick red lines = a physical Ethernet connection 
@@ -151,10 +154,10 @@ a network allows people access to information. for example allows you to access 
 			* used to manage devices
 	* the ports will be labelled by the port type and then number
 		* for example a port could be called:
-			* Fa0/12 - the 12th ethernet port
-			* Fa0/7 - the 7th ethernet port
-			* Gi0/1
-			* S0/0
+			* Fa0/12 - the 13th ethernet port
+			* Fa0/7 - the 8th ethernet port
+			* Gi0/1 - the 2nd Gigabit port
+			* S0/0/0 - the 1st serial port
 	
 #### Impact of user applications on the network
 
@@ -181,6 +184,10 @@ a network allows people access to information. for example allows you to access 
 	* Needs a lot of bandwidth and priority
 * QOS (Quality Of Service)
 	* how well the network can actually prioritise the different applications types
+
+### Understanding the Host-to-Host communications model
+	
+
 
 ## Module 2 - Establishing internet connectivity 
 
