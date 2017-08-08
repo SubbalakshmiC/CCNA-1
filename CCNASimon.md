@@ -1,4 +1,5 @@
 # CCNA Revision Document
+# Warriors of the net 
 CCNA lasts 3 years - can take a higher exam to requalify for CCNA
 
 Boot camp begins!
@@ -187,6 +188,37 @@ This layer also includes error detection.
 
 This layer is essentially the wire, or wires that the data travels along.
 This does not necessarily mean on or off, but could be as different voltages.
+
+#### Introducing LAN's
+
+##### Local Area Networks
+
+LAN's are very common.
+They are the networks that you have iun your home, office or in shops.
+LAN's provide much faster speeds.
+LAN used to mean that it was a network within a singular building, each building would have it's own LAN.
+LAN now comes to mean a set of buildings within a limited area (usually 1km).
+LAN's are connected to eachother via a WAN (Wide Area Network).
+Due to higher speed WAN's, LAN's can essentially be connected together to effectively make one large LAN. 
+For example, the offices in Bedfont Lakes and in Green Park are now effectively on the same LAN.
+This is called an intranet and it's you can connect to all of the Cisco webpages from any office in the world.
+
+##### Components of a LAN
+
+* Hosts
+	* PC's
+	* Servers
+* Interconnections
+	* NICs
+	* Network Media
+* Network Devices
+	* Switches 
+	* Routers 
+* Protocols - Set of rules that are used to communicate
+	* Ethernet - Layer 2 (Data Link)
+	* IP (Internet Protocol) - Layer 3 (Network)
+	* ARP (Address Resolution Protocol)
+	* DHCP (Dynamic Host Cionfiguration Protocol)
 
 ### Module 2 - Establishing Internet Connectivity
 
