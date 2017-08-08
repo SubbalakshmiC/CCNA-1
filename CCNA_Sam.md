@@ -337,6 +337,54 @@ There are varying types of applications, such as:
 		* Lower per port cost - Less devices are required to allow a network of the same size when using switches
 	* A switch offers a port (connection) to each device, removing the need for CSMA/CD. However this is still accepted, in the event that a hub may be connected to one of these ports to increase capacity
 
+#### Cisco IOS
+* Cisco IOS is the proprietory operating system that operates on Switches, Routers, APs and other networking appliances that Cisco Manufacture
+* The port used to directly connect to a router, switch etc. is called a console port
+* A light blue patch cable is used here (likely with an RJ-45 connection)
+* The Cisco CLI is used to enter commands
+* Operations performed vary dependant on the device
+
+* Modes within the CLI (Command Line Interface):
+	* `switch >` - User EXEC Mode
+		* A limited, read-only examination mode
+	* `switch #` - Priveleged EXEC Mode
+		* Allowing access to all system commands, though still read-only
+		* Accessed by typing `enable` from within User Mode
+		* Here the user can entirely examine the system, reload the system
+		* Offers access to the global configuration mode
+	* `switch (config)#` - Global Configuration Mode
+
+> `switch` is a placeholder hostname used here
+
+* Useful key combinations:
+	* `Ctrl-A` - Moves the cursor to the beginning of the command line
+	* `Ctrl-C`	- Aborts the current command and exits the configuration mode
+	* `Ctrl-E`	- Moves the cursor to the end of the command line
+	* `Esc-B`	- Moves the cursor back one word
+	* `Esc-F`	- Moves the cursor forward one word
+	* `Ctrl-B`	- Moves the cursor back one character
+	* `Ctrl-F`	- Moves the cursor forward one character
+	* `Ctrl-D`	- Deletes a single character at the cursor
+	* `Backspace`	- Removes one character to the left of the cursor
+	* `Ctrl-P` - Redisplays the current command line
+	* `Ctrl-U`	- Erases a line
+	* `Ctrl-W`	- Erases a word to the left of the cursor
+	* `Ctrl-Z` - Ends configuration mode and returns to the EXEC prompt
+	* `Tab`	- Completes a partially entered command if enough characters have been entered to make it unambiguous
+	* `Ctrl-Shift-6` - Allows the user to interrupt a Cisco IOS process such as ping or traceroute
+	* `Ctrl-P` or `Up Arrow` - Recalls last (previous) commands
+	* `Ctrl-N` or `Down Arrow`	- Recalls more recent commands
+
+* Useful commands:
+	* `show` - Show running system information, could be suffixed with an interface name for example
+	* `disable` - Returns to User EXEC Mode
+	* `exit` - Return to Priveledged EXEC Mode
+
+* There are 3 main types of error messages:
+	* `ambiguous command` - You did not enter enough characters for your device to recognize the command
+	* `incomplete command` - You did not enter all the keywords or values that are required by this command
+	* `invalid command` - You entered the command incorrectly. The ^ marks the point of the error
+
 ### Module 2: Establishing internet connectivity 
 
 ### Module 3: Summary Challenge 
