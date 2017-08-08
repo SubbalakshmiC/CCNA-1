@@ -347,10 +347,11 @@ When you send information the data goes down the stack on your machine side, the
   </tr>
 </table>
 
+> Day 2
 
 ##### Encapsulation
 
-<table border=0 rules=none>
+<table>
 <tr>
 	<td >Application</td>		
 	<td colspan="4" ></td>		
@@ -383,6 +384,49 @@ When you send information the data goes down the stack on your machine side, the
 	<td> Trailer </td>
 </tr>
 </table>
+
+### Introducing LANs
+
+A LAN is a network of computers that are in a small geographical location. Before LAN you would have had speeds of:
+
+* 9.6 kb
+* 19.2 kb
+* 64 kb
+* 2 Mb
+
+e.g. There is a LAN at green park and a LAN at Bedfont 
+
+Green park LAN <-> WAN <-> Bedfont LAN
+
+| | GP LAN | WAN | BF LAN|
+|-|-|-|-|
+Old | 10 Mbps | 2 Mbps | 10 Mbps |
+New | Gi | 100 Mbps / Gi | Gi |
+
+Due to the new increse in speed you could now call both the LANS a Single UK LAN for Cisco. Basically just an Intranet. 
+
+Due to this LANs can range in size from really small to inside a house all the way up to huge offices. For example an 8 port switch could cater for a small company perfectly fine. 
+
+#### LAN Components
+
+* Hosts
+	* PC
+	* Server
+* Interconnections
+	* NIC
+	* Network Media
+* Network Devices
+	* Switches
+	* Routers
+* Protocols
+	* Ethernet
+		* Acts at the Data link layer (layer 2)
+	* IP
+	* ARP (Address Resolution Protocol)
+	* DHCP (Dynamic Host Configuration Protocol)
+	* a protocol is a way to do things that have been set up and act like a standard so that all devices know how to use it 
+
+
 
 ## Module 2 - Establishing internet connectivity 
 
