@@ -456,7 +456,41 @@ Ethernet is just a layer 2 protocol, not a cable. Token ring is another layer 2 
 
 ##### *Thicc* Ethernet  
 
-Basically a coax cable, single copper core that would run in the floor or ceiling. every 2.5M along the cable you would attach a device to, you basically drill a hole in the cable and then attach the device to the copper core. Vampire taps. Maximum speed of 10Mbps which was REALLY fast for the day. 
+Basically a coax cable, single copper core that would run in the floor or ceiling. every 2.5M along the cable you would attach a device to, you basically drill a hole in the cable and then attach the device to the copper core. Vampire taps. Maximum speed of 10Mbps which was REALLY fast for the day. Called a broadcast media because when you broadcast information all devices can read and see the information. 
+
+Broadcast medium 
+
+* CSMA/CD
+	* Carrier sense multiple access with collision detect 
+	* Controls who gets to go first when you are on a broadcast media like a single coax cable where all devices want to send information. 
+	* before you transmit you would need to listen to the cable to see if someone else is transmitting, if they are then you must wait. 
+	* the collision detection will loop back some data to know if there has been a collision 
+	* if there has then they will send a jamming signal so that no data will interfere with the collision and will give time to let it pass
+	* Random exponential back off algorithm is then used to see who will transmit first again
+* when you add more devices to the network there will be MANY more collisions
+* In reality you would get about 3-4 Mbps
+
+This was a REALLY bad system. so it was replaced with UTP. it was nice as you had proper connectors and cables and so on. 
+
+We moved to hubs after this due to the fact that you could then just plug in UTP cables to the magic box. It only charged the physical cabling. So it still used CSMA/CD so it was all broadcasting all around. A hub still has the single wire in it basically so no changes to network speed or collision. Physically its a star but logically its a bus. Also known as a repeater. The hub is a layer one device
+
+##### Hub
+
+* a coax cable in a box with fancy connectors
+* Only changed the cables that you used, was still the same underneath
+* also known as a repeater
+* logically a bus but physically a star
+* a layer 1 device
+* this lead to a bridge
+
+##### bridge
+
+* ASIC (Application Specific Integrated Circuit)
+* SW based
+* Layer 2 device
+* This lead to switches as they were hardware based and so they were faster. 
+
+
 
 ## Module 2 - Establishing internet connectivity 
 
