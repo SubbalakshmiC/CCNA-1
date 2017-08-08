@@ -385,6 +385,23 @@ There are varying types of applications, such as:
 	* `incomplete command` - You did not enter all the keywords or values that are required by this command
 	* `invalid command` - You entered the command incorrectly. The ^ marks the point of the error
 
+
+* When making changes to the operation of a switch or router, saving and managing said changes are important.
+* The following commands may be useful:
+	* `show running-config` - Displays the current running configuration. You can also use filters. For example, you can use the show running-config interface GigabitEthernet0/1 command to display only the interface GigabitEthernet0/1 running configuration.
+	* `show startup-config` - Displays the saved configuration in NVRAM.
+	* `configure terminal` - Enters the configuration mode, where you can interactively create configurations in RAM from the console or remote terminal.
+	* `copy running-config startup-config` - Saves the running configuration to NVRAM.
+	* `copy startup-config running-config` - Startup configuration in NVRAM is merged into running configuration.
+	* `erase startup-config` - Deletes the saved startup-config file in NVRAM.
+
+* When displaying portions of a config it may help to filter out unwanted data.
+* This can be done in the following ways:
+	* `begin` - Shows all output lines, starting with the line that matches the filtering expression
+	* `exclude` - Excludes all output lines that match the filtering expression
+	* `include` - Includes all output lines that match the filtering expression
+	* `section` - Shows the entire section that starts with the filtering expression
+* e.g. `R1# show running-config | begin interface`
 ### Module 2: Establishing internet connectivity 
 
 ### Module 3: Summary Challenge 
