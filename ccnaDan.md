@@ -194,13 +194,13 @@ At the top there is the software that you are using, e.g. Word, firefox and so o
 
 || Layer name | Layer Number | purpose | PDU
 |-|------|-|-|-|
-|↓| Application | 7 | Used to enable the software that wants to talk to the network stack and enables it to do so. The user interface for the network stack | messages
-|↓| Presentation | 6 | defines how the data is encoded and represented and contains information on the file type. Also things like encryption and compression. This additional information is stored as metadata | messages
-|↓| Session | 5 | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session and then translated to the correct machine by the router. | messages
-|↓| Transport | 4 | defines how the data is to be transported across the network, implements TCP and UDP | segments
-|↓| Network | 3 | Network to network connectivity. handles ip addresses. Routers | packets
-|↓| Data Link | 2 | Device to device connectivity. handles MAC addresses. Switches. only works on a local network this is how ARP is used | frames
-|↓| Physical | 1 | How the data is represented on the raw media. e.g. ±5 volts, LED on for x miliseconds (encoding, need a clock to know when a signal ends) | bits
+|↓| Application | 7 | Used to enable the software that wants to talk to the network stack and enables it to do so. The user interface for the network stack | Messages
+|↓| Presentation | 6 | defines how the data is encoded and represented and contains information on the file type. Also things like encryption and compression. This additional information is stored as metadata | Messages
+|↓| Session | 5 | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session a then translated to the correct machine by the router. | Messages
+|↓| Transport | 4 | defines how the data is to be transported across the network, implements TCP and UDP | Segments
+|↓| Network | 3 | Network to network connectivity. handles ip addresses. Routers | Packets
+|↓| Data Link | 2 | Device to device connectivity. handles MAC addresses. Switches. only works on a local network this is how ARP is used | Frames
+|↓| Physical | 1 | How the data is represented on the raw media. e.g. ±5 volts, LED on for x miliseconds (encoding, need a clock to know when a signal ends) | Bits
 
 ##### Application
 * allows the software to access the network stack
@@ -243,25 +243,220 @@ At the top there is the software that you are using, e.g. Word, firefox and so o
 	* AHHHHHHH OK
 
 ##### Network
-	* Network to network connectivity 
-	* mainly deals with addressing
-	* get the data from your computer on the network that you are on to the network that you want to get the data to
+* Network to network connectivity 
+* mainly deals with addressing
+* get the data from your computer on the network that you are on to the network that you want to get the data to
 		* get the data from one logical address to another
 ##### data link
-	* Device to device connectivity 
-	* MAC addresses
-	* physical addressing
-	* to access by MAC you need to be on the same local network (on a switch)
-		* ARP will take ip and convert to MAC
+* Device to device connectivity 
+* MAC addresses
+* physical addressing
+* to access by MAC you need to be on the same local network (on a switch)
+	* ARP will take IP and convert to MAC
 ##### physical
-	* the actual cable 
-	* copper vs fibre vs wireless
-	* take the data and represent it in on and off signals
-		* copper = elestric signal high (+5v) -> 1
-		* fibre = light on for x microseconds
+* the actual cable 
+* copper vs fibre vs wireless
+* take the data and represent it in on and off signals
+	* copper = electric signal high (+5V) -> 1
+	* fibre = light on for x microseconds
+
+* data is encapsulated with headers at the front and then trailer at the end
 
 When you send information the data goes down the stack on your machine side, then at its destination it goes back up the stack.
 
+##### TCP IP model
+
+| Layer name | layer Number | purpose | PDU |
+|-|-|-|-|
+|Application | 4 | Application, presentation and session| Data
+|Transport | 3 | Transport | Segment
+|Internet | 2 | network | Packet
+|Link | 1 | data link and physical | Frame
+##### OSI summary
+| Layer name | purpose 
+|------|-|
+| Application  | Used to enable the software that wants to talk to the network stack and enables it to do so. The user interface for the network stack 
+| Presentation  | defines how the data is encoded and represented and contains information on the file type. Also things like encryption and compression. This additional information is stored as metadata 
+| Session | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session and then translated to the correct machine by the router. 
+| Transport  | defines how the data is to be transported across the network, implements TCP and UDP 
+| Network  | Network to network connectivity. handles ip addresses. Routers 
+| Data Link  | Device to device connectivity. handles MAC addresses. Switches. only works on a local network this is how ARP is used. Tells you how to interoperate the binary
+| Physical  | How the data is represented on the raw media. e.g. ±5 volts, LED on for x miliseconds (encoding, need a clock to know when a signal ends) 
+
+
+
+##### OSI vs TCP IP model
+
+<table>
+	<tr>
+	<th colspan="3"> OSI </th>
+	<th colspan="3"> TCP/IP </th>
+  </tr>
+  <tr>
+    <th>Layer Number</th>
+    <th>PDU</th>
+    <th>Layer Name</th>
+    <th>Layer Name</th>
+    <th>PDU</th>
+    <th>Layer Number</th>
+  </tr>
+  <tr>
+    <td>7</td>
+    <td rowspan="3">Messages</td>
+    <td>Application</td>
+    <td rowspan="3">Application</td>
+    <td rowspan="3">Data</td>
+    <td rowspan="3">4</td>
+  </tr>
+  <tr>
+    <td>6</td>
+    <td>Presentation</td>
+  </tr>
+  <tr>
+    <td>5</td>
+  	<td>Session</td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td>Segment</td>
+  	<td>Transport</td>
+  	<td>Transport</td>
+    <td>Segment</td>
+    <td>3</td>
+  </tr>
+  <tr>
+    <td>3</td>
+    <td>Packet</t>
+  	<td>Network</td>
+  	<td>Internet</td>
+    <td>Packet</t>
+    <td>2</t>
+  </tr>
+  <tr>
+    <td>2</td>
+    <td>Frame</td>
+  	<td>Data Link</td>
+    <td rowspan="2">Link</td>
+    <td rowspan="2">Frame</td>
+    <td rowspan="2">1</td>
+  </tr>
+  <tr>
+    <td>1</td>
+    <td>Bit</td>
+  	<td>Physical</td>
+  </tr>
+</table>
+
+> Day 2
+
+##### Encapsulation
+
+<table>
+<tr>
+	<td >Application</td>		
+	<td colspan="4" ></td>		
+	<td>User data</td>		
+	<td rowspan="3"> </td>
+</tr>
+<tr>
+	<td> Transport </td>
+	<td colspan="2"> </td>
+	<td> L4 header </td>
+	<td> Other Header</td>
+	<td> User data </td>
+
+</tr>
+<tr>
+	<td> Internet </td>
+	<td></td>
+	<td> L3 Header
+	<td> L4 header </td>
+	<td> Other Header</td>
+	<td> User data </td>
+</tr>
+<tr>
+	<td> Link </td>
+	<td> L2 Header
+	<td> L3 Header
+	<td> L4 header </td>
+	<td> Other Header</td>
+	<td> User data </td>
+	<td> Trailer </td>
+</tr>
+</table>
+
+### Introducing LANs
+
+A LAN is a network of computers that are in a small geographical location. Before LAN you would have had speeds of:
+
+* 9.6 kb
+* 19.2 kb
+* 64 kb
+* 2 Mb
+
+e.g. There is a LAN at green park and a LAN at Bedfont 
+
+Green park LAN <-> WAN <-> Bedfont LAN
+
+| | GP LAN | WAN | BF LAN|
+|-|-|-|-|
+Old | 10 Mbps | 2 Mbps | 10 Mbps |
+New | Gi | 100 Mbps / Gi | Gi |
+
+Due to the new increse in speed you could now call both the LANS a Single UK LAN for Cisco. Basically just an Intranet. 
+
+Due to this LANs can range in size from really small to inside a house all the way up to huge offices. For example an 8 port switch could cater for a small company perfectly fine. 
+
+#### LAN Components
+
+* Hosts
+	* PC
+	* Server
+* Interconnections
+	* NIC
+	* Network Media
+* Network Devices
+	* Switches
+	* Routers
+* Protocols
+	* Ethernet
+		* Acts at the Data link layer (layer 2)
+	* IP
+	* ARP (Address Resolution Protocol)
+	* DHCP (Dynamic Host Configuration Protocol)
+	* a protocol is a way to do things that have been set up and act like a standard so that all devices know how to use it 
+
+0100111010011 means what?
+
+|bits|0100|1110|10011|
+|-|-|-|-|
+|Layer 2 frame|Destination address|source address| data|
+
+In this example the layer 2 protocol defines where the DA, SA and data are in the binary numbers. 
+
+Ethernet takes the binary on the cable and compartmentalises them into relevant information. 
+
+Ethernet is just a layer 2 protocol, not a cable. Token ring is another layer 2 protocol. Due to this, they are not compatible with each other, if you did need to communicate between them then you would have to use a bridge. 
+
+
+##### Layer 2 protocols
+
+* Routers are good at taking data in one frame format and putting in another. 
+* Ethernet
+* Token ring
+* HDLC
+	* High level Data Link Control protocol
+	* used in serial connections
+* PPP
+	* Point to Point Protocol
+	* PPPoA(TM)
+		* PPP A-syncsones Transpher Mode
+	* PPPoE
+		* PPP Over Ethernet
+
+##### *Thicc* Ethernet  
+
+Basically a coax cable, single copper core that would run in the floor or ceiling. every 2.5M along the cable you would attach a device to, you basically drill a hole in the cable and then attach the device to the copper core. Vampire taps. Maximum speed of 10Mbps which was REALLY fast for the day. 
 
 ## Module 2 - Establishing internet connectivity 
 
