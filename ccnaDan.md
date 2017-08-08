@@ -280,7 +280,7 @@ When you send information the data goes down the stack on your machine side, the
 | Session | network session management. Keeps the connection going to the right location. Outgoing is the normal port, but incoming is randomised to the session and then translated to the correct machine by the router. 
 | Transport  | defines how the data is to be transported across the network, implements TCP and UDP 
 | Network  | Network to network connectivity. handles ip addresses. Routers 
-| Data Link  | Device to device connectivity. handles MAC addresses. Switches. only works on a local network this is how ARP is used
+| Data Link  | Device to device connectivity. handles MAC addresses. Switches. only works on a local network this is how ARP is used. Tells you how to interoperate the binary
 | Physical  | How the data is represented on the raw media. e.g. ±5 volts, LED on for x miliseconds (encoding, need a clock to know when a signal ends) 
 
 
@@ -426,7 +426,37 @@ Due to this LANs can range in size from really small to inside a house all the w
 	* DHCP (Dynamic Host Configuration Protocol)
 	* a protocol is a way to do things that have been set up and act like a standard so that all devices know how to use it 
 
+0100111010011 means what?
 
+|bits|0100|1110|10011|
+|-|-|-|-|
+|Layer 2 frame|Destination address|source address| data|
+
+In this example the layer 2 protocol defines where the DA, SA and data are in the binary numbers. 
+
+Ethernet takes the binary on the cable and compartmentalises them into relevant information. 
+
+Ethernet is just a layer 2 protocol, not a cable. Token ring is another layer 2 protocol. Due to this, they are not compatible with each other, if you did need to communicate between them then you would have to use a bridge. 
+
+
+##### Layer 2 protocols
+
+* Routers are good at taking data in one frame format and putting in another. 
+* Ethernet
+* Token ring
+* HDLC
+	* High level Data Link Control protocol
+	* used in serial connections
+* PPP
+	* Point to Point Protocol
+	* PPPoA(TM)
+		* PPP A-syncsones Transpher Mode
+	* PPPoE
+		* PPP Over Ethernet
+
+##### *Thicc* Ethernet  
+
+Basically a coax cable, single copper core that would run in the floor or ceiling. every 2.5M along the cable you would attach a device to, you basically drill a hole in the cable and then attach the device to the copper core. Vampire taps. Maximum speed of 10Mbps which was REALLY fast for the day. 
 
 ## Module 2 - Establishing internet connectivity 
 
