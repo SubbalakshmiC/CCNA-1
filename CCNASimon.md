@@ -234,17 +234,33 @@ Switches have the following functions:
 Switches essentially recieve frames and forward the frame through the required port based on destination address.
 Due to the fact that the switch operates on layer 2, these addresses will be hardware (MAC) addresses.
 To keep track of these addresses, the switch makes and maintains a MAC table.
+The MAC address table is generated using the SA (Source Address) header and the incoming port/interface.
+This is called 'learning by source' or 'dynamic learning'.
 This means for incoming frames, the destination, found in the header, can be compared to the MAC table and then that can determine how the frame needs to be dealt with.
 Administrators under certain circumstances will add or remove entries into the MAC table.
-This is how a switch deals with unicast addresses (Unicast - a singular point on a network, usually a singular device):
 
+So, when a frame is sent to the switch, the first thing that is read is the SA (source address). 
+It will then populate the MAC table with the SA and the port number/interface.
+It will then look at the DA (Destination Address) and decide what to do with it.
+
+There are 3 types of different addresses:
+
+* Unicast - a singular point on a network, a singular device
+* Multicast - a specific group of devices
+* Broadcast - everyone on the network, all devices
+
+
+This is how a switch deals with unicast addresses (Unicast - 
 
 |Step|Action|
 |---|---|
 |1|When a unicast frame is received on a port, the switch compares the destination MAC address to the MAC address that is listed in the table.|
-|2|If the switch determines that the destination MAC address of the frame resides on the same network segment as the source, it does not forward the frame. This proccess is called filtering. By performing this process, switches can significantly reduce the amount of traffic going between network segments by eliminating the unnecessary frames.|
+|2|If the switch determines that the destination MAC address resides on the network, it only forwards the frame to the required port, and not any others. The proccess of not forwarding to any other ports is called filtering. By performing this process, switches can significantly reduce the amount of traffic going between network segments by eliminating the unnecessary frames.|
 |3|If the switch determines that the MAC address of the frame is not in the same segment as the frames' source, it forwards the frame to the necessary segment.|
 |4|If the switch does not have an entry in the MAC table for the destination address, it transmits the frame out of all ports except the port the frame was received on. This is called flooding |
+
+In reality, the MAC table also contains lots of extra information regarding reliabilty and speeds.
+This means that when there are multiple entires of the same MAC address, the switch can make a decision to send over either port, rather than both.
 
 
 
