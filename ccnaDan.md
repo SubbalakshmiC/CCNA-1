@@ -490,6 +490,55 @@ We moved to hubs after this due to the fact that you could then just plug in UTP
 * Layer 2 device
 * This lead to switches as they were hardware based and so they were faster. 
 
+##### CSMA/CA
+ 
+* Carrier Sense Multiple Access with Collision Avoidance
+* really complicated but the modern version 
+* wifi
+
+###### random notes
+* 2.4 Ghz 82.11 b/g/
+	* 14 wireless frequencies 
+	* DSS
+* 5Hgz 82.11 n/AC
+	* 48 frequencies
+	* OFDM
+
+### Switching in a network
+
+why did we start switching
+
+* speed
+* reduce collisions
+* improve security
+
+#### Switches
+
+* layer 2 devices
+	* they actually read the frame data and send the information to where it needs to go. 
+
+Layer 2 switch icon:
+
+| | -> |
+|-|-
+<-||
+||->|
+<-||
+
+in this example we have a four port switch
+
+* device A is connected to port 1
+* device B is connected to port 3
+* device C is connected to port 2
+* device D is connected to port 4
+* Tx is send to switch
+* Rx is send to device (receive)
+	* Tx and Rx is full duplex
+		* full duplex is faster as you can send and reiceice at the same time
+	* only one is half duplex
+		* this is where you can only send or reiceive at the same time
+	* no need for CSMA/CD because separate wires are used
+* auto negotiation is used to get to the correct duplex for the connection 
 
 
 ## Module 2 - Establishing internet connectivity 
