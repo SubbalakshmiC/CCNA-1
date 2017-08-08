@@ -235,6 +235,7 @@ Switches essentially recieve frames and forward the frame through the required p
 Due to the fact that the switch operates on layer 2, these addresses will be hardware (MAC) addresses.
 To keep track of these addresses, the switch makes and maintains a MAC table.
 This means for incoming frames, the destination, found in the header, can be compared to the MAC table and then that can determine how the frame needs to be dealt with.
+Administrators under certain circumstances will add or remove entries into the MAC table.
 This is how a switch deals with unicast addresses (Unicast - a singular point on a network, usually a singular device):
 
 
@@ -244,6 +245,10 @@ This is how a switch deals with unicast addresses (Unicast - a singular point on
 |2|If the switch determines that the destination MAC address of the frame resides on the same network segment as the source, it does not forward the frame. This proccess is called filtering. By performing this process, switches can significantly reduce the amount of traffic going between network segments by eliminating the unnecessary frames.|
 |3|If the switch determines that the MAC address of the frame is not in the same segment as the frames' source, it forwards the frame to the necessary segment.|
 |4|If the switch does not have an entry in the MAC table for the destination address, it transmits the frame out of all ports except the port the frame was received on. This is called flooding |
+
+
+
+
 
 ### Module 2 - Establishing Internet Connectivity
 
