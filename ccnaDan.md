@@ -645,6 +645,22 @@ ah, C is on port 2 I will send it there
 
 This is called Learning by source or dynamic learning
 
+##### broadcast address
+
+MAC address only contains source address information due to this you cannot assign the broadcast address in the MAC table. 
+
+B sends in a broadcast frame, this is not in the MAC table so it floods the frame. 
+
+Broadcast ends at the router where device then gets assigned an ip address by the router this is then sent back to the 
+
+##### buffering
+
+100mbps -> Gi is ok
+
+Gi -> 100mbps is not ok
+* needs to buffer the frames.... its a frame buffer
+	* this additional information is stored on the switch and is buffered to the 100 port at 100 speed 
+	* a large frame buffer is needed
 
 #### Different types of casting
 
@@ -668,14 +684,13 @@ There are 3 different ways to send messages on a network based on who you want t
 
 When the switch receives a unicast frame the following process will occur:
 
-* the switch reads the destination MAC address to its internal table of MAC addresses
-* if the destination MAC address is on the network segment than the internal table then the switch will send the frame to the correct device
-* if the MAC address is not on the right network segment but the switch knows where to send it then it will send it to the right place via another switch
-* if the switch does not know where the frame needs to go then it will forward the frame to all devices on the network
-
 * filter
 * forward
 * flood
+
+### Operating Cisco IOS software
+
+
 
 ## Module 2 - Establishing internet connectivity 
 
