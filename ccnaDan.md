@@ -690,7 +690,64 @@ When the switch receives a unicast frame the following process will occur:
 
 ### Operating Cisco IOS software
 
+|User mode| -> | Privilege mode | - > | Global Configuration mode |
+|-|-|-|-|-|
+|$Hostname>|enable|$Hostname#| configure terminal / conf t|$Hostname(config)#
+|<-|disable|<-|exit / end |<-|
 
+switch is normally a plug and go device as it will do basic functions by just plugging in. but you may want to add security, remote management and so on.... 
+
+Internetwork Operating System is the OS on cisco things. 
+
+IOS is and End-to-End operating system as it covers all of the devices from switches to AP's
+
+You plugin via the console port
+
+You start in user mode, can read but not edit you know how this do
+
+you cannot man, help or even tab complete flags..... *sigh*
+
+* 'show' will as you guess, show you things
+* '?' contextual help 
+* '\<tab>' auto complete you know this
+* '\<up>' or '\<C-P>' previous command
+* '\<down>' or '\<C-N>' next command
+* '\<C-A>' beginning of line
+* '\<C-E>' end of line
+* '?'
+
+#### User mode | $Hostname> 
+
+by default 
+Read only mode
+
+#### Privilege mode | $Hostname#
+
+* "enable" will take you to privilege mode
+* you cannot change but you can reload
+* you can copy and save configuration
+	* good for making a template 
+* do a full examination 
+	* full access to configuration
+	* have access to config files that may have passwords
+* configuration mode access
+
+#### Global Configuration Mode
+
+show running-config (sh run)
+* shows your running config that is actually in place
+
+show startup-cohfig
+* the one that is used when you start up the device
+
+show interface Ethernet0/3 (sh int e0/3)
+
+hostname Temp
+* changes the hostname to 'Temp'
+
+#### Interface configuration mode
+
+### Discovery 1: Getting started with Cisco CLI
 
 ## Module 2 - Establishing internet connectivity 
 
