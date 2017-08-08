@@ -519,11 +519,11 @@ why did we start switching
 
 Layer 2 switch icon:
 
-| | -> |
+| | ---> |
 |-|-
-<-||
-||->|
-<-||
+<---||
+||--->|
+<---||
 
 in this example we have a four port switch
 
@@ -540,6 +540,142 @@ in this example we have a four port switch
 	* no need for CSMA/CD because separate wires are used
 * auto negotiation is used to get to the correct duplex for the connection 
 
+the switch maintains an internal table called the MAC address table. 
+
+#### MAC address table
+
+a table in the switch that is made by the switch in runtime. At the start the MAC address table is blank. 
+
+|MAC table|
+|-|
+||
+
+Device A sends information to device B. 
+
+|A|->|B|
+|-|-|-|
+|Source address | | Destination address
+|Port 1 | | |
+
+Add to the MAC table "device A is available through port 1"
+
+|MAC table|
+|-|
+|A=1|
+
+Where is device B located???? I dont know where to send this information, I will therefore send this information through every other port. (unknown unicast flooding)
+> called this because you dont know where B is (unknown), to one device (unicast), sending on all ports (flooding)
+
+when device C and D get the message, they see that it is not for them and they ignore the message. Destination address is not MAC address, drop the frame
+
+B gets the message takes it and then sends a response back
+
+|B|->|A|
+|-|-|-|
+Source address||destination address
+Port 3 ||
+
+Device B is located on port 3, I will add that to the MAC table. But where is device A? lets look at the MAC table
+
+|MAC table|
+|-|
+A=1|
+B=3|
+
+Ahh, A is on port one, i will send the frame to only port 1 then. 
+
+|B|->|A|
+|-|-|-|
+Source address||destination address
+Port 3 ||Port 1
+
+Now i can send messages directly from these two devices
+
+* This process is called forwarding as you forward the data to the correct known port
+
+* This then means that you filter the data from the other ports
+
+* This means that filtering is the opposite of forwarding and that forwarding is the process looking up the MAC table to get the correct port. 
+
+* This also means that filtering does not happen when flooding
+
+C -> D
+
+|C|->|D|
+|-|-|-|
+|Source address | | Destination address
+|Port 2 | | |
+
+C is on port 2, lets add that to the MAC table, but where is D, lets check the MAC table 
+
+|MAC table|
+|-|
+A=1|
+B=3|
+C=2|
+
+I dont know where D is..... I have to flood the data to all ports
+
+A and B see the data is not for them, they drop the packets
+
+D gets the data and sees that it is for it so its gets the data, and sends back a responce
+
+D -> C
+
+|D|->|C|
+|-|-|-|
+|Source address | | Destination address
+|Port 4| | |
+
+D is on port 4, lets add that to the MAC table, but where do I send the data to get to C, lets check the MAC table
+
+|MAC table|
+|-|
+A=1|
+B=3|
+C=2|
+D=4|
+
+ah, C is on port 2 I will send it there
+
+|D|->|C|
+|-|-|-|
+|Source address | | Destination address
+|Port 4| |Port 2 |
+
+This is called Learning by source or dynamic learning
+
+
+#### Different types of casting
+
+There are 3 different ways to send messages on a network based on who you want to receive them:
+
+* Unicast
+	* when you want to send the message to ONE device on the network
+	* A -> B
+* Multicast
+	* when you want to send the message to MULTIPLE devices on the network
+	* you get a multicast address that the switch will forward all data sent to that address to the intended devices
+	* A -> B & D
+* Broadcast
+	* when you want to send the message to EVERYONE on the network
+	* the highest available IP within the subnet will cast the data to all devices
+	* all subnetting is done on the switch side, so broadcast is an alias to send to all active addresses
+	* A -> B & C & D & ......
+		* A -> ALL
+
+##### unicast
+
+When the switch receives a unicast frame the following process will occur:
+
+* the switch reads the destination MAC address to its internal table of MAC addresses
+* if the destination MAC address is on the network segment than the internal table then the switch will send the frame to the correct device
+* if the MAC address is not on the right network segment but the switch knows where to send it then it will send it to the right place via another switch
+* if the switch does not know where the frame needs to go then it will forward the frame to all devices on the network
+
+* filter
+* forward
+* flood
 
 ## Module 2 - Establishing internet connectivity 
 
