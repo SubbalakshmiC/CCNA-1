@@ -1,6 +1,6 @@
 # CCNA Notes
 
-All notes made here relate to ICND 1 or 2, and may be a little lacking. Sorry.
+All notes made here relate to ICND 1 or 2, and may be a little lacking or nonsensical. Sorry.
 
 ---
 # ICND1
@@ -71,22 +71,19 @@ Network characteristics are as follows:
 
 #### Physical vs. Logical Topology
 * Physical Topologies
-    * Bus - Every workstation is connected to the main network medium. Each device is directly connected to another
-    ![Bus Topology](https://upload.wikimedia.org/wikipedia/commons/thumb/4/47/BusNetwork.svg/527px-BusNetwork.svg.png)
     * Ring - Each device is cabled together in a ring, so that the last device is connected to the first, etc.
-    ![Ring Topology](https://upload.wikimedia.org/wikipedia/commons/thumb/7/75/RingNetwork.svg/440px-RingNetwork.svg.png)
-    * Star - The most common type of topology. A central device is connected to all of the endpoints and other network devices
-    ![Star Topology](https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/StarNetwork.svg/440px-StarNetwork.svg.png)
     * Mesh - Every device is connected to one another, allowing higher redundancy tollerences
-    ![Mesh Topology](https://upload.wikimedia.org/wikipedia/commons/thumb/3/3c/NetworkTopology-FullyConnected.png/440px-NetworkTopology-FullyConnected.png)
+    * Star - The most common type of topology. A central device is connected to all of the endpoints and other network devices
+    * Bus - Every workstation is connected to the main network medium. Each device is directly connected to another
+    ![Bus, Ring, Mesh and & Star Toplogies](http://www.itgeared.com/images/content/1339-1.jpg)
     * Logical Topologies - The path that the data follows within a network
 
 #### Interpreting a network diagram
 * Various connection interfaces are used in a netowork. On a network diagram they are denoted as follows:
-    * S0/0/0 - **S**erial
-    * Gi0/0 - **Gi**gabit Ethernet (Speeds up to 1Gbps
+    * S0/0/0 - **S**erial (Speeds up to 2Mbps)
     * Fa0/0 - **Fa**st Ethernet (Speeds up to 100Mbps)
-    * / -  Slash notation of subnet mask used
+    * Gi0/0 - **Gi**gabit Ethernet (Speeds up to 1Gbps
+    * /XY -  Slash notation of subnet mask used
 
 #### Impact of User Applications on the Network
 * Applications can perfect network performace, and vice versa.
@@ -167,6 +164,8 @@ There are varying types of applications, such as:
     ##### Transport
 * One of 2 things:
 	* TCP (handshake like connection e.g. a phone)
+		* The TCP Handshake goes as follows:
+		* SYN → SYN-ACK → ACK
 	* UDP (connection-less e.g. a radio)
 * There is also a mechanism to ensure that a device running multiple applications simultaneously all receive their data.
 * To make this work correctly, incoming data from various applications are multiplexed on the transport layer and pushed to the bottom layers. At the other end of the communication, that data is de-multiplexed at the Transport Layer.
@@ -257,15 +256,6 @@ There are varying types of applications, such as:
     * At Layer 2 the trailer is ususally the FCS - Used to check for errors in transmission
     * At the destination this is unpacked one layer at a time, and the data is then passed up to the PDU on the layer above
 
-	|L2 |L3 |L4 |Other|    |Trailer|
-	|---|---|---|-----|----|-------|
-	|   |   |   |     |Data|       |
-	|   |   |Hdr|Hdr  |Data|       |
-	|   |Hdr|Hdr|Hdr  |Data|       |
-	|Hdr|Hdr|Hdr|Hdr  |Data|FCS    |
-	
-	> 'Hdr' meaning Header
-
 #### Local Area Networks
 * Ethernet became widespead in the 1990s
 * A LAN requires the following necessary components for operation:
@@ -289,8 +279,18 @@ There are varying types of applications, such as:
 	> As explained above
 	
 * Pre-switching ethernet networks used co-axial cables with many devices connected to them in a bus. This method offered upto 10Mbps speeds
-* At points along the cable, marked dots denoted areas where the cable could be tapped into with vampire taps to attach devices to the bus.
-* Errors required Time Domain Reflexomitors to show a rough region of the cable whereby the connection was lost
+	* At points along the cable, marked dots denoted areas where the cable could be tapped into with vampire taps to attach devices to the bus.
+	* Errors required Time Domain Reflexometers to show a rough region of the cable whereby the connection was lost
+	* Data on the broadcast media is accessable to any devices on the network
+	* This system was relaced with a central hub that contained the effective bus of the networ, and each device had its own UTP cable to and from the hub
+	* Phyically that network may be described as a hub, but logically that forms a bus network
+* CSMA/CD (Collision Sense Multiple Access/Collision Detection) is used to mitigate collisions along the media that may result in lost data. This forms part of the Ethernet Protocol and is used in Half-Duplex networks
+* CSMA/CA (/Collision Avoidance) is used on wireless, and ensures 2 devices are not transmitting at the same time, as the frequency is shared across the devices
+	* Collision Detection - to discover whether a device is currently transmitting on the media
+	* The sending device listens to the signal they are transmitting. If the data heard differs from that sent, the system becomes aware of a collision
+	* A jamming signal is sent to prevent other devices whilst another is, mitigating the chances of a collision occuring
+	* Hubs became repeaters, Bridges became Switches
+	* ASIC - Application Specific Integrated Circuits
 	
 #### Need for Switches
 * Traditionally devices had to compete for bandwidth on a network (or broadcast domain), using a bus topology. This meant that only one device could transmit at a time
@@ -303,24 +303,50 @@ There are varying types of applications, such as:
 * Switches build tables of the devices immediately connected to them and store their MAC (Physical) Addresses in a MAC address table
 * The header of each incomming frame has a MAC address within it for the destination host, which is compared to addresses within the switch's MAC address table. They use this to decide whether to flood, forward or filter recieved frames
 * 'Bridges' connect token ring to ethernet networks
-* The processing method of a Unicast frame on a switch is as follows:
-	1. When a unicast frame is recieved on a port, the destination MAC is compared with the addresses within the MAC address table
-	2. If the destination is within the same segment as the switch, the frame is not forwarded, but is instead filtered. This reduces network traffic by not passing on the frame
-	3. If the MAC address listed is not on the same segment, the frame is forwarded on to the next network segment
-	4. If the address is present on no ports, the frame is transmitted on all ports except the one it was recieved on, with the hope that it can be passed on. This is flooding
 
+	|Sender| → |Recipient|Type     |
+	|:----:|---|:-------:|:-------:|
+	|A     | → |B        |Unicast  |
+	|A     | → |B & C    |Multicast|
+	|A     | → |All      |Broadcast|
+> Transport Types	
+
+* When a unicast frame is recieved on a port, the destination MAC is compared with the addresses within the MAC address table, one of 3 things happen:
+	* If the switch is aware of the MAC address to interface relationship, due to it being an entry within it's MAC Address Table, then the packet is **Forwarded** to that port. The other ports are now filtered out. 
+	* If the MAC address listed is known, and is on the same interface, e.g.Hosts X & Y being on teh same segment as they are attached to a hub, the packet is **Filtered** by the switch and not passed outwards to any other ports.
+	* If the address matches no entry on the switch's MAC Address Table, the frame is transmitted on all ports except the one it was recieved on, with the hope that it can be passed on, this is **Flooding**.
+
+		|Port|Host|
+		|----|----|
+		|1   |A   |
+		|2   |B   |
+		|3   |C   |
+		|4   |D   |
+> MAC Address Table. This is built from source addresses
+	
 #### Switches
+* Switches can be in two types:
+	* Dedicated Bandwidth - a single station is connected to a given switch port, and so there is no competiton for bandwidth
+	* Full Duplex Operation - on a shared ethernet medium, this allows for devices to both sendand recieve at the same time. Half duplex allows for either sending or recieving at a given time
+	* A L2 Switch makes decisions as to where to send packets based on data found in the Ethernet Frame, whereas a L3 Router uses the IP addresses within said packets
+	* LAN Switches can have:
+		* High port density - any number from less than 32 to hundreds of ports may be on a switch
+		* Large frame buffers - allowing more frames to be storred before needing to drop them
+		* Varying port speeds - Speeds of 100Mbps are expected, but other speeds such as 1 or 10Gbps are also common
+		* Fast internal switching - fast internal bus, shared memory or integrated crossbar switch fabric may be used 
+		* Lower per port cost - Less devices are required to allow a network of the same size when using switches
+	* A switch offers a port (connection) to each device, removing the need for CSMA/CD. However this is still accepted, in the event that a hub may be connected to one of these ports to increase capacity
 
-### Module 2: Establishing internet connectivity
+### Module 2: Establishing internet connectivity 
 
-### Module 3: Summary Challenge
+### Module 3: Summary Challenge 
 
-### Module 4: Building a Medium-Sized Network
+### Module 4: Building a Medium-Sized Network 
 
-### Module 5: Network Device Managment & Security
+### Module 5: Network Device Managment & Security 
 
-### Module 6: Summary Challenge
+### Module 6: Summary Challenge 
 
-### Module 7: Introducing IPv6
+### Module 7: Introducing IPv6 
 
 ---
