@@ -10,7 +10,7 @@ Boot camp begins!
 * Then there is the part 1 exam
 * Then 2 weeks of ICND2
 
-## ICND1
+## ICN🅱️1
 * 90 mins - 55 to 60 questions
 * Exam is tight for time
 * Cannot go back, answer right first time
@@ -261,8 +261,6 @@ This is how a switch deals with unicast addresses (Unicast -
 
 In reality, the MAC table also contains lots of extra information regarding reliabilty and speeds.
 This means that when there are multiple entires of the same MAC address, the switch can make a decision to send over either port, rather than both.
-
-
 
 
 
