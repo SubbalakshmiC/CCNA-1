@@ -7,16 +7,16 @@ All notes made here relate to ICND 1 or 2, and may be a little lacking or nonsen
 ## General Notes
 
 ### Timeline
-* 2 Weeks Training (Week 1 GPK, Week 2 BFL)
-* 1 Week self study
-* Exam at the end of W3
+* 2 Weeks Training (Week 1 GPK, Week 2 BFL).
+* 1 Week self study.
+* Exam at the end of W3.
 
 ### Course Goals
-* Describe network fundementals and implement a simple LAN
-* Establish Network fundementals
-* Expand a small network to a medium-sized routing-enmabled network
-* Confifure, manage, secure and monitor Cisco devices
-* Describe IPv6 basics
+* Describe network fundementals and implement a simple LAN.
+* Establish Network fundementals.
+* Expand a small network to a medium-sized routing-enmabled network.
+* Confifure, manage, secure and monitor Cisco devices.
+* Describe IPv6 basics.
 
 ### Extra Content
 * CEF: Cisco Express Forwarding
@@ -27,17 +27,17 @@ All notes made here relate to ICND 1 or 2, and may be a little lacking or nonsen
 
 ### Certified Mock Exam Questions:
 * MeasureUp
-* Bolan.com (?)
+* Bosan.com (?)
 
 ## Exam Notes
 
-* Exam pass is a requirment to continue the Apprenticeship Program
-* ICND1 is marked out of 1000
-* 300/1000 marks for participating
-* 90 minutes for the exam
-* ~ 825/1000 marks to pass
-* Results immediately displayed upon exam completion
-* Qualification is valid for 3 years, and completing the next exam in the series (e.g. CCNP) will re-validate any lower exams
+* Exam pass is a requirment to continue the Apprenticeship Program.
+* ICND1 is marked out of 1000.
+* 300/1000 marks for participating.
+* 90 minutes for the exam.
+* ~ 825/1000 marks to pass.
+* Results immediately displayed upon exam completion.
+* Qualification is valid for 3 years, and completing the next exam in the series (e.g. CCNP) will re-validate any lower exams.
 
 ## Module Notes
 
@@ -49,34 +49,34 @@ All notes made here relate to ICND 1 or 2, and may be a little lacking or nonsen
 #### Physical Components of a Network
 * Networks are composed of:
     * Endpoints - PCs, servers, printers etc.
-    * Interconnections - NICs, Network Media (e.g. UTP or STP in varying categories) & Connectors (e.g. RJ-i45)
-    * Switches - Endpoints connect to these, and they can share a common network
-    * Routers - Select the best route for traffic from one network to another
-    * WLAN Devices - Connect Wireless Devices to a network
-    * APs - Allow wireless devices to communciate with a wired network
-    * WLAN Controllers - Devices that network admins can use to manage APs in large quantities
-    * Firewalls - Network security systems that control and monitor incoming and outgoing traffic based on provided rules
+    * Interconnections - NICs, Network Media (e.g. UTP or STP in varying categories) & Connectors (e.g. RJ-i45).
+    * Switches - Endpoints connect to these, and they can share a common network.
+    * Routers - Select the best route for traffic from one network to another.
+    * WLAN Devices - Connect Wireless Devices to a network.
+    * APs - Allow wireless devices to communciate with a wired network.
+    * WLAN Controllers - Devices that network admins can use to manage APs in large quantities.
+    * Firewalls - Network security systems that control and monitor incoming and outgoing traffic based on provided rules.
 
 #### Characteristics of a Network
 Network characteristics are as follows:
-* Topology - Physcial (e.g. arrangment of cables, devices and end systems) or Logical (e.g. the path that the data follows within a network) 
-* Speed - The data travel rate per second given in bits within a link in the network (bitrate)
-* Cost - General expendature for purchasing, installing and maintiaining the elements in a network
-* Security - How protected the network is, including the information transferred across the network
-* Availability - Measure of probability that the netowork will be available for use when required
+* Topology - Physcial (e.g. arrangment of cables, devices and end systems) or Logical (e.g. the path that the data follows within a network).
+* Speed - The data travel rate per second given in bits within a link in the network (bitrate).
+* Cost - General expendature for purchasing, installing and maintiaining the elements in a network.
+* Security - How protected the network is, including the information transferred across the network.
+* Availability - Measure of probability that the netowork will be available for use when required.
     * This can be calculated with the following formula:
     `((minutes in a year) - (number of minutes if down time in a year) / number of minutes in a year) x 100` 
-* Scalability - How easily the network can accokoate more users and data transmission requirements
-* Reliability - The dependability of components that the network is composed of
+* Scalability - How easily the network can accokoate more users and data transmission requirements.
+* Reliability - The dependability of components that the network is composed of.
 
 #### Physical vs. Logical Topology
-* Physical Topologies
+* Physical Topologies:
     * Ring - Each device is cabled together in a ring, so that the last device is connected to the first, etc.
-    * Mesh - Every device is connected to one another, allowing higher redundancy tollerences
-    * Star - The most common type of topology. A central device is connected to all of the endpoints and other network devices
-    * Bus - Every workstation is connected to the main network medium. Each device is directly connected to another
+    * Mesh - Every device is connected to one another, allowing higher redundancy tollerences.
+    * Star - The most common type of topology. A central device is connected to all of the endpoints and other network devices.
+    * Bus - Every workstation is connected to the main network medium. Each device is directly connected to another.
     ![Bus, Ring, Mesh and & Star Toplogies](http://www.itgeared.com/images/content/1339-1.jpg)
-    * Logical Topologies - The path that the data follows within a network
+    * Logical Topologies - The path that the data follows within a network.
 
 #### Interpreting a network diagram
 * Various connection interfaces are used in a netowork. On a network diagram they are denoted as follows:
@@ -154,7 +154,7 @@ There are varying types of applications, such as:
 * This layer is also responsible for compression, encryption, and ensuring that the character code set can be interpreted on the other side of the connection.
 
     ##### Session
-* Port numbers are present in both sending and recieving capacities. e.g. Internet requests will be sent to port 80, but will be recieved on veryiong port numbers dependant on my Session ID
+* Port numbers are present in both sending and recieving capacities. e.g. Internet requests will be sent to port 80, but will be recieved on veryiong port numbers dependant on my Session ID.
 * Responsible for:
 	* session establishment,
 	* maintenance
@@ -346,15 +346,18 @@ There are varying types of applications, such as:
 
 * Modes within the CLI (Command Line Interface):
 	* `switch >` - User EXEC Mode
-		* A limited, read-only examination mode
+		* A limited, read-only examination mode.
 	* `switch #` - Priveleged EXEC Mode
-		* Allowing access to all system commands, though still read-only
-		* Accessed by typing `enable` from within User Mode
-		* Here the user can entirely examine the system, reload the system
-		* Offers access to the global configuration mode
+		* Allowing access to all system commands, though still read-only.
+		* Accessed by typing `enable` from within User Mode.
+		* Here the user can entirely examine the system, reload the system.
+		* Offers access to the global configuration mode.
 	* `switch (config)#` - Global Configuration Mode
+		*  Here there are different types of config mode dependant on the function desired:
+		*  These are `Interface`, `VLAN`, `Router`, `(N)ACL` etc.
+		*  These modes are accessed via typing their names from within Global EXEC Mode.
 
-> `switch` is a placeholder hostname used here
+	> `switch` is a placeholder hostname used here
 
 * Useful key combinations:
 	* `Ctrl-A` - Moves the cursor to the beginning of the command line
@@ -385,7 +388,8 @@ There are varying types of applications, such as:
 	* `incomplete command` - You did not enter all the keywords or values that are required by this command
 	* `invalid command` - You entered the command incorrectly. The ^ marks the point of the error
 
-
+* Cisco switches use an 'Aging Timer' which lasts 300 seconds (5 Minutes) to know when to remove an address from a MAC address table. If a cable is removed from a port, the time is set to 0
+* CAM - Content Addressable Memory. MAC Addresses are stored here
 * When making changes to the operation of a switch or router, saving and managing said changes are important.
 * The following commands may be useful:
 	* `show running-config` - Displays the current running configuration. You can also use filters. For example, you can use the show running-config interface GigabitEthernet0/1 command to display only the interface GigabitEthernet0/1 running configuration.
@@ -397,11 +401,31 @@ There are varying types of applications, such as:
 
 * When displaying portions of a config it may help to filter out unwanted data.
 * This can be done in the following ways:
-	* `begin` - Shows all output lines, starting with the line that matches the filtering expression
-	* `exclude` - Excludes all output lines that match the filtering expression
-	* `include` - Includes all output lines that match the filtering expression
-	* `section` - Shows the entire section that starts with the filtering expression
-* e.g. `R1# show running-config | begin interface`
+	* `begin` - Shows all output lines, starting with the line that matches the filtering expression.
+	* `exclude` - Excludes all output lines that match the filtering expression.
+	* `include` - Includes all output lines that match the filtering expression.
+	* `section` - Shows the entire section that starts with the filtering expression.
+* e.g. `R1# show running-config | begin interface` will show only lines from within R1's running config that begin with 'interface'.
+
+#### Starting a Switch
+* Switches can be configured in one of two ways:
+	* Via Console Port - physically to the switch.
+	* Via VTY (Virtual Teletype) - remotely to the switch.
+* Both of these connection mediums enter the system at User EXEC Mode.
+* When a switch boots up, it performs Power On Self Test (POST) and then initialises the system.
+* Switches have LED indicators, which have differing meanings, these are:
+
+	|Indicator Name|Discription|
+	|--------------|-----------|
+	|SYST          |Overall system status (off meaning system is off, green meaning switch is on and operational, amber meaning switch is on but has failed POST)
+	|RPS           |Status of a Redundant Power Supply
+	|STAT          |If on (green), shows that port LEDs are implying to the status of each port
+	|DUPLX         |If on (green), shows that port LEDs are implying the duplex status (on meaning full duplex, off meaning half duplex)
+	|SPEED         |If on (green), shows that port LEDs are implying port speeds (off meaning 10Mbps, solid green meaning 100Mbps, flashing green meaning 1Gpbs)
+	|PoE           |If on (green), shows that port LEDs are implying the Power over Ethernet status of each port
+	
+	* A MODE button is also present, allowing you to cycle the indicator LEDs on each switch to it's Status (on/off), Duplex Status and Speed.
+
 ### Module 2: Establishing internet connectivity 
 
 ### Module 3: Summary Challenge 
