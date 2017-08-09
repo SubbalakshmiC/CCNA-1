@@ -808,6 +808,91 @@ when you get it first you do the standard set-up stuff
 			* on shows supported
 			* off shows not supported
 
+#### Connecting to the console port
+
+* Console port (DB9)
+* Console cable
+* usb to console adaptor
+
+#### Discovery 2: Perform basic switch function 
+
+To reverse any command just put no before the command
+
+## Understanding Ethernet and switch operation
+
+### Ethernet LAN connection media
+
+* coax
+* twisted copper pair (UTC)
+	* 4 pairs of wires
+	* 10 mbps to 10 Gbps
+	* RJ 45 connector
+	* Normally 100m range
+	* 2 types
+		* stright through
+			|1|2|3|4|5|6|7|8|
+			|-|-|-|-|-|-|-|-|
+			|1|2|3|4|5|6|7|8|
+			* used for like to unlike device
+			* PC to switch
+		* crossover cable
+			|1|2|3|4|5|6|7|8|
+			|-|-|-|-|-|-|-|-|
+			|3|6|1|4|5|2|7|8|
+			* Used for like to like device
+			* PC to PC
+			* PC to Router (Dont do this!)
+* fibre-optic
+	* main part is the glass core that is flexible
+	* *FEST*
+	* different types
+		* Multi mode - 2 different frequencies on the glass
+		* single mode - only one signal
+		* connector types
+			* thereaded 
+			* bayonet
+			* push pull
+		* connector material 
+			* Metal
+			* Plastic sleve
+		* ST - patch panels
+		* FC - service providers
+		* SC - enterprise
+		* LC - sfp
+	* see page 51
+	
+* wireless
+
+### Ethernet frame structure
+
+Byte size|8|6|6|2|46-1500|4|
+|-|-|-|-|-|-|-|
+Name|Preamble|Destination|source|type|data|FCS|
+Description|A message is coming through|where the data is going to|where the data came from| what type of network this frame is intended for. (ipv4 or ipv6)|the actual data that you want| Frame check sequence - a checksum|
+
+#### FCS
+
+if it is bad then the packed is thrown away then requested again 
+
+#### addresses
+
+these are the MAC addresses. 
+
+48bits in lenght (6 bytes)
+
+first 24 bits are manufacturer
+
+last 24 bits are the uuid
+
+##### MAC address
+	
+* Unicast
+	* one to one
+* Broadcast
+	* one to all
+* Multicast
+	* one to many
+
 ## Module 2 - Establishing internet connectivity 
 
 ## Module 3 - Summary challenge
