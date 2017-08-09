@@ -818,7 +818,35 @@ when you get it first you do the standard set-up stuff
 
 To reverse any command just put no before the command
 
+things that can be wrong with the switch is that the duplex or the speed could be wrong
+
+"do" basically sudo but for doing non-sudo commands from sudo
+* running user commands in non-user mode
+
+collision is normal
+* late collision means that duplex is set up badly 
+	* one end full duplex one end half
+
+if the duplex is unknown then it sets to half
+* but if it is Gi then it will set default to full duplex
+
+set both speed and duplex in a network to a defined state for static devices
+* so laptops that move around should be set to auto 
+
+CDP - Cisco Detection Protocol
+* will only work when both are Cir
+
+LLDP - Link Layer Discovery Protocol
+
 ## Understanding Ethernet and switch operation
+
+switch problem?
+* is the cable ok
+	* port down
+* is the duplex wrong
+	* will get duplex error in terminal
+	* port up
+* is the is the speed wrong
 
 ### Ethernet LAN connection media
 
@@ -892,6 +920,75 @@ last 24 bits are the uuid
 	* one to all
 * Multicast
 	* one to many
+
+### troubleshooting problems
+
+* define problem
+* gather information
+* analyse information
+* eliminate potential causes
+* Propose hypothesis
+* test hypothesis
+* solve and document
+
+#### methods to troubleshoot
+
+##### OSI model
+
+Top-Down
+
+Bottom-up
+
+divide and conquer
+* if ping works then layers 1, 2 and 3 MUST work
+
+##### other
+
+comparison of another machine
+
+Follow the path of the issue
+* do you have wifi 	
+* does the router work?
+* ... and so on, follow the path
+
+swapping components
+* router has died :(
+	* get a new one
+
+##### tools
+
+	ping 10.10.50.2
+
+	ping 10.10.50.2 source ethernet 0/0
+
+> cisco ping will always send 5 requests
+
+	traceroute 10.10.50.2
+
+##### common trouble causes
+
+###### Layer 1
+
+New device adds EMI interference
+
+Damage to wiring
+
+Traffic patterns change
+
+New stuff is installed that is not accommodated for in other devices
+
+* fibre
+	* bent and snapped core
+
+###### Layer 2
+
+duplex mismatch
+
+speed mismatch
+* if this is in effect then no coms at all
+
+solution
+* look at both devices to see about the issues
 
 ## Module 2 - Establishing internet connectivity 
 
