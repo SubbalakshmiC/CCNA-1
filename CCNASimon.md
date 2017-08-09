@@ -262,7 +262,68 @@ This is how a switch deals with unicast addresses (Unicast -
 In reality, the MAC table also contains lots of extra information regarding reliabilty and speeds.
 This means that when there are multiple entires of the same MAC address, the switch can make a decision to send over either port, rather than both.
 
+##### Characteristics of a switch
 
+LAN Switch Characteristics:
+* High port density
+* Mixture of port speeds
+* Large frame buffers
+* Fast internal switching
+* Low per-port cost
+
+#### Operating IOS Software
+
+IOS - Internetwork Operating System
+
+##### Feature and functions
+
+The following are features or functions of IOS:
+
+* Features to carry the chosen network protocols and functions
+* Connectivity for high-speed traffic between devices
+* Security to control access and prohibit unautherized network usage
+* Scalibility to add interfaces and capability as needed for network growth
+* Reliability to ensure dependable access to network resources
+
+IOS is a CLI.
+Due to this it can be controlled through a console connection, modem connection or throught Telnet or SSH.
+
+##### Software Modes
+
+| Mode | Access Method | Prompt | Exit Method | About This Mode |
+|---|---|---|---|---|
+|User EXEC | Begin a session| Switch> |Enter 'logout' or 'quit'|Use this mode to change terminal settings, perform basic tests, or display system information - Read Only Mode|
+|Priveleged EXEC| While in User EXEC, enter the 'enable' command| Switch# | Enter 'disable' or 'exit' |Use this mode to verify commands that you have entered. Use a password to preotect access to this mode - Read Only Mode|
+|Global Configuration| While in Priveleged EXEC, enter the 'configure' command| Switch(config)#| Enter 'exit' or 'end', or press Ctrl-Z|Use this mode to configure parameters that apply to the entire switch|
+|Interface Configuration| While in Global Configuration, enter the 'interface' command (with a specified interface)| Switch(config-if)# | Enter 'exit' or 'end'|Use this mode to configure paramaters for the Ethernet interfaces|
+|VLAN Configuration|While in Global Configuration, enter the 'vlan' command (with specified interfaces)| Switch(config-vlan)#|Enter 'exit' or 'end'||
+|Router Configuration|While in Global Configuration, enter the 'router' command (with specific options)| Switch(config-router)#|Enter 'exit' or 'end'||
+|(n)ACL Configuration|
+
+#### Starting a Switch
+
+##### Switch Installation
+
+* Before installing a switch, verify the power and cooling requirements 
+* Physically install the switch:
+	* Rack mount
+	* Wall mount
+	* Table or shelf mount
+* Verify the network cabling
+* Attach the power cable to start the switch
+* System startup routines perfrom POST (Power On Self Test) and initiate the switch software
+* Kernel loads and then IOS
+
+#### Switch LED Indicators
+
+|Name|Description|
+|---|---|
+|SYST| Implies the overall system status|
+|RPS| Suggests the status of the extra (redundant) power supply|
+|STAT| If on (green), each port LED implies the status of the port|
+|DUPLX| If on (green), each port LED implies the duplex of this port (on is full duplex, off is half duplex)|
+|SPEED| If on (green), each port LED implies the speed of this port, as follows: off means 10Mbps, solid green means 100Mbps, flashing green means 1Gbps|
+|PoE| Some switches have PoE LED in the system status group of LEDs. This LED indicates the per-port and system PoE status|
 
 ### Module 2 - Establishing Internet Connectivity
 
