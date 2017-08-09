@@ -4,32 +4,32 @@ All notes made here relate to ICND 1 or 2, and may be a little lacking or nonsen
 
 ---
 # ICND1
-## General Notes
+# General Notes
 
-### Timeline
+## Timeline
 * 2 Weeks Training (Week 1 GPK, Week 2 BFL).
 * 1 Week self study.
 * Exam at the end of W3.
 
-### Course Goals
+## Course Goals
 * Describe network fundementals and implement a simple LAN.
 * Establish Network fundementals.
 * Expand a small network to a medium-sized routing-enmabled network.
 * Confifure, manage, secure and monitor Cisco devices.
 * Describe IPv6 basics.
 
-### Extra Content
+## Extra Content
 * CEF: Cisco Express Forwarding
 
-### Exercise Types:
+## Exercise Types:
 * Challenge Exercises
 * Discovery Extercises
 
-### Certified Mock Exam Questions:
+## Certified Mock Exam Questions:
 * MeasureUp
 * Bosan.com (?)
 
-## Exam Notes
+# Exam Notes
 
 * Exam pass is a requirment to continue the Apprenticeship Program.
 * ICND1 is marked out of 1000.
@@ -39,14 +39,14 @@ All notes made here relate to ICND 1 or 2, and may be a little lacking or nonsen
 * Results immediately displayed upon exam completion.
 * Qualification is valid for 3 years, and completing the next exam in the series (e.g. CCNP) will re-validate any lower exams.
 
-## Module Notes
+# Module Notes
 
-### Module 1: Building a Simple Network
-#### What is a Network?
+## Module 1: Building a Simple Network
+### What is a Network?
 * Networks carry data in varying environments.
 * Large networks may be multi-location, e.g. Home Office, Branchg Office, Main Office & Mobile all on a single network.
 
-#### Physical Components of a Network
+### Physical Components of a Network
 * Networks are composed of:
     * Endpoints - PCs, servers, printers etc.
     * Interconnections - NICs, Network Media (e.g. UTP or STP in varying categories) & Connectors (e.g. RJ-i45).
@@ -57,7 +57,7 @@ All notes made here relate to ICND 1 or 2, and may be a little lacking or nonsen
     * WLAN Controllers - Devices that network admins can use to manage APs in large quantities.
     * Firewalls - Network security systems that control and monitor incoming and outgoing traffic based on provided rules.
 
-#### Characteristics of a Network
+### Characteristics of a Network
 Network characteristics are as follows:
 * Topology - Physcial (e.g. arrangment of cables, devices and end systems) or Logical (e.g. the path that the data follows within a network).
 * Speed - The data travel rate per second given in bits within a link in the network (bitrate).
@@ -69,7 +69,7 @@ Network characteristics are as follows:
 * Scalability - How easily the network can accokoate more users and data transmission requirements.
 * Reliability - The dependability of components that the network is composed of.
 
-#### Physical vs. Logical Topology
+### Physical vs. Logical Topology
 * Physical Topologies:
     * Ring - Each device is cabled together in a ring, so that the last device is connected to the first, etc.
     * Mesh - Every device is connected to one another, allowing higher redundancy tollerences.
@@ -78,14 +78,14 @@ Network characteristics are as follows:
     ![Bus, Ring, Mesh and & Star Toplogies](http://www.itgeared.com/images/content/1339-1.jpg)
     * Logical Topologies - The path that the data follows within a network.
 
-#### Interpreting a network diagram
+### Interpreting a network diagram
 * Various connection interfaces are used in a netowork. On a network diagram they are denoted as follows:
     * S0/0/0 - **S**erial (Speeds up to 2Mbps)
     * Fa0/0 - **Fa**st Ethernet (Speeds up to 100Mbps)
     * Gi0/0 - **Gi**gabit Ethernet (Speeds up to 1Gbps
     * /XY -  Slash notation of subnet mask used
 
-#### Impact of User Applications on the Network
+### Impact of User Applications on the Network
 * Applications can perfect network performace, and vice versa.
 There are varying types of applications, such as:
     * Batch
@@ -102,12 +102,12 @@ There are varying types of applications, such as:
 		* Human-Human interaction
 * QoS (Quality of Service) is important. It allows for the granting of higher priority to different types of data e.g. VoIP Packets.
 
-#### Host-to-Host Communications
+### Host-to-Host Communications
 * Varying types of host-to-host models exist:
     * Older Models e.g. Used by Proprietary Software
     * Standards-based Models e.g. Used by Multivendor Software (OSI, TCP/IP Models) 
     
-#### OSI Model
+### OSI Model
 * The layers of the OSI model are as follows:
 
 	|   |OSI Model   |
@@ -125,7 +125,7 @@ There are varying types of applications, such as:
 * It is standards based, allowing vendors a set of standards that ensure compatability between various types of network technology worldwide.
 * The layer functions are as follows: 
 
-    ##### Application
+    #### Application
 * Function of application layer changes dependant on application.
 	* Some of these things include:
 	* resource sharing,
@@ -140,7 +140,7 @@ There are varying types of applications, such as:
 	* and Simple Mail Transfer Protocol (SMTP).
 * Real traffic data is generated at this layer. It may be a web request from HTTP to a command from TelNet, to a file download from FTP.
   
-    ##### Presentation
+    #### Presentation
 * Responsible for: 
 	* character code translation (i.e. ASCII vs. EBCDIC vs. Unicode), 
 	* data conversion, 
@@ -153,7 +153,7 @@ There are varying types of applications, such as:
 * When the presentation layer receives data, it checks the data format is correct and if not converts it.
 * This layer is also responsible for compression, encryption, and ensuring that the character code set can be interpreted on the other side of the connection.
 
-    ##### Session
+    #### Session
 * Port numbers are present in both sending and recieving capacities. e.g. Internet requests will be sent to port 80, but will be recieved on veryiong port numbers dependant on my Session ID.
 * Responsible for:
 	* session establishment,
@@ -161,7 +161,7 @@ There are varying types of applications, such as:
 	* and termination
 * In the connection establishment phase, service rules are transmitted and must be accepted by both devices. Once these rules have been set, the transfer begins, the session is ended once the transmission is complete.
   
-    ##### Transport
+    #### Transport
 * One of 2 things:
 	* TCP (handshake like connection e.g. a phone)
 		* The TCP Handshake goes as follows:
@@ -170,26 +170,26 @@ There are varying types of applications, such as:
 * There is also a mechanism to ensure that a device running multiple applications simultaneously all receive their data.
 * To make this work correctly, incoming data from various applications are multiplexed on the transport layer and pushed to the bottom layers. At the other end of the communication, that data is de-multiplexed at the Transport Layer.
   
-    ##### Network
+    #### Network
 * Responsible for:
 	* Logical-physical address mapping: translates logical addresses, or names, into physical addresses.
 	* Routing routes frames among networks.
 * Routers direct the data packet from this layer using location information stored in a Routing Table. This is a list of destinations on the network.
 
-    ##### Data Link
+    #### Data Link
 * Responsible for establishing and terminating links.
 * This layer provides error-free transfer of data frames from one node to another over the physical layer.
 * This layer is separated into the Media Access Control (MAC) Sublayer and the Logical Link Control (LLC) Sublayer.
 * The MAC layer determines the physical addressing of host devices. It maintains MAC addresses for communicating with other devices.
 * Logical Link is responsible for synchronising frames, error checking, and flow control.
 
-    ##### Physical
+    #### Physical
 * The physical layer handles how data is physically encoded and decoded. 
 * Physical layers describe the electrical or optical signals used for communication.
 	* For example, whether a voltage represents a 1 or a 0.
 * This layer is concerned by the electrical or optical signalling techniques which includes the voltage of the electrical current used to transport the signal, the media type, impedance characteristics, physical shape of the connector, synchronisation method, etc. 
  
-#### TCP/IP Model
+### TCP/IP Model
 * The layers of the TCP/IP Model are as follows:
 
 	|   |TCP/IP Model|
@@ -210,7 +210,7 @@ There are varying types of applications, such as:
 
 * The layer functions are as follows:
 	
-	##### Application
+	#### Application
 * This layer generates data dependant on what application is being used. This could be a web address in a web browser, for example.
 * It also defines how host programs interface with Transport layer services to use the network.
 * Protocols on this layer are:
@@ -219,23 +219,23 @@ There are varying types of applications, such as:
 	* SMTP (Simple mail transfer protocol)
 	* SNMP (Simple network management protocol) etc
 
-	##### Transport
+	#### Transport
 * This layer receives data from the application layer above it. 
 * This layer permits devices on the source and destination hosts to continue their communication.
 * There are many protocols that work at this layer but the two most commonly used protocols at transport layer are TCP and UDP.
 	* TCP (handshake like connection e.g. a phone)
 	* UDP (connection-less e.g. a radio)
 
-	##### Internet
+	#### Internet
 * The main purpose of this layer is to organise or handle the movement of data on network.
 * It controls how data is physically transmitted, including how bits are electrically or optically signalled by hardware devices that interface directly with a network connection type, like coaxial cable, optical fibre, or twisted pair copper wire.
 
-	##### Link
+	#### Link
 * This layer normally consists of device drivers in the OS and the network interface card attached to the system.
 * The most popular protocol in use over LAN is ethernet. This uses a method known as CSMA/CD, this is Career Sense Multiple Access/Collision Detection. This is used to access media. Access methods determine how hosts place media on communication mediums.
 * In the case of CSMA/CD every host has the same access to the medium and can place data on the wire when there is no traffic. If there is traffic it waits until there is not before placing the data. If this was not the case, the data would collide and be destroyed, and will need resubmitting.
 
-#### Peer-to-Peer Communications
+### Peer-to-Peer Communications
 * At each layer of communciation a different Protocol Data Unit (PDU) is used, for example:
 
 	|   |Sender     |PDU    |Reciever   |
@@ -247,7 +247,7 @@ There are varying types of applications, such as:
 	
 	> At the physical layer, the PDU used is 'bits'
 
-#### Encapsulation and De-Encapsulation
+### Encapsulation and De-Encapsulation
 * Encapsulation is a process that occurs within the OSI and TCP/IP Models
 * Within the OSI Model, it occurs as follows:
     * The application layer recieved the user data, and adds a header before sending it to the presentation layer
@@ -256,7 +256,7 @@ There are varying types of applications, such as:
     * At Layer 2 the trailer is ususally the FCS - Used to check for errors in transmission
     * At the destination this is unpacked one layer at a time, and the data is then passed up to the PDU on the layer above
 
-#### Local Area Networks
+### Local Area Networks
 * Ethernet became widespead in the 1990s
 * A LAN requires the following necessary components for operation:
 	* Hosts
@@ -292,7 +292,7 @@ There are varying types of applications, such as:
 	* Hubs became repeaters, Bridges became Switches
 	* ASIC - Application Specific Integrated Circuits
 	
-#### Need for Switches
+### Need for Switches
 * Traditionally devices had to compete for bandwidth on a network (or broadcast domain), using a bus topology. This meant that only one device could transmit at a time
 * Switches can now be used to split up a network, and reduce the number of devices within a collision domain. There may be multiple collision domains within a broadcast domain (the immediate reach of a switch)
 * The function of switches is as follows:
@@ -324,11 +324,12 @@ There are varying types of applications, such as:
 		|4   |D   |
 > MAC Address Table. This is built from source addresses
 	
-#### Switches
+### Switches
 * Switches can be in two types:
 	* Dedicated Bandwidth - a single station is connected to a given switch port, and so there is no competiton for bandwidth
 	* Full Duplex Operation - on a shared ethernet medium, this allows for devices to both sendand recieve at the same time. Half duplex allows for either sending or recieving at a given time
 	* A L2 Switch makes decisions as to where to send packets based on data found in the Ethernet Frame, whereas a L3 Router uses the IP addresses within said packets
+	* A 1Gbps port on a switch defaults to Full Duplex if not told to do otherwise, whereas a 100Mbps port will default to Half Duplex unless specified otherwise.
 	* LAN Switches can have:
 		* High port density - any number from less than 32 to hundreds of ports may be on a switch
 		* Large frame buffers - allowing more frames to be storred before needing to drop them
@@ -337,7 +338,7 @@ There are varying types of applications, such as:
 		* Lower per port cost - Less devices are required to allow a network of the same size when using switches
 	* A switch offers a port (connection) to each device, removing the need for CSMA/CD. However this is still accepted, in the event that a hub may be connected to one of these ports to increase capacity
 
-#### Cisco IOS
+### Cisco IOS
 * Cisco IOS is the proprietory operating system that operates on Switches, Routers, APs and other networking appliances that Cisco Manufacture
 * The port used to directly connect to a router, switch etc. is called a console port
 * A light blue patch cable is used here (likely with an RJ-45 connection)
@@ -407,7 +408,7 @@ There are varying types of applications, such as:
 	* `section` - Shows the entire section that starts with the filtering expression.
 * e.g. `R1# show running-config | begin interface` will show only lines from within R1's running config that begin with 'interface'.
 
-#### Starting a Switch
+### Starting a Switch
 * Switches can be configured in one of two ways:
 	* Via Console Port - physically to the switch.
 	* Via VTY (Virtual Teletype) - remotely to the switch.
@@ -426,16 +427,87 @@ There are varying types of applications, such as:
 	
 	* A MODE button is also present, allowing you to cycle the indicator LEDs on each switch to it's Status (on/off), Duplex Status and Speed.
 
-### Module 2: Establishing internet connectivity 
+### Understanding Ethernet and Switch Operation
+* Ethernet can be used on varying mechanical standards, such as:
+	* Co-Axial (this is nolonger used for ethernet communications)
+	* Twisted Copper Pair
+		* Unshielded Twisted Pair cables can come in varying categories:
+			* Category 1: Used in telephone communications but not transmitting data
+			* Category 2: Capable of data transmissions up to 4Mbps
+			* Category 3: Used in 10BASE-T Networks and can transmit up to 10Mbps
+			* Category 4: Used in token ring networks and can transmit up to 16Mbps
+			* Category 5: Capable of transmitting data at up to 100Mbps
+			* Category 5e: Capable of transmitting data at up to 1Gbps
+			* Category 6: 4 Pairs of 24-guage copper wires, and can transmit up to 10Gbps
+			* Category 6a: Used in networks at speeds up to 10Gbps
+			* Category 7: Used in networks at speeds up to 10Gbps
+			
+		* These UTP Cables are terminated with RJ-45 connections. They may be terminated in one of two ways: Straight-Through and Crossover cables.
+			* Like to like devices connect via crossover cables (e.g. switch to switch)
+			* Like to unlike devices connect via straight-through cables (e.g. switch to PC)
+		* The pin layout at each end of the cables varies between the two types.
+		* This is as follows:
+	
+		![Straight-Through vs. Crossover](http://www.incentre.net/wp-content/uploads/2015/02/ethcable03.gif)
+		
+	* Optical Fibres
+		* These fibers come in two types, Single and Multi Mode
+		* They have the following properties:
+			* **PROPERTIES**
+		* These cables can also be terminated with differing connectors:
+			* **CONNECTORS**
+	* Wireless (This has no connection media)
 
-### Module 3: Summary Challenge 
+* Ethernet frames have a fixed structure. This may be:
 
-### Module 4: Building a Medium-Sized Network 
+	|Field Length (bits)   |8       |6                  |6             |2   |46-1500|4  |
+	|----------------------|--------|-------------------|--------------|----|-------|---|
+	|Typical Frame Contents|Preamble|Destination Address|Source Address|Type|Data   |FCS|
+	
+	* Preamble	- 8 Bytes of Binary digits used to synchronize the signals of the communicating hosts.
+	* DA - The address of the NIC on the local network that the packet is being sent to.
+	* SA - The address of the NIC on the sending host.
+	* Type - Code identifying the network layer protocol.
+	* Data & Padding - Data being sent to the host. If the data is less than 46 Bytes, padding is used to make up this space.
+	* FCS - Checksum mechanism used to make sure the data is sent without corruption.
+	
+* MAC Addresses are 48-bit strings of binary characters.
+* They are split in half, containing the Organisation Unique Identifier and the Vendor Assignmed Portion.
+* These are noted in Hexadecimal format, and may appear as: `0000.0c43.2e08`, `00:00:0c:43:2e:08` or `00-00-0C-43-2E-08`.
 
-### Module 5: Network Device Managment & Security 
+* Switches perform frame switching. This is aided by the MAC Address Table, informing the switch of the relationship between host MAC Addresses and Ports.
+* This procedure is as follows:
+	1. Switch recieves a frame from PC A on Port A.
+	2. Switch enters the Source MAC Address (the port the message is recieved on) of PC A into its MAC Address table.
+	3. Switch checks its MAC Address table for the destination MAC Address, however because it is unknown the frame is flooded to all ports, except the port that the frame is received on.
+	4. The device with a matching destination MAC Address replies to the unicast with a unicast frame addressed to PC A.
+	5. The switch enters the source MAC Address of PC B and the port number of the switch port that receieved the frame into its MAC Address table.
+	6. The switch can now forward frames between these addresses without flooding, as these addresses are now in its MAC Address table.
+	
+### Troubleshooting
+* Troubleshooting issues may happen in a couple of ways:
+* The OSI Model may be used to troubleshoot an error, be that by starting at the top, bottom or from using the 'divide and conquer' method (starting in the middle and working from above and below.
+* If `ping` works, layers 3 and below (at least) are functional, becuase it is a layer 3 protocol.
+* Using `telnet`, the user can test layer 4 functionality.
+* Copper media can suffer from issues via:
+	* Wiring damage
+	* New sources of EMI
+	* Changes to traffic patterns
+	* New equipment installation
+* Fibre can suffer from issues via:
+	* Micro & Macrobend data loss (cable is bent too far, causing data loss during reflection of light)
+	* Splice loss
 
-### Module 6: Summary Challenge 
+## Module 2: Establishing internet connectivity 
 
-### Module 7: Introducing IPv6 
+## Module 3: Summary Challenge 
+
+## Module 4: Building a Medium-Sized Network 
+
+## Module 5: Network Device Managment & Security 
+
+## Module 6: Summary Challenge 
+
+## Module 7: Introducing IPv6 
 
 ---
