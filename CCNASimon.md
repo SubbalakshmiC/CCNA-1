@@ -314,7 +314,7 @@ Due to this it can be controlled through a console connection, modem connection 
 * System startup routines perfrom POST (Power On Self Test) and initiate the switch software
 * Kernel loads and then IOS
 
-#### Switch LED Indicators
+##### Switch LED Indicators
 
 |Name|Description|
 |---|---|
@@ -324,6 +324,48 @@ Due to this it can be controlled through a console connection, modem connection 
 |DUPLX| If on (green), each port LED implies the duplex of this port (on is full duplex, off is half duplex)|
 |SPEED| If on (green), each port LED implies the speed of this port, as follows: off means 10Mbps, solid green means 100Mbps, flashing green means 1Gbps|
 |PoE| Some switches have PoE LED in the system status group of LEDs. This LED indicates the per-port and system PoE status|
+
+##### Connecting to a switch
+
+* Console Port
+* Console Cable
+* USB to Serial Port Adapter
+
+#### Understanding Ethernet and Switch Operations
+
+##### Ethernet LAN connection Media
+
+* The mechanical properties of Ethernet depend on the type of physical medium
+	* Coaxial (not used anymore)
+	* Twisted copper pair
+	* Fiber optics
+	* Wireless
+
+Types of UTP Cabling:
+
+* Straight through cable
+	* The cables run directly throught the cable (1-1, 2-2, 3-3 etc...)
+	* This cable is for connecting different types of devices together
+		* Switch to Router
+		* Switch to Host
+* Crossover cable
+	* The cables cross in the cable (1-8, 2-6, 3-5 etc....)
+	* This cable is used for connecting like to like devices
+		* Switch to Switch
+		* Router to Router
+		* PC to Router ***** This is the only non like to like that uses crossover
+	* This is to avoid clashes within the cable
+
+LEARN THE FIBRE CONNECTION TYPE (PAGE 51) 🙃🙃
+
+##### Ethernet Frame Structure
+
+|Field Length (Bytes)| 8|6|6|2|46-1500|4|
+|---|---|---|---|---|---|---|
+|Typical Ethernet Frame|Preamble|Destination Address| Source Address| Type| Data| FCS|
+|Description| Warning that a message is coming| Where the frame is going| Where the frame has come from| What is the frame carrying (IPv4/IPv6)| The actuall data| Essentially a value based on length of frame (checksum)|
+
+
 
 ### Module 2 - Establishing Internet Connectivity
 
