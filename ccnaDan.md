@@ -745,9 +745,68 @@ show interface Ethernet0/3 (sh int e0/3)
 hostname Temp
 * changes the hostname to 'Temp'
 
-#### Interface configuration mode
+##### CAM table
 
-### Discovery 1: Getting started with Cisco CLI
+* aging time is normally 5 mintues
+after that time the MAC address is removed from the table 
+
+* When a cable is removed then the MAC table for that port is erased
+
+* if the MAC address changes port then the MAC is changed the assigned port
+
+### Starting a switch
+
+when you connect to a switch you can do so via the two methods
+
+|User mode| -> | Privilege mode | - > | Global Configuration mode |
+|-|-|-|-|-|
+|$Hostname>|enable|$Hostname#| configure terminal / conf t|$Hostname(config)#
+|<-|disable|<-|exit / end |<-|
+|||||V   ^
+|||^||V exit
+|||end||V 
+/------<-------|----<---|--------<-------|-------------<------------|-------------->-------------\|
+|interface | VLAN | Router|(n)ACL|...etc
+|$Hostname(config-if)#|$Hostname(config-vlan)#|$Hostname(config-router)#|$Hostname(config-nacl)#|
+|interface x|vlan x| router x | access-list|
+
+#### switch installation
+
+when you get it first you do the standard set-up stuff
+
+* mount to location
+* plug in power
+* plug in network cables
+* system does POST (Power On Self Test)
+* kernel loads and bootstrap and so on
+
+##### mode button
+
+* will change what the LED lights show
+	* syst
+		* shows the system status
+			* Off means switch is off
+			* On (green) means fully operational
+			* On (amber) means POST failed
+	* RPS
+		* Redundant Power Supply status
+	* stat 
+		* shows used ports
+			* On means active port
+			* Off means inactive connection
+	* duplx
+		* shows the duplex setting of the ports
+			* on is full
+			* off is half
+	* speed
+		* will show what speed the ports are running at
+			* off is 10 Mbps
+			* on is 100 Mbps
+			* flashing is Gi
+	* PoE
+		* shows the ports that support Power Over Ethernet
+			* on shows supported
+			* off shows not supported
 
 ## Module 2 - Establishing internet connectivity 
 
