@@ -379,8 +379,9 @@ Last 24 bits - ID
 In total there are 48 bits used, however, usually shown in Hex
 
 
-
 ### Module 2 - Establishing Internet Connectivity
+
+
 
 ### Module 3 - Summary Challenge
 
