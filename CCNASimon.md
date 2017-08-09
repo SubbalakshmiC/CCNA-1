@@ -365,6 +365,19 @@ LEARN THE FIBRE CONNECTION TYPE (PAGE 51) 🙃🙃
 |Typical Ethernet Frame|Preamble|Destination Address| Source Address| Type| Data| FCS|
 |Description| Warning that a message is coming| Where the frame is going| Where the frame has come from| What is the frame carrying (IPv4/IPv6)| The actuall data| Essentially a value based on length of frame (checksum)|
 
+##### MAC Addressess 
+
+Different display formats:
+
+* 000.0c46.2e08
+* 00:00:0c:43:2e:08
+
+First 24 bits - Vendor code (manufacturer)
+
+Last 24 bits - ID 
+
+In total there are 48 bits used, however, usually shown in Hex
+
 
 
 ### Module 2 - Establishing Internet Connectivity
