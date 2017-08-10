@@ -76,8 +76,8 @@ a network allows people access to information. for example allows you to access 
 			* subscriber - SC
 			* lucid - LC
 			* stright tip - ST(C)
-		* NIC (Network interface card)
-			* used to allow the computer to actually plug into and use the network and connecter
+	* NIC (Network interface card)
+		* used to allow the computer to actually plug into and use the network and connecter
   * Switches
   	* allows local devices to talk to each other
 	* has many NIC interface
@@ -86,8 +86,7 @@ a network allows people access to information. for example allows you to access 
   * WLAN devices
   * APs
   * WLAN controller
-  * Firewall
-
+  
 #### Characteristics of a network
 
 * Topology

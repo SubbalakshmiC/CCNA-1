@@ -529,9 +529,61 @@ There are varying types of applications, such as:
 
 * IPv4 Addresses are 32 bit numbers, split into 4 octets.
 * It is composed of two parts:
-	* The network ID address - this is unchanged for any devices on a network
-	* Host addresses - this changes for each host on a network
-* 
+	* The network ID address - this is unchanged for any devices on a network.
+	* Host addresses - this changes for each host on a network.
+	* The size of each of these two portions is fluid dependant on the class of the address.
+![IPv4 Layer Address Fields](http://computing.dcu.ie/~humphrys/Notes/Networks/tanenbaum/5-53.jpg)
+	* Version - IP version
+	* IHL - Header length
+	* Service Type - Provides information on the desires QoS
+	* Total Length - Length of the packet, inc. header and data
+	* ID - Used for unique fragment identification
+	* Flag - Sets various control flags regarding identification
+	* Fragment offset - Indicates where specific fragments begin
+	* TTL - Time to Live, lifetime of a packet
+	* Protocol - Indicates protocol in use
+	* Header Checksum - Used for error detection
+	* Source Address - 32 bit binary value of the sending endpoint
+	* Destination Address - 32 bit binary value of the receiving endpoint
+	* Options - Indicates optional parameters
+	* Padding - Used to ensure that the header ends on a 32 bit boundary
+	
+* Binary is a base 2 number system
+* An IPv4 uses 32 binary digits.
+* An IPv4 address is traditionally displayed in dotted decimal format (e.g. 192.168.4.6)
+* The left-most character in a binary octet is the Most Significant Bit and the right-most is the Least Significant Bit.
+
+	|128| 64| 32| 16|  8|  4|  2|  1|
+	|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
+	|2^7|2^6|2^5|2^4|2^3|2^2|2^1|2^0|
+	
+* Using this system, the number `00101000` translates to `40`.
+
+* IP Addresses have different classes:
+	* Class A - First Bit Fixed at `0`, first byte reserved for the network portion - used in networks with more than 16 million hosts.
+	* Class B - First 2 Bits Fixed at `10`, first 2 bytes reserved for the network portion - used in networks with more than 65,000 hosts.
+	* Class C - First 3 Bits Fixed at `110`, first 3 bytes reserved for the network portion - used in networks with less than 254 hosts.
+	* Class D - First 4 Bits Fixed at `1110`, this is used for multicast addresses, and unlike Classes A, B & C, this is always a destination address.
+	* Class E - First 5 Bits Fixed at `1111`, this is a reserved experimental range.
+* The IANA (Internet Assigned Number Authority) Initially developed these classes.
+
+	|IP address Class            |First Octet Binary Range|First Octet Decimal Range|Maximum Number of Hosts/Subnet|
+	|:--------------------------:|:----------------------:|:-----------------------:|:----------------------------:|
+	|Class A                     |00000001 to 01111110    |1 to 126                 |16,777,214                    |
+	|Class B                     |10000000 to 10111111    |128 to 191               |65,534                        |
+	|Class C                     |11000000 to 11011111    |192 to 223               |254                           |
+	|Class D                     |11000000 to 11101111    |224 to 239               |                              |
+	|Class E                     |11110000 to 11111111    |240 to 255               |                              |
+
+> The two Class A addresses 127.0.0.0 and 127.255.255.255 are reserved for loopback and diagnostics purposes.
+ 
+* An IPv4 Class C Address, for example, could be:
+
+	|192       |168       |4         |6         |
+	|:--------:|:--------:|:--------:|:--------:|
+	|`11000000`|`10100010`|`00000100`|`00000110`|
+
+* IPv6 offers 3.4x10^38 Addresses
 
 ## Module 3: Summary Challenge 
 
