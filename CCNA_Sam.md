@@ -665,6 +665,46 @@ There are varying types of applications, such as:
 	
 * A host needs to be aware of its subnet mask to know when to send messages intended for devices in other networks to the default gateway instead.
 
+* Worked Example:
+	* 200.210.18.0/24 → Class C Address (Mask 255.255.255.0)
+	* The network features 14 collision domains, and thus needs a minimum of 14 subnets
+	* At least 10 hosts required per subnet
+	* Subnetting can occur only the last byte
+	* In the last octet:
+	
+		|     |128  |64   |32   |16   |8    |4    |2    |1    |
+		|-----|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+		|Mask |1    |1    |1    |1    |**0**|**0**|**0**|**0**|
+		
+		> **Bold** denotes the host portion of the octet  
+		
+	* Because the last available bit in the mask is in position 4, equalling 16, that will be the step used for each of the subnets.
+
+	* Subnet 1: 200.210.18.0/28
+		* First Host: 200.210.18.1
+		* Last Host: 200.210.18.14
+		* Broadcast Address: 200.210.18.15
+	* Subnet 2: 200.210.18.16/28
+		* First Host: 200.210.18.17
+		* Last Host: 200.210.18.30
+		* Broadcast Address: 200.210.18.31
+	* Subnet 3: 200.210.18.32/28
+		* First Host: 200.210.18.17
+		* Last Host: 200.210.18.30
+		* Broadcast Address: 200.210.18.31
+	* Subnet 4:
+		* First Host: 200.210.18.17
+		* Last Host: 200.210.18.30
+		* Broadcast Address: 200.210.18.31
+	* Subnet 5:
+		* First Host: 200.210.18.17
+		* Last Host: 200.210.18.30
+		* Broadcast Address: 200.210.18.31
+	* Subnet 6:
+		* First Host: 200.210.18.17
+		* Last Host: 200.210.18.30
+		* Broadcast Address: 200.210.18.31
+
 ## Module 3: Summary Challenge 
 
 ## Module 4: Building a Medium-Sized Network 
