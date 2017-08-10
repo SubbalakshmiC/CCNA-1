@@ -27,7 +27,7 @@ All notes made here relate to ICND 1 or 2, and may be a little lacking or nonsen
 
 ## Certified Mock Exam Questions:
 * MeasureUp
-* Bosan.com (?)
+* Boson.com
 
 # Exam Notes
 
@@ -553,10 +553,10 @@ There are varying types of applications, such as:
 * An IPv4 address is traditionally displayed in dotted decimal format (e.g. 192.168.4.6)
 * The left-most character in a binary octet is the Most Significant Bit and the right-most is the Least Significant Bit.
 
-	|128| 64| 32| 16|  8|  4|  2|  1|
-	|:-:|:-:|:-:|:-:|:-:|:-:|:-:|:-:|
-	|2^7|2^6|2^5|2^4|2^3|2^2|2^1|2^0|
-	
+	|128    |64     |32     |16     |8      |4      |2      |1      |
+	|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|:-----:|
+	|$$2^7$$|$$2^6$$|$$2^5$$|$$2^4$$|$$2^3$$|$$2^2$$|$$2^1$$|$$2^0$$|
+
 * Using this system, the number `00101000` translates to `40`.
 
 * IP Addresses have different classes:
@@ -566,24 +566,47 @@ There are varying types of applications, such as:
 	* Class D - First 4 Bits Fixed at `1110`, this is used for multicast addresses, and unlike Classes A, B & C, this is always a destination address.
 	* Class E - First 5 Bits Fixed at `1111`, this is a reserved experimental range.
 * The IANA (Internet Assigned Number Authority) Initially developed these classes.
+> Cisco IP Phones use the Class D address 239.0.0.1 to send hold music via multicast to save on bandwidth.
 
 	|IP address Class            |First Octet Binary Range|First Octet Decimal Range|Maximum Number of Hosts/Subnet|
 	|:--------------------------:|:----------------------:|:-----------------------:|:----------------------------:|
 	|Class A                     |00000001 to 01111110    |1 to 126                 |16,777,214                    |
 	|Class B                     |10000000 to 10111111    |128 to 191               |65,534                        |
 	|Class C                     |11000000 to 11011111    |192 to 223               |254                           |
-	|Class D                     |11000000 to 11101111    |224 to 239               |                              |
-	|Class E                     |11110000 to 11111111    |240 to 255               |                              |
+	|Class D                     |11000000 to 11101111    |224 to 239               |-                             |
+	|Class E                     |11110000 to 11111111    |240 to 255               |-                             |
 
-> The two Class A addresses 127.0.0.0 and 127.255.255.255 are reserved for loopback and diagnostics purposes.
+	> The Class A address range from 127.0.0.0 to 127.255.255.255 is reserved for loopback and diagnostics purposes.
+	
+* Some IPv4 addresses and ranges are reserved, and cannot be given to hosts. For example:
+	* 0.0.0.0 - Unspecified, or Any Network
+	* 255.255.255.255 - Local Network Broadcast
+	* Any address with the host portion as 0s - Network address
+		* e.g. an address of 172.16.0.0 cannot be given to a host as it is a network address.
+	*10.255.255.255 - Directed Broadcast address
  
+* This method is called class-full addressing.
+* Another method is classless inter domain routing (CIDR)
+
+* Worked Examples:
+	* 200.210.18.34
+		* Class C Address (200 falls between 192 to 223)
+	* 10.255.17.254
+		* Class A Address (10 falls between 1 to 126)
+	* 172.54.3.2
+		* Class B Address (172 falls between 128 to 191)
+		
 * An IPv4 Class C Address, for example, could be:
 
 	|192       |168       |4         |6         |
 	|:--------:|:--------:|:--------:|:--------:|
 	|`11000000`|`10100010`|`00000100`|`00000110`|
 
-* IPv6 offers 3.4x10^38 Addresses
+* The number of usable hosts within a subnet can be calculated with $$2^{n-2}$$ where $$n$$ = number of bits available for the address portion of the IP address.
+	* e.g. $$2 bits \therefore m=2 \therefore 2^2 = 4$$
+
+* IPv6 offers $$3.4 \times 10^{38}$$ Addresses.
+*
 
 ## Module 3: Summary Challenge 
 
