@@ -12,7 +12,7 @@ Hello there, welcome to the CCNA revision notes repo, this page contains the not
 To access the notes just click on the corresponding file above. 
 
 * There are a couple of other files in this repository that you may find useful, these are:
-	* [Simon's Mindmaps (WIP)](https://github.com/446163/CCNA/tree/master/Mind%20Maps)
+	* [Simon's Mindmaps (WIP)](https://github.com/446163/CCNA/tree/master/Mind%20Maps/Images)
 	* [Sam's Cisco CLI Cheatsheet](https://github.com/446163/CCNA/blob/master/Cisco%20CLI%20Cheat%20Sheet.pdf)
 
 Here are some useful tables that you may find good for quick reference 
