@@ -1123,7 +1123,7 @@ class full addressing is what we have just done, but its old so now we use class
 * class B
 * 172 is between 128 and 191
 
-### subnetting :D whoo
+### subnetting 
 
 think of the number of hosts that you want in the network then select the lowest power of 2 that is bigger than you want and can accommodate the number. 
 
@@ -1156,6 +1156,91 @@ There are always 2 less than the 2^x number due to one being the broadcast addre
 * ping of death
 	* all devices in 10.*.*.* will try to respond
 	* it will pass through routers
+
+#### public IP addresses
+
+|class|ip address section one| address section 2|
+|-|-|-|
+|A|1.0.0.0 to 9.255.255.255 | 11.0.0.0 to 126.255.255.255|
+|B|128.0.0.0 to 172.15.255.255 | 172.32.0.0 to 191.255.255.255|
+|C|192.0.0.0 to 192.167.255.255 | 192.169.0.0 to 223.255.255.255|
+
+#### private IP addresses
+
+|class|ip range|
+|-|-|
+|A|10.0.0.0 to 10.255.255.255|
+|B|172.16.0.0 to 172.31.255.255|
+|C|192.168.0.0 to 192.168.255.255|
+
+#### NAT (Network Address Translation)
+
+translates your private ip address 192.168.0.4 to a public ip address 23.43.65.145.
+
+#### Domain Name Server
+
+you type in the name of the website, then that data will go to a dns server who will send back the ip address that will actually connect you to the server that holds the website. 
+
+on the endpoint you just need to say that you just want to use DHCP then the rest will work it out itself. 
+
+if you set in manually then you need to say what ip address you want and the subnet mask that you want. 
+
+### IP ADDRESSING AND SUBNETTING
+
+if you are in a class A network then you could easily get many of the devices sending a broadcast at the same time that it would be far too slow. you take a whole layer 2 network (just switches) then then split it up with routers so that there are now many smaller netowrks and connect them together. 
+
+small networks are easy to manage, have less traffic 
+
+the subnet mask is 32 bits. it can be represented in dotted decimal notation or slash notation. 
+
+a comparison is made between the bits in the ip address and the bits in the subnet mask. 
+
+if you have a bit in the mask, then that bit is part of the network section and not the host section. 
+* if the bit is 0 then it is part of the host section of the address 
+
+10.1.1.1 - class A
+
+N.H.H.H
+
+the mask for that would be 255.0.0.0 as it shows the first byte is part of the network section. 
+
+172.16.5.12 - class B
+
+N.N.H.H
+
+the mask for that would be 255.255.0.0 as it shows the first two bytes are part of the network section
+
+200.210.18.32 - class C
+
+N.N.N.H
+
+the mask for this would be 255.255.255.0 as it shows the first 3 bytes are part of the network section 
+
+then you have slash notation so for example 255.255.0.0 has a slash notation of /16 as there are 16 1's in a row at the start of the mask.
+
+your machine needs to know what network it is on so that it knows that you are in the public section of that network so it knows if it needs to go through the router to do NAT and access the machine that it needs. 
+
+* it needs to know where the default gateway is
+
+|128|64|32|16|8|4|2|1|
+|-|-|-|-|-|-|-|-|
+|0|0|0|0|1|0|1|0|
+|1|1|1|1|1|1|1|1
+|0|0|0|0|1|0|1|0|
+
+|128|64|32|16|8|4|2|1|
+|-|-|-|-|-|-|-|-|
+|0|0|0|0|1|1|1|1|
+|1|1|1|1|1|1|1|1
+|0|0|0|0|1|1|1|1|
+
+one device on network 16.7.7.11 another on 15.7.7.11
+
+15.7.7.11 & 255.0.0.0 = 15.0.0.0
+
+16.7.7.11 & 255.0.0.0 = 16.0.0.0
+
+These are not the same so they are on a different network and so need to go through a router to get the each other
 
 ## Module 3 - Summary challenge
 
