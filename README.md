@@ -139,4 +139,4 @@ Here are some useful tables that you may find good for quick reference
 
 If you have any questions about the notes then just ask any of us. On the other hand you can just look at another set of notes as they may make more sense to you as they are all for you to use. 
 
-> if in doubt the answer is probably: "it depends"
+> if in doubt, the answer is probably: "it depends"
