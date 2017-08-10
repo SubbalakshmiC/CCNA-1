@@ -1066,6 +1066,40 @@ in an IP address you have a byte (8 bits), the full ip address is 4 bytes long.
 |0|0|32|0|8|0|0|0|
 32+8 = 40
 
+> Day 4
+
+|192|168|0|1|
+|-|-|-|-|
+11000000|10101000|00000100|00000110|
+
+### Classing system
+
+|Class|fixed bits|start|secend|third|final|example|
+|-|-|-|-|-|-|-|
+| class A | first bit is fixed | 0xxxxxxx | .Host | .Host | .Host | 10.0.0.1 |
+| Class B | 2 bits are fixed | 10xxxxxx | .Network | .Host | .Host | 172.16.0.1 |
+| Class C | 3 bits are fixed | 110xxxxx | .Network | .Network | .Host | 192.168.1.1 |
+| Class D (Multicast) | 4 bits are fixed | 1110xxxx | | | | |
+| Class E (Reserved) | 4 bits are fixed | 1111xxxx | | | | |
+
+|Class|binary range|decimal range|maximum number of hosts|Layout
+|-|-|-|-|-|
+|A|**0**0000001 - **0**1111110|1 - 126| 16,777,214|N.H.H.H
+|B|**10**000000 - **10**111111|128 - 191| 65,534|N.N.H.H
+|C|**110**00000 - **110**11111|192 - 223| 254|N.N.N.H
+|D|**1110**0000 - **1110**1111|224 - 239| Multicast |
+|E|**1111**0000 - **1111**1111|240 - 255| Reserved |
+| | **01111111** | 127 | used for diagnostics
+
+>*Please note that 127.0.0.0 to 127.255.255.255 is not used as it is for diagnostics and loopback and so on. hence why 127.0.0.1 is your local machine*
+
+The assignment of ip address is done by
+
+Internet Assigned Number Authority (IANA)
+* Regional Internet . Europe (RIPE)
+
+> IPV6 is 128 bit
+
 ## Module 3 - Summary challenge
 
 ## Module 4 - Building a Medium sized network
