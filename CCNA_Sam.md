@@ -583,7 +583,7 @@ There are varying types of applications, such as:
 	* 255.255.255.255 - Local Network Broadcast
 	* Any address with the host portion as 0s - Network address
 		* e.g. an address of 172.16.0.0 cannot be given to a host as it is a network address.
-	*10.255.255.255 - Directed Broadcast address
+	* 10.255.255.255 - Directed Broadcast address
  
 * This method is called class-full addressing.
 * Another method is classless inter domain routing (CIDR)
@@ -602,11 +602,68 @@ There are varying types of applications, such as:
 	|:--------:|:--------:|:--------:|:--------:|
 	|`11000000`|`10100010`|`00000100`|`00000110`|
 
-* The number of usable hosts within a subnet can be calculated with $$2^{n-2}$$ where $$n$$ = number of bits available for the address portion of the IP address.
+* The number of usable hosts within a subnet can be calculated with $$2^n-2$$ where $$n$$ = number of bits available for the address portion of the IP address.
 	* e.g. $$2 bits \therefore m=2 \therefore 2^2 = 4$$
 
+* IPv4 has private and public IP ranges:
+	* Private
+	
+		|IP Address Class|Range                         |
+		|:--------------:|------------------------------|
+		|A               |10.0.0.0 to 10.255.255.255    |
+		|B               |172.16.0.0 to 172.31.255.255  |
+		|C               |192.168.0.0 to 192.168.255.255|
+		
+	* Public
+	
+		|IP Address Class|Range                                                          |
+		|:--------------:|---------------------------------------------------------------|
+		|A               |1.0.0.0 to 9.255.255.255                                       |
+		|                |11.0.0.0 to 126.255.255.255                                    |
+		|B               |128.0.0.0 to 172.15.255.255                                    |
+		|                |172.32.0.0 to 191.255.255.255                                  |
+		|C               |192.167.0.0 to 192.167.255.255                                 |
+		|                |192.169.0.0 to 223.255.255.255                                 |
+
 * IPv6 offers $$3.4 \times 10^{38}$$ Addresses.
-*
+
+* DNS is the Domain Name System. It translates IP addresses to domain names such as 'www.cisco.com'.
+
+### Understanding IP addressing and Subnets
+* By subnetworking a network:
+	* Smaller networks can be more easily managed
+	* Overall network traffic is reduced
+	* Network security policies can be more easily introduced
+* When IPv4 addresses are expressed, a slash notation is provided in order to display the number of bits in the address is used for the network portion of the address, for example:
+	* 10/.1.1.1/8 - A Class A Address with the mask 255.0.0.0
+	* 172.16.55.87/16 - A Class B Address with the mask 255.255.0.0
+* A Subnet mask:
+	* Defines the number of bits that represent the network and submit part of an address
+	* Is used by end systems to identify the destination IP address as either local or remote
+	* Is used by L3 devices to determine network path
+
+* The table below can be used to assist with slash notations and subnetting:
+
+	|Step                |128|64 |32 |16 |8  |4  |2  |1  |
+	|--------------------|---|---|---|---|---|---|---|---|
+	|Mask (.x)           |128|192|224|240|248|252|254|255|
+	|A: /8 255.x         |/9 |/10|/11|/12|/13|/14|/15|/16|
+	|B: /16 255.255.x    |/17|/18|/19|/20|/21|/22|/23|/24|
+	|C: /24 255.255.255.x|/25|/26|/27|/28|/29|/30|/31|/32|
+	
+* To find a network from a host address and a subnet mask, perform the following:
+	* Device Address: 15.17.1.12
+	* Subnet Mask: 255.0.0.0
+
+	|            |   |128|64 |32 |16 |8  |4  |2  |1  |
+	|------------|---|---|---|---|---|---|---|---|---|
+	|Host Address|15 |0  |0  |0  |0  |1  |1  |1  |1  |
+	|Subnet Mask |255|1  |1  |1  |1  |1  |1  |1  |1  |
+	|Network ID  |?  |0  |0  |0  |0  |1  |1  |1  |1  |
+
+	> The same process should be completed with each octet
+	
+* A host needs to be aware of its subnet mask to know when to send messages intended for devices in other networks to the default gateway instead.
 
 ## Module 3: Summary Challenge 
 

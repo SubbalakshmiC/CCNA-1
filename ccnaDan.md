@@ -1123,6 +1123,40 @@ class full addressing is what we have just done, but its old so now we use class
 * class B
 * 172 is between 128 and 191
 
+### subnetting :D whoo
+
+think of the number of hosts that you want in the network then select the lowest power of 2 that is bigger than you want and can accommodate the number. 
+
+number of usable hosts = (2^n) - 2
+
+#### reserved addresses
+
+There are always 2 less than the 2^x number due to one being the broadcast address and then the other being the network ID
+
+* 0.0.0.0 is not valid
+	* unspecified address
+	* used to indicate "anything"
+	* cannot assign as a host address
+
+* 255.255.255.255
+	* local network broadcast address
+	* this will propagate in a network but will not leave it (a router will drop the packet)
+	* one example is the use in DHCP
+
+10.***0.0.0***
+* the network ID
+	* like setting your house name as the street name
+* N.H.H.H
+	* the host feild is all 0's
+	* this means the whole network
+	* hone to advertise the network to other people
+
+10.255.255.255
+* directed broadcast address
+* ping of death
+	* all devices in 10.*.*.* will try to respond
+	* it will pass through routers
+
 ## Module 3 - Summary challenge
 
 ## Module 4 - Building a Medium sized network
@@ -1132,3 +1166,7 @@ class full addressing is what we have just done, but its old so now we use class
 ## Module 6 - Summary challenge
 
 ## Module 7 - Introducing IPV6
+
+ipv6 is 128 bit
+* 64 bit for network
+* 64 bits for device
