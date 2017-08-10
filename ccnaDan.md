@@ -1088,7 +1088,7 @@ in an IP address you have a byte (8 bits), the full ip address is 4 bytes long.
 |C|**110**00000 - **110**11111|192 - 223| 254|N.N.N.H
 |D|**1110**0000 - **1110**1111|224 - 239| Multicast |
 |E|**1111**0000 - **1111**1111|240 - 255| Reserved |
-| | **01111111** | 127 | used for diagnostics
+| |**01111111** | 127 | used for diagnostics
 
 >*Please note that 127.0.0.0 to 127.255.255.255 is not used as it is for diagnostics and loopback and so on. hence why 127.0.0.1 is your local machine*
 
@@ -1098,6 +1098,30 @@ Internet Assigned Number Authority (IANA)
 * Regional Internet . Europe (RIPE)
 
 > IPV6 is 128 bit
+
+ we will configure multicast with RIFv2 - 224.0.0.9
+
+next week we will look at OSPF (open shortest past first) which is another - 224.0.0.5 / 224.0.0.6
+
+hold music is sent on 239.0.0.1 
+
+class full addressing is what we have just done, but its old so now we use classless addressing
+
+#### classing test thing
+
+200.210.18.34
+* class C
+* 200 is between 128 and 191
+* N.N.H.H
+
+10.255.17.254
+* class A
+* 10 is between 1 and 126
+* N.H.H.H
+
+172.54.3.2
+* class B
+* 172 is between 128 and 191
 
 ## Module 3 - Summary challenge
 
