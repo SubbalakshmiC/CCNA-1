@@ -126,6 +126,16 @@ Here are some useful tables that you may find good for quick reference
 | | **01111111** | 127 | used for diagnostics
 
 
+###### Subnetting table
+
+|Step|128|64|32|16|8|4|2|1|
+|---|---|---|---|---|---|---|---|---|
+|Mask (.x)|128|192|224|240|248|252|254|255|
+|A: /8 255.|/9|/10|/11|/12|/13|/14|/15|/16|
+|B: /16 255.255.|/17|/18|/19|/20|/21|/22|/23|/24|
+|C: /24 255.255.255.|/25|/26|/27|/28|/29|/30|/31|/32|
+
+
 
 If you have any questions about the notes then just ask any of us. On the other hand you can just look at another set of notes as they may make more sense to you as they are all for you to use. 
 
