@@ -1240,7 +1240,94 @@ one device on network 16.7.7.11 another on 15.7.7.11
 
 16.7.7.11 & 255.0.0.0 = 16.0.0.0
 
-These are not the same so they are on a different network and so need to go through a router to get the each other
+These are not the same so they are on a different network and so need to go through a router to get the each other so therefor it has to go through the default gateway to access it. 
+
+172.16.0.0 & 11111111.11111111.11111100.00000000
+
+6 additional bits have been taken from the next byte and so there are 2^6=64 different subnets that are now available to be made. 
+
+the value of the last 1 in the mask is the magic number this will tell you the steps that the subnets will go in 
+
+200.210.18.0/24 - 11 switch networks - min 10 hosts on each
+
+10 hosts fits in 4 bits
+
+/24 means that can only be in the last byte
+
+therefor the last byte would look like 11110000
+
+therefor the slash notation would now be /28 due to there being 28 ones
+
+the last bit of the subnet is a 16 value so there will be a step of 16 betweeen each subnet
+
+the subnets will be
+
+* 200.210.18.0
+	* first address - 200.210.18.1
+	* last address - 200.210.18.14
+	* BC = 200.210.18.15
+* 200.210.18.16
+	* first address - 200.210.18.17
+	* last address - 200.210.18.30
+	* BC = 200.210.18.31
+* 200.210.18.32
+	* first address - 200.210.18.33
+	* last address - 200.210.18.46
+	* BC = 200.210.18.47
+* 200.210.18.48
+	* first address - 200.210.18.49
+	* last address - 200.210.18.62
+	* BC = 200.210.18.63
+* 200.210.18.64
+	* first address - 200.210.18.65
+	* last address - 200.210.18.78
+	* BC = 200.210.18.79
+* 200.210.18.80
+	* first address - 200.210.18.81
+	* last address - 200.210.18.94
+	* BC = 200.210.18.95
+* 200.210.18.96
+	* first address - 200.210.18.97
+	* last address - 200.210.18.110
+	* BC = 200.210.18.111
+* 200.210.18.112
+	* first address - 200.210.18.113
+	* last address - 200.210.18.126
+	* BC = 200.210.18.127
+* 200.210.18.128
+	* first address - 200.210.18.129
+	* last address - 200.210.18.142
+	* BC = 200.210.18.143
+* 200.210.18.144
+	* first address - 200.210.18.145
+	* last address - 200.210.18.158
+	* BC = 200.210.18.159
+* 200.210.18.160
+	* first address - 200.210.18.161
+	* last address - 200.210.18.174
+	* BC = 200.210.18.175
+* 200.210.18.176
+	* first address - 200.210.18.177
+	* last address - 200.210.18.190
+	* BC = 200.210.18.191
+* 200.210.18.192
+	* first address - 200.210.18.193
+	* last address - 200.210.18.206
+	* BC = 200.210.18.207
+* 200.210.18.208
+	* first address - 200.210.18.209
+	* last address - 200.210.18.222
+	* BC = 200.210.18.223
+* 200.210.18.224
+	* first address - 200.210.18.225
+	* last address - 200.210.18.238
+	* BC = 200.210.18.239
+* 200.210.18.240
+	* first address - 200.210.18.241
+	* last address - 200.210.18.254
+	* BC = 200.210.18.255
+
+
 
 ## Module 3 - Summary challenge
 
