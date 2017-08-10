@@ -117,13 +117,13 @@ Here are some useful tables that you may find good for quick reference
 ###### Classing table
 
 |Class|binary range|decimal range|maximum number of hosts|Layout
-|-|-|-|-|-|
-|A|**0**0000001 - **0**1111110|1 - 126| 16,777,214|N.H.H.H
-|B|**10**000000 - **10**111111|128 - 191| 65,534|N.N.H.H
-|C|**110**00000 - **110**11111|192 - 223| 254|N.N.N.H
+|---|---|---|---|---|
+|A|**0**0000001 - **0**1111110|1 - 126| 16,777,214|N.H.H.H|
+|B|**10**000000 - **10**111111|128 - 191| 65,534|N.N.H.H|
+|C|**110**00000 - **110**11111|192 - 223| 254|N.N.N.H|
 |D|**1110**0000 - **1110**1111|224 - 239| Multicast |
 |E|**1111**0000 - **1111**1111|240 - 255| Reserved |
-| | **01111111** | 127 | used for diagnostics
+| | **01111111** | 127 | used for diagnostics|
 
 
 ###### Subnetting table
