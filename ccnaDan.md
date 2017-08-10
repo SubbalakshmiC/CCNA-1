@@ -992,6 +992,80 @@ solution
 
 ## Module 2 - Establishing internet connectivity 
 
+### Understanding the TCP/IP internet layer
+
+* The internet protocol (UDP)
+	* layer two of the TCP/IT
+	* layer three of the OSI
+	* IP protocol
+		* connectionless protocol
+			* doesnt have to create a connection before you send information
+		* packets treated indepently
+		* Best-effort delivery
+		* No data-recovery stuff
+			* made to be fast
+			* no reliability use transport layer for that stuff
+		* media independant (not on layer 1 or 2)
+		* IPv4 and 6 are here 
+	
+#### Protocols
+
+* PC - SW = layer 2 ethnernet
+* SV - SW = layer 2 ethernet
+
+|PC||||||||SRV|
+|-|-|-|-|-|-|-|-|-|
+|V|ETH||HDLC||PPP||ETH|^|
+|SW|->|R1|->|R3|->|R2|->|SW|
+|||||||||
+|<|-|-|-|IP|-|-|-|>
+
+When the frame reaches R1 the router will de-encapsulate the data to layer 3, then make a decision about where to forward it. It sees that the next connection needs a HDLC frame to send the data so when the router re-encapsulates the data it will put it in a HDLC frame to send it across the connection. 
+
+basically it decodes the data, decides where to send the data based on IP then re-encodes all the information in the correct format for the next connection keeping the destination and source MAC address and data between the two. 
+
+example, when you upload a word document resume containing data, your name (source) and the company name (destination) to their website. the website would convert it to a pdf, but all the information contained will stay the same. then when the person gets it at the other end they will convert it back to the word document. Then it will contain all the same information inside but in the original format. 
+
+### IPv4 address representation 
+
+an IP address is a 32 bit binary number. we take this complicated value into 4 sections of 8 bits (4 octets). we then represent this in dotted decimal location 
+
+an IP address is split into 2 sections, the Network ID and the Host ID. 
+
+|32|bits|
+|-|-|
+|Network|Host|
+
+[10].0.0.0 is like the street name and represents it. This is the network number and the length can change. all of the devices in the same network share the network name. 
+
+router = 10.0.0.[1] because it is the first address that is reached
+
+switch = 10.0.0.[2] - PC1 = 10.0.0.[3] - PC2 = 10.0.0.[4]
+
+This 1,2 and 3 represents street number as they all have the same street name, but are located on different locations on the network. 
+
+### IP header PUT MORE INFORMATION HERE
+
+protocol = TCP or UDP
+
+Time to live = hop count maximum
+
+ask for two sheets of not paper
+
+### decimal and binary
+
+in an IP address you have a byte (8 bits), the full ip address is 4 bytes long.
+
+|most significant bit|||||||least significant bit|
+|-|-|-|-|-|-|-|-|
+
+|2^7|2^6|2^5|2^4|2^3|2^2|2^1|2^0|
+|-|-|-|-|-|-|-|-|
+|128|64|32|16|8|4|2|1|
+|0|0|1|0|1|0|0|0|
+|0|0|32|0|8|0|0|0|
+32+8 = 40
+
 ## Module 3 - Summary challenge
 
 ## Module 4 - Building a Medium sized network
