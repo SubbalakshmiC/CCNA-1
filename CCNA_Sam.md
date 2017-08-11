@@ -224,6 +224,9 @@ There are varying types of applications, such as:
 * This layer permits devices on the source and destination hosts to continue their communication.
 * There are many protocols that work at this layer but the two most commonly used protocols at transport layer are TCP and UDP.
 	* TCP (handshake like connection e.g. a phone)
+		* The TCP Handshake goes as follows:
+		* SYN → SYN-ACK → ACK
+	* UDP (connection-less e.g. a radio)
 	* UDP (connection-less e.g. a radio)
 
 	#### Internet
@@ -724,6 +727,76 @@ There are varying types of applications, such as:
 		
 	* The subnet ID for this host would be: 200.210.18.48
 	
+### Understanding the TCP/IP Transport Layer
+* The Transport layer on the TCP/IP Model maps to the Transport layer on the OSI Model also.
+* Its functions are as follows:
+	* Session Multiplexing
+	* Identification of differing applications
+	* Segmentation*
+	* Flow-Control*
+	* Connection-Orientated
+	* Reliability*
+
+		> *When required
+
+* TTL - Time To Live (the number of routers the traffic can pass through in order to reach its destination before it is destroyed)
+* The two most commonly used protocols here are TCP and UDP:
+
+#### TCP
+* Multiple applications occur at the same time on a system, e.g. web browsing using HTTP and file sharing using FTP. 
+* To start a TCP communication, a 3 way handshake takes place:
+	* (Host A) SYN → (Host B) SYN-ACK → (Host A) ACK
+	* SYN meaning Synchronise
+	* ACK meaning Acknowledge of request
+* To end a TCP Conversation, a seminal process happens:
+	* (Host A) FIN → (Host B) ACK-FIN → (Host A) ACK
+	* FIN meaning Finish or Terminate session
+	* ACK meaning Acknowledge of request
+* Session multiplexing is used to allow an IP host to communicate using multiple protocols simultaneously.
+* Differing Ports are used here to allow for this. e.g. HTTP on port 80 & FTP on port 21.
+* Every application process requires a port number to allow these multiple processes to not be confused with one another.
+* In order to process multiple data streams at once (*never cross the streams*) the data must be segmented to fit the Maximum Transmission Unit (MTU) of the layers below. IP 1500 as the MTU for that protocol. This is the normal size for MTU.
+* If a sender sends data faster than it can be received, some packets will be dropped, and TCP requires them to be retransmitted. 
+* TCP Detects dropped packets and resends them.
+* For flow control to work the receiver must send ACK responses to the sender after each chunk of data that is sent.
+* Flow control is used to maximise the transfer rate whilst minimising the number of retransmissions needed.
+* The Round Trip Time (RTT) value represents the time for data to get from sender to receiver and back. If this is too significant, then windowing may also be used. This allows the receiver to advertise the maximum amount of that can be received by the device prior to any being sent.
+* TCP has 3 main objectives:
+	* Detection and Transmission of dropped packets
+	* Detection and Remediation of duplicate or out-of-order data
+	* Avoidance of congestion in the network 
+
+**TCP HEADER**
+
+#### UDP
+* UDP is a best effort protocol that favours speed over reliability.
+* Offers applications access to the network layer without the reliability overheads of TCP.
+* One-way datagrams are sent to the receiver without any type of advance notification from the device.
+* Provides no way to resend or discover lost packets
+* Offers a low over-head
+
+**UDP HEADER**
+
+* Common Application Layer Protocols and corresponding Ports
+
+	|Protocol|Port           |
+	|--------|---------------|
+	|FTP     |21 - TCP       |
+	|SSH     |22 -  TCP      |
+	|Telnet  |23 -  TCP      |
+	|HTTP    |80 -  TCP      |
+	|HTTPS   |443 -  TCP     |
+	|DNS     |53 -  TCP & UDP|
+	|TFTP    |69 -  UDP      |
+	|SNMP    |161 -  UDP     |
+
+* DNS takes place over both TCP and UDP. UDP to send the initial request from a host, and TCP to synchronise between DNS Servers.
+
+* Possible Webpage Responses:
+	* 404 - Page not found
+	* 200 - OK
+	* 301 - Permanent Redirect (e.g. HTTP to HTTPS) 
+
 ## Module 3: Summary Challenge 
 
 ## Module 4: Building a Medium-Sized Network 
