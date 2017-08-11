@@ -460,9 +460,9 @@ There are varying types of applications, such as:
 
 * Ethernet frames have a fixed structure. This may be:
 
-	|Field Length (bits)   |8       |6                  |6             |2   |46-1500|4  |
-	|----------------------|--------|-------------------|--------------|----|-------|---|
-	|Typical Frame Contents|Preamble|Destination Address|Source Address|Type|Data   |FCS|
+	|Field Length (bits)       |8       |6                  |6             |2   |46-1500|4  |
+	|--------------------------|--------|-------------------|--------------|----|-------|---|
+	|**Typical Frame Contents**|Preamble|Destination Address|Source Address|Type|Data   |FCS|
 	
 	* Preamble	- 8 Bytes of Binary digits used to synchronise the signals of the communicating hosts.
 	* DA - The address of the NIC on the local network that the packet is being sent to.
@@ -665,8 +665,8 @@ There are varying types of applications, such as:
 	
 * A host needs to be aware of its subnet mask to know when to send messages intended for devices in other networks to the default gateway instead.
 
-* Worked Example:
-	* 200.210.18.0/24 → Class C Address (Mask 255.255.255.0)
+* Worked Example 1:
+	* 200.210.18.0/28 → Class C Address (Mask 255.255.255.240)
 	* The network features 14 collision domains, and thus needs a minimum of 14 subnets
 	* At least 10 hosts required per subnet
 	* Subnetting can occur only the last byte
@@ -689,22 +689,41 @@ There are varying types of applications, such as:
 		* Last Host: 200.210.18.30
 		* Broadcast Address: 200.210.18.31
 	* Subnet 3: 200.210.18.32/28
-		* First Host: 200.210.18.17
-		* Last Host: 200.210.18.30
-		* Broadcast Address: 200.210.18.31
-	* Subnet 4:
-		* First Host: 200.210.18.17
-		* Last Host: 200.210.18.30
-		* Broadcast Address: 200.210.18.31
-	* Subnet 5:
-		* First Host: 200.210.18.17
-		* Last Host: 200.210.18.30
-		* Broadcast Address: 200.210.18.31
-	* Subnet 6:
-		* First Host: 200.210.18.17
-		* Last Host: 200.210.18.30
-		* Broadcast Address: 200.210.18.31
+		* First Host: 200.210.18.33
+		* Last Host: 200.210.18.46
+		* Broadcast Address: 200.210.18.47
+	* Subnet 4: 200.210.18.48/28
+		* First Host: 200.210.18.49
+		* Last Host: 200.210.18.62
+		* Broadcast Address: 200.210.18.63
+	* Subnet 5: 200.210.18.64/28
+		* First Host: 200.210.18.65
+		* Last Host: 200.210.18.78
+		* Broadcast Address: 200.210.18.79
+	* Subnet 6: 200.210.18.80/28
+		* First Host: 200.210.18.81
+		* Last Host: 200.210.18.94
+		* Broadcast Address: 200.210.18.95
 
+* Worked Example 2:
+	* 15.17.18.35/24 → Class A Host Address (Mask 255.255.255.0)
+	* Here the network address would be 15.17.18.0 for the subnet this host falls into, calculated by ANDing the values of the provided host address with the subnet mask.
+	* Usable hosts would be calculated as: $$2^8-2=254$$
+	* Number of subnets within the network is calculated as: $$2^8=256$$
+
+* Worked Example 3:
+	* 200.210.18.51/28 → Class C Host Address (Mask 255.255.255.240)
+	* Network address of subnet 1 would be: 200.210.18.?
+		
+		|    |128|64 |32 |16 |8  |4  |2  |1  |
+		|:--:|---|---|---|---|---|---|---|---|
+		|.51 |0  |0  |1  |1  |0  |0  |1  |1  |
+		|.240|1  |1  |1  |1  |0  |0  |0  |0  |
+		|=   |0  |0  |1  |1  |0  |0  |0  |0  |  
+		= 48
+		
+	* The subnet ID for this host would be: 200.210.18.48
+	
 ## Module 3: Summary Challenge 
 
 ## Module 4: Building a Medium-Sized Network 
