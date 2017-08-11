@@ -222,12 +222,7 @@ At the top there is the software that you are using, e.g. Word, firefox and so o
 * TCP = reliably 
 	* TCP Transmission Control Protocol
 	
-	###### three way handshake
-	|Client|Server|
-	|--|--|
-	|SYN ↘| |
-	| | ↙ SYN - ACK |
-	|ACK ↘| |
+###### three way handshake
 	
 	* are you ready to get the data
 	* yes I am
@@ -1327,7 +1322,114 @@ the subnets will be
 	* last address - 200.210.18.254
 	* BC = 200.210.18.255
 
+15.17.18.35 - 255.255.255.0
 
+network ID = 15.17.18.0
+
+the default class mask is what the class A, B and C will use by default (255.0.0.0, 255.255.0.0, 255.255.255.0)
+
+### The connection between two routers will have to be its own network and it will probably have just two ip addresses for the two routers
+
+### Understanding the TCP/IP transport layer
+
+when you write a letter you would add in both the logical and the physical address, e.g. nan, and then her address.
+
+"defines how data is going to be transported across the network"
+
+one way of transferring data is reliable and the other is unreliable 
+
+in an unreliable method you don't check that there is a connection and that the data all got sent and so on 
+
+like passport control, if you check everyone then you will be really slow
+
+UDP = unreliable
+
+TCF = reliable
+
+* session multiplexing - allowing multiple programs to run at once
+ 
+* identification of different applications - port numbers
+ 
+* segmentation - segmenting up the data into the packets so that they fit in the layer two protocol - MTU (Maximum transmitting unit)
+	 * ethernet = 1500 bytes
+ 	* tcp is a header that takes up 20 bytes
+ 	* ip is a header that takes up 20 bytes
+ 	* MSS (maximum Segment Size)
+ 
+* flow control - window size for reliability - TCP sliding windows
+
+#### TCP
+
+a handshake will happen
+
+* c:Do you want to talk?
+* s:yes I do, do you want to talk?
+	* this is now a two way handshake
+* c:yes i do
+
+|Client|Server|
+|--|--|
+|SYN ↘| |
+| | ↙ SYN - ACK |
+|ACK ↘| |
+
+the conversation has now been established!
+
+* c:get me cisco.com
+* s:yeah, sure i will send it over give me a sec
+* s:here you go
+* c:ah cool, thanks for the page
+	* OR
+	* c:erm, can i have the page please?
+
+the ip address gets you there then the port number tells you what you want. 
+
+* establish the connection
+* conversate
+* terminate the connection mutually
+
+|Client|Server|
+|--|--|
+|FIN↘| |
+| | ↙ FIN - ACK |
+|ACK ↘| |
+
+dns port 53 this will get the ip address for the domain name that you ask for. Then the information is cached so that next time the information is there. every response has a time to live that is not normally less than a day. 
+
+window size shows how much bytes can be sent each time before and ack. it keeps going up and up until there is a mismatch then you will decrees until you are at the highest 
+
+#### UDP
+
+* can you send me this information please?
+* if I get a response then i assume that the data got through all fine
+* if i don't get a response then I send for the information again 
+
+200 ok - 301 permanent redirection 
+
+#### ADD IN TCP HEADER HERE
+
+flags are ack, syn, fin and so on
+
+UDP = "absolutely not very much"
+
+DNS is recursice. 
+* company DNS
+	* Service provider DNS
+		* THE BIG MAIN ONES
+
+|ftp|ssh|telnet|http|https|dns|tftp|sntp|
+|-|-|-|-|-|-|-|-|
+21|22|23|80|443|53|69|161
+
+# HOMEWORK THING TO DO
+
+* lab 5
+* lab 6
+* lab 7
+
+Challenge lab
+* 1
+* 2
 
 ## Module 3 - Summary challenge
 
