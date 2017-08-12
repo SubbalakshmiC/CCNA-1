@@ -224,6 +224,9 @@ There are varying types of applications, such as:
 * This layer permits devices on the source and destination hosts to continue their communication.
 * There are many protocols that work at this layer but the two most commonly used protocols at transport layer are TCP and UDP.
 	* TCP (handshake like connection e.g. a phone)
+		* The TCP Handshake goes as follows:
+		* SYN → SYN-ACK → ACK
+	* UDP (connection-less e.g. a radio)
 	* UDP (connection-less e.g. a radio)
 
 	#### Internet
@@ -460,9 +463,9 @@ There are varying types of applications, such as:
 
 * Ethernet frames have a fixed structure. This may be:
 
-	|Field Length (bits)   |8       |6                  |6             |2   |46-1500|4  |
-	|----------------------|--------|-------------------|--------------|----|-------|---|
-	|Typical Frame Contents|Preamble|Destination Address|Source Address|Type|Data   |FCS|
+	|Field Length (bits)       |8       |6                  |6             |2   |46-1500|4  |
+	|--------------------------|--------|-------------------|--------------|----|-------|---|
+	|**Typical Frame Contents**|Preamble|Destination Address|Source Address|Type|Data   |FCS|
 	
 	* Preamble	- 8 Bytes of Binary digits used to synchronise the signals of the communicating hosts.
 	* DA - The address of the NIC on the local network that the packet is being sent to.
@@ -664,6 +667,135 @@ There are varying types of applications, such as:
 	> The same process should be completed with each octet
 	
 * A host needs to be aware of its subnet mask to know when to send messages intended for devices in other networks to the default gateway instead.
+
+* Worked Example 1:
+	* 200.210.18.0/28 → Class C Address (Mask 255.255.255.240)
+	* The network features 14 collision domains, and thus needs a minimum of 14 subnets
+	* At least 10 hosts required per subnet
+	* Subnetting can occur only the last byte
+	* In the last octet:
+	
+		|     |128  |64   |32   |16   |8    |4    |2    |1    |
+		|-----|:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+		|Mask |1    |1    |1    |1    |**0**|**0**|**0**|**0**|
+		
+		> **Bold** denotes the host portion of the octet  
+		
+	* Because the last available bit in the mask is in position 4, equalling 16, that will be the step used for each of the subnets.
+
+	* Subnet 1: 200.210.18.0/28
+		* First Host: 200.210.18.1
+		* Last Host: 200.210.18.14
+		* Broadcast Address: 200.210.18.15
+	* Subnet 2: 200.210.18.16/28
+		* First Host: 200.210.18.17
+		* Last Host: 200.210.18.30
+		* Broadcast Address: 200.210.18.31
+	* Subnet 3: 200.210.18.32/28
+		* First Host: 200.210.18.33
+		* Last Host: 200.210.18.46
+		* Broadcast Address: 200.210.18.47
+	* Subnet 4: 200.210.18.48/28
+		* First Host: 200.210.18.49
+		* Last Host: 200.210.18.62
+		* Broadcast Address: 200.210.18.63
+	* Subnet 5: 200.210.18.64/28
+		* First Host: 200.210.18.65
+		* Last Host: 200.210.18.78
+		* Broadcast Address: 200.210.18.79
+	* Subnet 6: 200.210.18.80/28
+		* First Host: 200.210.18.81
+		* Last Host: 200.210.18.94
+		* Broadcast Address: 200.210.18.95
+
+* Worked Example 2:
+	* 15.17.18.35/24 → Class A Host Address (Mask 255.255.255.0)
+	* Here the network address would be 15.17.18.0 for the subnet this host falls into, calculated by ANDing the values of the provided host address with the subnet mask.
+	* Usable hosts would be calculated as: $$2^8-2=254$$
+	* Number of subnets within the network is calculated as: $$2^8=256$$
+
+* Worked Example 3:
+	* 200.210.18.51/28 → Class C Host Address (Mask 255.255.255.240)
+	* Network address of subnet 1 would be: 200.210.18.?
+		
+		|    |128|64 |32 |16 |8  |4  |2  |1  |
+		|:--:|---|---|---|---|---|---|---|---|
+		|.51 |0  |0  |1  |1  |0  |0  |1  |1  |
+		|.240|1  |1  |1  |1  |0  |0  |0  |0  |
+		|=   |0  |0  |1  |1  |0  |0  |0  |0  |  
+		= 48
+		
+	* The subnet ID for this host would be: 200.210.18.48
+	
+### Understanding the TCP/IP Transport Layer
+* The Transport layer on the TCP/IP Model maps to the Transport layer on the OSI Model also.
+* Its functions are as follows:
+	* Session Multiplexing
+	* Identification of differing applications
+	* Segmentation*
+	* Flow-Control*
+	* Connection-Orientated
+	* Reliability*
+
+		> *When required
+
+* TTL - Time To Live (the number of routers the traffic can pass through in order to reach its destination before it is destroyed)
+* The two most commonly used protocols here are TCP and UDP:
+
+#### TCP
+* Multiple applications occur at the same time on a system, e.g. web browsing using HTTP and file sharing using FTP. 
+* To start a TCP communication, a 3 way handshake takes place:
+	* (Host A) SYN → (Host B) SYN-ACK → (Host A) ACK
+	* SYN meaning Synchronise
+	* ACK meaning Acknowledge of request
+* To end a TCP Conversation, a seminal process happens:
+	* (Host A) FIN → (Host B) ACK-FIN → (Host A) ACK
+	* FIN meaning Finish or Terminate session
+	* ACK meaning Acknowledge of request
+* Session multiplexing is used to allow an IP host to communicate using multiple protocols simultaneously.
+* Differing Ports are used here to allow for this. e.g. HTTP on port 80 & FTP on port 21.
+* Every application process requires a port number to allow these multiple processes to not be confused with one another.
+* In order to process multiple data streams at once (*never cross the streams*) the data must be segmented to fit the Maximum Transmission Unit (MTU) of the layers below. IP 1500 as the MTU for that protocol. This is the normal size for MTU.
+* If a sender sends data faster than it can be received, some packets will be dropped, and TCP requires them to be retransmitted. 
+* TCP Detects dropped packets and resends them.
+* For flow control to work the receiver must send ACK responses to the sender after each chunk of data that is sent.
+* Flow control is used to maximise the transfer rate whilst minimising the number of retransmissions needed.
+* The Round Trip Time (RTT) value represents the time for data to get from sender to receiver and back. If this is too significant, then windowing may also be used. This allows the receiver to advertise the maximum amount of that can be received by the device prior to any being sent.
+* TCP has 3 main objectives:
+	* Detection and Transmission of dropped packets
+	* Detection and Remediation of duplicate or out-of-order data
+	* Avoidance of congestion in the network 
+
+**TCP HEADER**
+
+#### UDP
+* UDP is a best effort protocol that favours speed over reliability.
+* Offers applications access to the network layer without the reliability overheads of TCP.
+* One-way datagrams are sent to the receiver without any type of advance notification from the device.
+* Provides no way to resend or discover lost packets
+* Offers a low over-head
+
+**UDP HEADER**
+
+* Common Application Layer Protocols and corresponding Ports
+
+	|Protocol|Port           |
+	|--------|---------------|
+	|FTP     |21 - TCP       |
+	|SSH     |22 -  TCP      |
+	|Telnet  |23 -  TCP      |
+	|HTTP    |80 -  TCP      |
+	|HTTPS   |443 -  TCP     |
+	|DNS     |53 -  TCP & UDP|
+	|TFTP    |69 -  UDP      |
+	|SNMP    |161 -  UDP     |
+
+* DNS takes place over both TCP and UDP. UDP to send the initial request from a host, and TCP to synchronise between DNS Servers.
+
+* Possible Webpage Responses:
+	* 404 - Page not found
+	* 200 - OK
+	* 301 - Permanent Redirect (e.g. HTTP to HTTPS) 
 
 ## Module 3: Summary Challenge 
 
