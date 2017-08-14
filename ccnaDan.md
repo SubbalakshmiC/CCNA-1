@@ -1457,6 +1457,23 @@ when you send information from one IP address to another, it will be put into a 
 * ARP ( Address Resolution Protocol )
 	* used to get the MAC address when you have an IP address of a device on the network
 
+* send ping
+* ip is not on the same network
+* gons to default gateway
+* whats the mac address?
+* uses ARP to get MAC address of default gateway
+* data is encapsulated
+* sent to router
+* router reads ip address
+* looks up data in routing table
+* finds the correct interface for the network
+* encapsulates the data with the mac address of the router port
+* doesnt know mac address of destination
+* sends arp request to find mac address of the device with the IP address
+* encapsulates data with the mac address
+* sends information across the next network on the other interface
+* other machine gets the ping request
+
 ## Module 3 - Summary challenge
 
 ## Module 4 - Building a Medium sized network
