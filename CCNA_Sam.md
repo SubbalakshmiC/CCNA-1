@@ -785,7 +785,7 @@ There are varying types of applications, such as:
 	|SSH     |22 -  TCP      |
 	|Telnet  |23 -  TCP      |
 	|HTTP    |80 -  TCP      |
-	|HTTPS   |443 -  TCP     |
+	|HTTPS   |443 - TCP   |  |
 	|DNS     |53 -  TCP & UDP|
 	|TFTP    |69 -  UDP      |
 	|SNMP    |161 -  UDP     |
@@ -796,6 +796,42 @@ There are varying types of applications, such as:
 	* 404 - Page not found
 	* 200 - OK
 	* 301 - Permanent Redirect (e.g. HTTP to HTTPS) 
+
+### Exploring the Functions of a Router
+* Routers are required to reach hosts that are not within the same local network as the sender.
+* To do this, they use routing tables.
+* When a path to the destination hast cannot be found, a "Destination Unreachable" message is sent back to the sender to inform them of the error.
+* The command `show ip route` will display the Routing Table.
+* Any packets that are for a host not found on the local network that the router is attached to are sent via the default gateway to exit the local network.
+* Packets intended to external hosts will feature the destination address as the routers default gateway.
+* Address Resolution Protocol (ARP) is used to resolve the link between IP address and MAC Address.
+* When a router receives a frame, it checks the destination address to see if the frame was intended for it, and if so strips the frame information. It then inspects the packet's destination address. The Routing Table is consulted, and if a match is found the packet is re-encapsulated into a frame with the destination address of the next hop, and a source address of the router. The packet remains unchanged.
+* To see the ARP table, type `show ip arp` or `show arp` (dependant on the device)
+* Routers have 4 Types of memory:
+	* RAM: Stores data during CPU processing, volatile storage medium, so data is lost once the system is turned off.
+	* NVRAM: Non Volatile RAM, stores the running config of a system.
+	* ROM: Read Only Memory on the motherboard, volatile memory type that is read only memory and cannot be changed, only added to. Sometimes contains a ROM Monitor to fallback on if IOS becomes corrupted. POST and Bootstrap is here.
+	* Flash: Non-Volatile memory that can be erased and reprogrammed. This is where the IOS image is stored for the system.
+* Static routing is whereby an administrator sets a fixed route for data travel to reach another network. Indirect connections will still need to be discovered. E.g. a fixed route to Network B from Network A may be set via port E0/1, as well as an entry that to get to Host B, the message will have to be sent via port E0/1, that Network B is connected to.
+* Dynamic Routing uses a routing protocol to advertise remote network to other routers. This is routers sharing their routing table with other routers.
+* Dynamic routing can be done in one of two ways:
+	* Distance-vector routing protocol - Router informs it's neighbour of topology changes periodically, and the data is passed to the next neighbour. e.g. EIGRP.
+	* Link-state protocol -  The router informs all nodes in a network of changes in topology e.g. OSPF.
+* Each Router can inform the next one that it is directly connected to about the hosts that it has within it's broadcast domain, and this information is passed about other routers that are directly connected to the next etc. There are many routing protocols with unique properties, e.g. RIP, EIGRP and BGP.
+* Routers have two main functions:
+	* Path determining
+	* Packet Forwarding, of which there are 3 main systems:
+		* Process Switching - every received packet is compared to all entries in the routing table.
+		* Fast Switching - Recent destinations are cached to improve lookup speeds, this is consulted before the routing table.
+		* Cisco Express Forwarding - Fastest combination of the two previous technologies.
+* In a routing table, abbreviations along the left hand side will show how the addresses were discovered, e.g. C - Connected, S - Static or D - EIGRP
+* Common Metrics used in routing are as follows:
+	* Bandwidth: the data capacity of a link (the higher the better).
+	* Delay: The time required to move along a link, dependant on bandwidth, port queues, congestion etc. (the lower the better).
+	* Cost: arbitrary value assigned by an administrator, based on bandwidth, technology preference etc. (the lower the better)
+	* Hop Count: The number of routers a packet must travel through to reach its destination (the lower the better).
+* Different protocols use different metrics in order to determine path. e.g. RIP uses Hop Count, EIGRP uses Cost, OSPF uses Bandwidth and Delay.
+* 
 
 ## Module 3: Summary Challenge 
 
