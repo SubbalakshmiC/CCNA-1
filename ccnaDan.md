@@ -1739,6 +1739,60 @@ route tables are sent on unicast - 224.0.0.9
 a classless network protocol
 * VLSM is supported
 
+classfull means no vlsm - classless means yes vlsm
+
+#### enable rip v2
+
+```
+R1(config)# router protocol
+```
+
+at this point you have only enabled RIPv1 and so you are classfull. to change to version 2 you would type:
+
+```
+R1(config-router)# version 2
+```
+
+this will just allow you to use it, but you need to set the networks that the router is connected to use rip
+
+```
+R1(config-router)# network 10.0.0.0
+```
+
+This will mean that all networks that are 10.*.*.* that the router is directly connected to will be sent the route tables every 30 seconds like the protocol states. 
+
+how to enable a protocol
+
+* step one: turn on the protocol 
+	* R1(config)# router protocol
+* stop two: tell the router what networks to use RIP on
+	* R1(config-router)# network 10.0.0.0
+
+RIP would have to be enabled on all the routers on the network in order for it to actually work. 
+
+##### how to verify that RIP is working
+
+```
+R1# shop ip protocols 
+```
+
+[120/1] = [admin value/number of hops]
+
+##### change values
+
+```
+router rip
+timers basic 60 180 180 240
+```
+
+passive interface means that you dont send rip stuff to that part but it is still advertired. this would be used where a router is connected to a network that is stubbed.
+
+```
+passive-interface default
+```
+
+will set all interfaces as passive
+
 ## Module 3 - Summary challenge
 
 ## Module 4 - Building a Medium sized network
