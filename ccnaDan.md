@@ -1555,11 +1555,30 @@ dynamic routing will automatically choose the best path for the data to go, and 
 
 different protocols will use different things to see what the best route is
 
-### Distance vector
+the level of trust that you give to different protocols is called the administrative distance basically you would trust a complex protocol more that one that is super simple. 8 bit number. lower is better
+
+* directly connected network
+	* rating of 0
+* admin done (manuall)
+	* rating of 1
+
+protocol|admin distance
+|-|-|
+direct | 0
+static | 1
+EIGRP|90
+OSPF|110
+RIP|120
+
+Cisco decides what the ratings are on Cisco stuff
+
+### Routing Internet Protocol (Distance vector)
 
 routing by rumour
 
 if something changes then the information that other people hold will be out of date, basically it does not auto magically update when information changes, only when the problem is found. 
+
+
 
 ## Module 3 - Summary challenge
 
