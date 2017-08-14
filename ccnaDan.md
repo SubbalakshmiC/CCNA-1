@@ -1431,6 +1431,32 @@ Challenge lab
 * 1
 * 2
 
+### The role of a router
+
+routers are required to reach hosts that are not on the same network. "Transmission of data from one network to another"  
+
+a router WILL NOT flood the data if it does not know where to go. a router will instead DROP the packet, then send a message back. 
+
+Routers need this knowledge to know where to send the information.
+
+* to know about a network the router will need to have an address on the network 
+* to get it to work you will need to
+	* enable the port: no shutdown
+	* set an ip address: ip address 10.1.1.1 255.255.255.0
+
+#### Routing table
+
+|10.1.1.1/24|e0
+|-|-|
+100.172.16.4/24|e1
+
+when you ping from one device to another then the pc will see that the device is not on the same network and so it will send it to the default gateway where the router is located and this will send the data to another network 
+
+when you send information from one IP address to another, it will be put into a frame that contains the MAC address of the pc that send the information and the MAC address of the default gateway. this is because layer two is divide to device connections. 
+
+* ARP ( Address Resolution Protocol )
+	* used to get the MAC address when you have an IP address of a device on the network
+
 ## Module 3 - Summary challenge
 
 ## Module 4 - Building a Medium sized network
