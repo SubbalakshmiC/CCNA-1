@@ -1,3 +1,8 @@
+
+|10.1.1.1/24|e0
+|-|-|
+100.172.16.4/24|e1
+
 # CCNA stuff 
 > lets do this!!!
 ---
@@ -1597,6 +1602,39 @@ routing by rumour
 ARP TTL is 4 hours to default
 
 if something changes then the information that other people hold will be out of date, basically it does not auto magically update when information changes, only when the problem is found. 
+
+### Enabling static routing
+
+this can be done by an admin or by a dynamic routing protocol. 
+
+to route a router must:
+
+* identify destination
+* identify routing information
+
+comparing
+
+static
+
+* admin adds in table
+* will have to manually update when a change occurs ( many administrative overhead )
+* behaviour can be precisely controlled
+
+dynamic
+
+automatically does the thing
+...
+
+when to use static routing?
+* hub and spoke
+* small networks
+* quick ad-hoc route
+
+stub network = one way in, one way out
+
+'''
+ip route destination_network destination_mask next_hop
+'''
 
 ## Module 3 - Summary challenge
 
