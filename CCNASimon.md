@@ -445,7 +445,30 @@ This is basically your ISP, and from there, they can forward the packets as requ
 Distance vector routing is like having signposts for routers, and the number of hops away.
 Examples of this are EIGRP and RIPv2.
 Link state routing is like having a map with a you are here sign on it, and showing every possible route to the destination.
-Examples of this are OSPF and IS-IS. 
+Examples of this are OSPF and IS-IS.
+
+##### Routing protocols
+A router will have different metrics to decide the best path:
+* Bandwidth - The data capacity of a link
+* Delay - The length of time that is required to move a packet along each link from the source to the destination.
+* Cost - A value set by administrators to weight decicions (load balance, reliability etc.)
+* Hop Count - Number of hops between the source and destination (shortest but not necessarily fastest)
+
+Usually protocols use multiple metrics to decide the best route
+
+##### Picking between routing protocols
+Routers can have multiple routing protocols running at the same time.
+The way a router picks between which route to take is a number called the administrative distance.
+The lower this number the better the rating.
+
+|Protocol|Administrative Rating|
+|---|---|
+|Directly connected|0|
+|Static route|1|
+|RIP|120|
+|EIGRP|90|
+|OSPF|110|
+
 
 ### Module 3 - Summary Challenge
 
