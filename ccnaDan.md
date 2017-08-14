@@ -1572,13 +1572,31 @@ RIP|120
 
 Cisco decides what the ratings are on Cisco stuff
 
+in the routing table you will only find the best route that the routes knows about
+
+#### LLDP
+
+LLDP (Link Layer Discovery Protocol)
+
+basically a standard version of the CDP
+
+* must be enabled on device and port
+* only on physical ports
+* can discover one device per port
+* detect Linux server
+
+##### ARP (address resolution protocol)
+
+* broadcast: who has this IP
+* unicast: I have that IP, here is my mac
+
 ### Routing Internet Protocol (Distance vector)
 
 routing by rumour
 
+ARP TTL is 4 hours to default
+
 if something changes then the information that other people hold will be out of date, basically it does not auto magically update when information changes, only when the problem is found. 
-
-
 
 ## Module 3 - Summary challenge
 
