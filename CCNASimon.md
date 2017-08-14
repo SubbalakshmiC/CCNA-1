@@ -10,7 +10,7 @@ Boot camp begins!
 * Then there is the part 1 exam
 * Then 2 weeks of ICND2
 
-## ICN🅱️1
+## ICND1
 * 90 mins - 55 to 60 questions
 * Exam is tight for time
 * Cannot go back, answer right first time
@@ -381,7 +381,71 @@ In total there are 48 bits used, however, usually shown in Hex
 
 ### Module 2 - Establishing Internet Connectivity
 
+#### Exploring the functions of a router
 
+##### Role of a router
+
+* Routers are required to reach a host that is not on the local network
+* Routers use a routing table to route between networks
+
+Routers need an address on a network to function.
+
+You do this in IOS with:
+
+* `ip addr "IP" "Subnet"`
+* `no shutdown`
+
+` sh ip route ` shows you the routing table
+
+When sending information from one IP address to another, the data will be put into a frame that contains the MAC address of the sender host, and also the MAC address of the default gateway.
+
+A host will use ARP (Address Resolution Protocol) to find the MAC address of the default gateway.
+
+
+A router contains a routing table.
+This is similar to a MAC table found in a switch, however, they are used in very different ways.
+If the router knows the destination address, it will forward the packets through the required port.
+If not, the packet will be sent along the default route or by discovering the network.
+
+The routing table is populated in 3 ways.
+One way is the router just reading the address of directly connected networks.
+Another way is with statice routing.
+This is where an admin directly tells the router an address and the port to send it from.
+The other way is called dynamic routing.
+This is where routers use a routing protocol to advertise remote networks to other routers.
+This is basically routers sharing their routing tables.
+This means if R1 is connected to R2, which is connected to R3.
+Due to dynamic routing, R1 knows to connect to R3 by sending to R2, which it will know what port it is connected  on.
+On R1s routing table, it will have an entry for R3, and the interface would be the interface that R2 is connected to.
+This shows how routers only care about the next hop, as R1 only knows that it needs to send the traffic to R2.
+It does not care how many routers are between R2 and R3 (in this case it is 0 but it could be thousands).
+
+All routers need to know about is something called the 'next hop'.
+This is basically the next router on the path.
+It does not care what happens to the traffic after that, it just needs to send the traffic to the next router.
+
+Routers only really have 2 functions:
+* Forwarding the packets
+* Path determination
+
+There is a specific entry in a routing table called a default gateway, or a gateway of last resort.
+This is basically where a router will send packet of addresses it does not know.
+This is basically your ISP, and from there, they can forward the packets as required.
+
+
+##### Memory of a router
+
+* Flash - IOS
+* NVRAM - Startup Config
+* RAM - Running Config
+* ROM - Power On self Test, Bootstrap, ROM monitor - backup OS
+
+##### Distance Vector vs Link State
+
+Distance vector routing is like having signposts for routers, and the number of hops away.
+Examples of this are EIGRP and RIPv2.
+Link state routing is like having a map with a you are here sign on it, and showing every possible route to the destination.
+Examples of this are OSPF and IS-IS. 
 
 ### Module 3 - Summary Challenge
 
