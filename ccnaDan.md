@@ -1474,6 +1474,93 @@ when you send information from one IP address to another, it will be put into a 
 * sends information across the next network on the other interface
 * other machine gets the ping request
 
+#### Routing
+
+the router learns about directly connected network because it has an ip address with that network. The art of routing is about the routes leaning about indirectly connected networks
+
+##### Static routing
+
+an admin will configure the router on how to reach a network
+
+basically the process of manually adding data to the routing table 
+
+to get to network 12.1.1.10 you need to send the packet out of interface e1 via Router 2
+
+
+|10.1.1.1/24|e0
+|-|-|
+100.172.16.4/24|e1
+12.1.1.10/24|e1 via Router 2 (11.1.1.2)
+
+this is known as the next hop address
+
+so routers can see all of the networks within a one hop range e.g. via one router
+
+##### dynamic routing
+
+basically the router worming it out by itself. 
+
+routers use a routing protocol to advertise remote networks to other routers. routers will share their routing table in a way. 
+
+###### Distance vector routing
+
+is like a router having a sings post, network x that way 3 hops and so on
+
+will have to wait for help if there is a problem
+
+###### Link state routing
+
+like having a map with a you are here here that have every possible route to every destination 
+
+can easily find a way around a problem like a down router
+
+##### router memory
+
+* flash - OS, kernel 
+* nvram - startup config
+* RAM - running config
+* ROM - POST, bootstrap, ROM monitor
+
+##### Router functions
+
+* Path determination
+* packet forwarding 
+
+##### The network was learnt by....
+
+* c = connected
+* t = local
+* r = RIP
+* o = OSPF
+
+gateway of last resort = if you dont know where to send it then send it to this as your final sort
+
+dynamic routing will automatically choose the best path for the data to go, and many things will need to be taken into account:
+
+* bandwidth
+	* the data capasity
+* delay
+	* the time it takes for the data to get through the network
+* cost
+	* an arbitrary value that is assigned by a network admin to the network that factors in all of the things. 
+* hop count
+	* THIS IS ALL THAT RIP WILL CARE ABOUT
+	* the number of hops that the connection will go through 
+* ... and so on
+
+
+* ospf = cost
+* eigrp = delay andn speed
+* rip = hops
+
+different protocols will use different things to see what the best route is
+
+### Distance vector
+
+routing by rumour
+
+if something changes then the information that other people hold will be out of date, basically it does not auto magically update when information changes, only when the problem is found. 
+
 ## Module 3 - Summary challenge
 
 ## Module 4 - Building a Medium sized network
