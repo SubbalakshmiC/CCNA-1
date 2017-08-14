@@ -1632,9 +1632,112 @@ when to use static routing?
 
 stub network = one way in, one way out
 
-'''
-ip route destination_network destination_mask next_hop
-'''
+##### static route
+
+```
+ip route destination_network destination_mask next_hop 2
+```
+
+format
+
+the 2 will tell the trust level to be lower 
+
+```
+ip route *.*.*.* 0.0.0.0 172.16.2.2
+```
+
+for any data that does not need to go to the local network then go out of 172.16.2.2
+
+### implementing RIPv2
+
+in the big company internet thing you would have to use dynamic routing due to the fact that it is far too complex to actually do manually. dynamic means that the network will automatically work out how the network should change when a problem occurs. but for a small off site part you could static routing as it is smaller. for site A, all data that is not internal you would static to the main network. you would then also have the site statically linked in the main part of the network. 
+
+#### dynamic routing - metric
+
+##### RIP
+
+* distance vector based
+
+rip uses hop count to determine the path, nothing else. its a very basic way to do the determination as it doesn't take into account speed, or so on. 
+
+Equal cost path load balancing - round robin load sharing 
+* this means that it will sent one packet will go one way, and one packet another way and so on for all the paths that have the same hop count. by default the max is 4 different paths at the same time. 
+
+rip is legacy and not really used too much on big networks
+
+OSPF goes off the cost of the connection. that is a combination of the bandwidth and the speed of the connections so the packets would not go through the.  
+
+EIGRP - bw, delay, load, reliability
+* usually just goes off the bw and delay
+
+Routing protocols will have to:
+
+* discovery of remote networks
+* maintaining information
+* choosing best path
+* ability to wind new best path if one is no longer available
+
+Routing protocols
+
+* Dynamic routing protocols
+	* Interior gateway protocols - under a network controlled by one organising body
+		* Distance routing vector protocols
+			* IGRP - not really used
+				* EIGRP - advanced distance vector - modern version
+			* RIP - not really used
+				* RIPv2 - modern version
+		* link state protocols
+			* OSPF
+			* IS-IS
+	* Exterior gateway protocol - across the internet
+		* BGP
+
+### Understanding RIP2
+
+* Hop count select the path
+* allows load balancing of equal cost paths ( 4 by default )
+* does not take into account other parameters like BW and so on
+	* because of this RIP takes very simple decisions
+
+|Network A|Router 1|Router 2|Router 3|Network B|
+|-|-|-|-|-|
+0|1|2|3|4
+
+R1 will send all of the routing table to R2 - Network A is one hop away for you
+* A is one hop away from you, via me, so your next hop is (ip)
+R2 then sends its route table to R3
+* A is two hops away from you, via me, so your next hop is (IP)
+
+This process will carry on until 15 hops and after that then the router will say that it is not able to connect to the server. 
+
+This means that a value of 16 will mean that it is infinite away and so the router will not try to connect. 
+
+so far this is a one way process as it only describes how to get there
+
+due to this the same thing happens in reverse
+
+> This process happens every 30 seconds, this means that every 30 seconds the status of the network is cheeked
+
+you get 3 attempts to prove that you are actually alive and still in the network. 
+
+additionally another things happens so it will take 3 minutes for the connection to be re routed. 
+
+#### RIP v1
+
+route tables are sent on BC - 255.255.255.255
+
+a classfull network protocol
+* cannot do VLSM
+	* in the routing message you send there is no compartment for the mask so it uses the routers one, so they all need to be the same
+
+#### RIP v2
+
+route tables are sent on unicast - 224.0.0.9
+
+> RIP v2 - route tables - unicast - 224.0.0.9
+
+a classless network protocol
+* VLSM is supported
 
 ## Module 3 - Summary challenge
 
