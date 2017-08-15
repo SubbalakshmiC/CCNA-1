@@ -806,6 +806,8 @@ There are varying types of applications, such as:
 * Packets intended to external hosts will feature the destination address as the routers default gateway.
 * Address Resolution Protocol (ARP) is used to resolve the link between IP address and MAC Address.
 * When a router receives a frame, it checks the destination address to see if the frame was intended for it, and if so strips the frame information. It then inspects the packet's destination address. The Routing Table is consulted, and if a match is found the packet is re-encapsulated into a frame with the destination address of the next hop, and a source address of the router. The packet remains unchanged.
+
+### Configuring a Cisco Router
 * To see the ARP table, type `show ip arp` or `show arp` (dependant on the device)
 * Routers have 4 Types of memory:
 	* RAM: Stores data during CPU processing, volatile storage medium, so data is lost once the system is turned off.
@@ -831,11 +833,117 @@ There are varying types of applications, such as:
 	* Cost: arbitrary value assigned by an administrator, based on bandwidth, technology preference etc. (the lower the better)
 	* Hop Count: The number of routers a packet must travel through to reach its destination (the lower the better).
 * Different protocols use different metrics in order to determine path. e.g. RIP uses Hop Count, EIGRP uses Cost, OSPF uses Bandwidth and Delay.
-* 
+* Path Determination is used to populated routing tables.
+* Admin Distances are used to determine how trustworthy paths are.
+	* Directly connected devices have an admin distance of 0
+	* Static routes have an admin distance of 1
+	* Each protocol has its own admin distance, e.g. OSPF is 110, RIP is 120 and EIGRP is 90.
+* Entries in a table may include a subnet, so more than one entry may exist for a single destination via differing subnets. e.g. in a routing table the address 10.1.1.1, the entries 10.1.1.0/24 and 10.1.1.0/16 will show because the subnet masks mean that only the first 1 or 2 octets will be considered. However, the match with the longest prefix is chosen over that of others.
+* Routing tables only contain a best route, determined by the protocol in use.
+* When building and maintaining a Cisco routing table, multiple methods may be used:
+	* The routing processes, which run routing protocols.
+	* The forwarding process
+	* The routing table its self, accepting data from routing processes.
+* CDP - Cisco routing protocol that allows devices to announce their capabilities. An industry standard version of this protocol is Link Layer Discovery Protocol (LDDP) This can be enabled (or disabled) with `(no) lldp run`.
+* 4 troubleshooting methods for lack of internet connectivity:
+	* Ping loopback to check if the IP stack is functioning.
+	* Ping Localhost to check if the NIC is functioning.
+	* Ping default gateway to check if the Host can communicate on the Local Network.
+	* Ping a remote device to check if the DNS service is functioning.
+* To be able to route data, a router must be able to:
+	* Identify the destination address (This may be via pre-determined static routes set by an administrator, or by information collected via dynamic routing protocols)
+	* Identify the source of the information 
+	* Identify routes of data travel 
+	* Select routes
+	* Maintain and verify routing information
+
+### Enabling Static Routing
+* Static routes should be used when:
+	* A network is small and simple
+	* A network follows a star topology
+	* A quick route needs to be created
+* Do not use static routing when:
+	* A network is likely to change
+	* A network is large 
+* A stub network is a one-way in one-way out type network.
+* To configure a static route, type `ip route (destination address) (destination subnet mask) (next hop or interface)`
+* To configure a default route, type `ip route 0.0.0.0 0.0.0.0 (next hop or interface)`
+
+### Learning the basics of ACL
+* ACL - Access Control Lists.
+* ACL is:
+	* A Protocol that sorts with IPs or MAC Addresses dependant on whether it is in use on a Router or a Switch.
+	* An IOS tool used to identify particular traffic types.
+	* A list of permit and deny statements.
+	* Identifies traffic using data in the IP Packet.
+	* Usable on both routers and switches.
+	* Working from top down through a list of statements, as soon as a non-match is found to any statement the packet is denied.
+* Once traffic has been identified, a next course of action can be decided.
+
+	![ACL](https://dbgate.files.wordpress.com/2016/02/flowchartacl.jpg?w=752&h=566)
+* To implement for filtering via standard source IP run: `access-list 1 (IP address) (Wild Card bit mask)`.
+* To implement via source IP, destination IP or Protocol run: `access-list 100`.
+* Wild Card bit masking is used to match IP Conditions using 1s or 0s. e.g. `access-list 1 deny 10.1.1.1 0.0.0.0`
+	* Binary 0 meaning "must match"
+	* Binary 1 meaning "ignore"
+	* This would deny only an IP address that matches the one above *exactly*.
+* Adding `access-list 1 deny 0.0.0.0 255.255.255.255` would block all traffic.
+* To display access lists run `show access-list`
+* ACL can be implemented in 3 types:
+
+|ACL Type         |Identifier or Range      |
+|-----------------|-------------------------|
+|Numbered Standard|0 to 99 & 1300 to 1999   |
+|Numbered Extended|100 to 199 & 2000 to 2699|
+|Named            |Name                     |
+
+### Enabling Internet Connectivity
 
 ## Module 3: Summary Challenge 
 
 ## Module 4: Building a Medium-Sized Network 
+### Implementing VLANs and Trunks
+
+### Routing between VLANs
+
+### Using a Cisco IOS Networking Device as a DHCP Network Server
+
+### Implementing RIPv2
+* Routing protocols can determine:
+	* How updates are conveyed
+	* Which knowledge is conveyed
+	* When to convey knowledge
+	* How to locate recipients of updates
+* Routing protocols can be used for:
+	* Discovering remote networks
+	* Maintaining up-to-date information
+	* Choosing the best path to follow
+	* Ability to find a new best path when the previous one is not available 
+* The operations of a dynamic protocol are:
+	* Sending and receiving messages on its interfaces
+	* Sharing routing messages and information with other routers
+	* exchanging routing information to learn about other remote networks
+	* When detecting a change in topology, this can be advertised to other routers
+* If all routes feature the same value in a given metric that a dynamic routing protocol may use, Equal Metric Load Balancing is used to spread out the load across the paths.
+* Most interior gateway protocol routing conforms to one of the following:
+	* Distance vector routing - determining the distance of the link between networks and uses the shortest path.
+	* Link-state - creates a map of the entire network to determine best paths. Periodic keep-alive messages are sent to ensure the map remains updated and accurate.
+	* Advanced Distance Vector - Combines Distance Vector and Link-State features, whereby a 'Hello' packet is sent, and partial updates occur after that.
+* RIPv2 is an open standard protocol that uses Hop Count as it's metric.
+* Load balancing of equal paths is used (4 equal paths max by default)
+* bandwidth is not taken into account as a metric. E.g. a serial connection with 2 hops will be favoured over a Gigabit connection with 3 hops.
+* RIPv1 does not work with VLSM or subnets of differing sizes. RIPv2 does.
+* To configure RIP:
+	* `router rip` - to configure RIP
+	* `version 2` - to enable RIPv2
+	* `network 0.0.0.0` - to enable RIP on all interfaces and advertise it
+	* `passive-interface e0/0` - allowing an interface to be advertised via RIP, but not receive unnecessary RIP messages
+* In an IP Routing table output on a IOS device, the two values in square brackets are: `[ admin distance / hop count ]`
+* Automatic RIP Summarisation occurs when a RIP packet moves to a network with a different subnet mask. It does not offer the mask, but instead a class-full IP address. e.g. Router A → Router B → Router C. Routers A and C are discontiguous to one another and occur on different subnet masks. This creates a class-full network boundary, whereby the Network address s different. 
+* Auto RIP Summarisation is where a router compresses it's entire route table to a single network address and advertises that address.
+* This is performed by EIGRP, RIPv1 and RIPv2.
+
+> Find useful posters at [PacketLife.net](http://packetlife.net/library/cheat-sheets/)
 
 ## Module 5: Network Device Management & Security 
 
