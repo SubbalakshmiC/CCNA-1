@@ -15,6 +15,8 @@ To access the notes just click on the corresponding file above.
 	* [Simon's Mindmaps (WIP)](https://github.com/446163/CCNA/tree/master/Mind%20Maps)
 	* [Sam's Cisco CLI Cheatsheet](https://github.com/446163/CCNA/blob/master/Cisco%20CLI%20Cheat%20Sheet.pdf)
 
+here is a link to a cool website that goes through the commands for IOS that we use in CCNA: https://haroen.me/ccna/
+
 Here are some useful tables that you may find good for quick reference 
 
 ###### OSI compared to TCP/IP 
