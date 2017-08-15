@@ -1947,7 +1947,22 @@ for example if you wanted to allow all of the packets that go through then you w
 access-list 1 permit any
 ```
 
+you can set the wildcard mask to any value that you want like you can with subnet mask. 
 
+example: allow 172.30.16.0/24 through to 172.30.31.0/24
+
+```
+access-list 1 deny 172.30.16.0 0.0.15.255
+```
+
+this command will permit all of the values higher than 172.30.16.0 up to 172.30.31.0. this is because the last four bits of the 16 will be changeable and the first four bits will be locked and in this case the are locked to 16. This then means that the value will range from 16 to 31 and so all of those will be allowed. 
+
+|172.30.|16|.0
+|-|-|-|
+||00010000||
+||**0001**0000|16|
+||...||
+||**0001**1111|31|
 
 ## Module 3 - Summary challenge
 
