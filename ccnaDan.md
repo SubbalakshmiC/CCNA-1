@@ -1,8 +1,3 @@
-
-|10.1.1.1/24|e0
-|-|-|
-100.172.16.4/24|e1
-
 # CCNA stuff 
 > lets do this!!!
 ---
@@ -1792,6 +1787,167 @@ passive-interface default
 ```
 
 will set all interfaces as passive
+
+
+things to clarify from discovery 20
+* auto summary 
+	* a problem that occers with classfull routing protocols 
+
+Discontinuous subnets - subnets of one big network separated by networks of subnet works of another class of network
+
+this means that there are class B networks that are connected together by some class A networks - the boundary between the routers of different classes will be a classfull network boundary.
+
+in rip auto summary the protocol will change the network address of one of the classes to fit in with the class of the other network when it advertises it. 
+
+a class B network is actually 172.16.5.0/24 and it is connected to a class A network with the address of 10.2.2.0/24. 
+
+| 172.16.5.0/24 | R2 | 10.2.2.0/24 | R1 | 10.3.3.0/24 | R3 | 172.16.6.0/24 |
+|-|-|-|-|-|-|-|
+B||A||A||B
+summ to 172.16.0.0/16||||||summ to 172.16.0.0/16
+
+auto summary will mean that you would say that we are fy18 rather than saying all of our names. 
+
+router 3 will not say 172.16.6.0 it will compress it and say 172.16.0.0. 
+
+because the ip address of the device connected to the router will all have the same begining part of the ip address, then the parts after will change with the subnet mask. due to this the router will just have to advertise the first part of the ip address and then the router will sort out all of the specific stuff when the data gets to it. 
+
+however, this could present a problem as you could then have two ip address that have the same begining on different parts of different networks, this would then lead to the data getting split between the two networks. 
+
+in the example above you can see that both of the networks on the end have the same compressed form of the ip address that is advertised. 
+
+if router 1 needed to ping 172.16.6.5 then it should go over to the right, but as you can see in the compressed form of the ig address, it sees both of the networks as the same address. so it will ping off to the right, and it will do throuth all OK. but then the router will load balance and send the next ping to the left router then the ping will be dropped and because its from the wrong network. this would lead to the ping pattern of:
+
+> !.!.!
+
+without compression then this would not happen. the command "no auto-summary" will ensure that this compression does not happen and therefor this problem will not exist.
+
+### learning the basics of ACL (Access Control List)
+
+an ACL is a way to identify a type of traffic and then do things according to that. can be as simple blocking all packets from simon to sam. can go up to allowing FTP but blocking telnet. can also be used for route summarisation. its a packet by packet check process where it will go through every single packet and check the contents. It will also make the router slower due to the fact that it has to check all of the packets. 
+
+* cisco tool for traffic identification 
+* list of permit or deny statements
+* based on information that is in the ip packet
+* after it has been identified then actions can be taken
+* can be used on routers and switches. 
+
+the acl is a sequential list and you have to create all of it
+
+here is an example of how the process will work:
+
+```
+void process () {
+	packet = getPacketNext();
+	if ( packet = telnet ){
+		block(packet);
+	} elif ( packet = ssh ){
+		block(packet);
+	} elif ( packet = http ){
+		allow(packet);
+
+	 ...etc
+
+	} else {
+		block( packet ); // implicit block
+	}
+	 exit;
+}
+```
+
+how to do this in IOS:
+
+```
+# access-list number
+```
+
+if number is 1
+* you are configuring a standard ACL
+	* this will limit the functionality of the if statements 
+	* this can only access the source IP address 
+if the number is 100
+* you are configuring a extended ACL
+	* you can look at
+		* sourse address
+		* destination address
+	* you can filter on protocol 
+		* is it IP
+		* is it ospf
+		* tcp?
+			* ssh
+			* ftp
+			* web
+		* udp?
+		* and so on... 
+	* port number
+
+```
+# accesss-list 1 deny 10.1.1.1 wildcardMask
+```
+
+the wildcardMask will match if there is a 0 bit. and a 1 means that it ignors it. 
+
+basically where there is a 1 you are able to replace it with a \* to stand for a wild card in the address. 
+
+> ITS THE OPPOSITE OF A SUBNET MASK 
+
+> 0 = must match
+> 1 = ignore
+
+```
+# accesss-list 1 deny 10.1.1.1 0.0.0.0
+```
+
+this will mean that it will block "10.1.1.1" 
+
+at the botttom of the ACL this is automatically defined 
+
+```
+access-list 1 deny 0.0.0.0 255.255.255.255
+```
+
+this will deny ANY traffic that comes in from any address, also note that the 0.0.0.0 is useless due to the fact that the 255.255.255.255 will ensure that all of the numbers in the address will be ignored. 
+
+due to this if you want to allow all traffic apart from things that you have bloked then you would want to add in a global permit statement for all of the people on the subnet that you want to allow. this would look like:
+
+```
+access-list 1 permit 10.1.1.0 0.0.0.255
+```
+
+what this would do is that this would allow all of the people that are on the subnet that are trusted, but will still block all of the data from people on other networks. 
+
+it works like an if statement if you have the allow before the block then it would be allowed before it would be blocked. 
+
+if you want to see the list then you would do as you expect:
+
+```
+show access-list
+```
+
+cisco make this whole process a lot nicer, so instead of doing:
+
+```
+access-list 1 deny 10.1.1.1 0.0.0.0
+```
+you can instead put down:
+```
+access-list 1 deny host 10.1.1.1
+```
+in a similar way, you can re write:
+```
+access-list 1 deny 0.0.0.0 255.255.255.255
+```
+as:
+```
+access-list 1 deny any
+```
+
+for example if you wanted to allow all of the packets that go through then you would write in:
+```
+access-list 1 permit any
+```
+
+
 
 ## Module 3 - Summary challenge
 
