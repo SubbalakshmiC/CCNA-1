@@ -1952,17 +1952,94 @@ you can set the wildcard mask to any value that you want like you can with subne
 example: allow 172.30.16.0/24 through to 172.30.31.0/24
 
 ```
-access-list 1 deny 172.30.16.0 0.0.15.255
+access-list 1 permit 172.30.16.0 0.0.15.255
 ```
 
 this command will permit all of the values higher than 172.30.16.0 up to 172.30.31.0. this is because the last four bits of the 16 will be changeable and the first four bits will be locked and in this case the are locked to 16. This then means that the value will range from 16 to 31 and so all of those will be allowed. 
 
 |172.30.|16|.0
 |-|-|-|
-||00010000||
+|0.0.|15|255|
+|changes|0000*1111*||
+|stays|00010000||
 ||**0001**0000|16|
 ||...||
 ||**0001**1111|31|
+
+there are a few shortcuts that cisco allow you to do:
+* host will just do one ip 
+* any will do anything
+
+### ACP
+
+* standard
+	* only source address
+* extended
+	* source IP
+	* destination IP
+	* protocols
+	* applications
+
+you can also then give names
+
+standard:
+* 1-99 and 1300-1999
+extended
+* 100-199 and 2000-2699
+
+these numbers are the acl profile numbers. this means that you could create many different profiles that all have different rules and then swap out the number of the profile that you are using. 
+
+when you are using a standard ACL and dont add in the wildcard mask the router will add one in for you and this will be 0.0.0.0 which basically means that it will only do the address that you put in and not anything else. on most cases this will means that the address that you use will not work because you would put in a network address as it ends in 0so
+
+when you want to show an acl you must specify the name of the acl that you want to edit.
+
+### NAT (network address translation)
+
+you need an ip address that is allowed, both for you as a device and the router that you are connecting through. the reason that home routers will just work is because the have a config. when you plug it in for the first time it asks for an ip address from the ISP routers, this is DHCP (dynamic host configuration protocol). first step is to get and address that comes from your service provider using dhcp. you can manually set the ip address. 
+
+a public address is accessible/allowed from the internet, a private one is not. 
+
+when you connect to your router you will make a dhcp request that will give you an ip address. 
+
+devices on your private network need to be able to access the internet, but they cannot do that with the private address that they have. 
+
+NAT will enable the devices on your private network to be able to talk to devices on the internet even though they have a private address. 
+
+|Inside local address |->| inside global address. |
+|-|-|-|
+|static NAT|one to one process|old
+192.168.1.10 (pc) |-> direct assignment | 81.113.214.6(unique address)|
+192.168.1.11 (phone) |-> direct assignment | 81.113.214.7(unique address)|
+192.168.1.12 (tablet) |-> direct assignment | 81.113.214.8(unique address)
+dynamic NAT|many to many||
+192.168.1.10 (pc) |-> taken from pool | 81.113.214.6(unique address)
+192.168.1.11 (phone) |-> taken from pool | 81.113.214.7(unique address)
+192.168.1.10 (tablet) |-> taken from pool | 81.113.214.6( old address from device that is no longer talking )
+PAT | many to one | used now
+192.168.1.11 (pc) |-> uses a port number (the PID) | 81.113.214.4:6349(router address)
+192.168.1.11 (phone) |-> uses a port number (the PID) | 81.113.214.4:3043(router address)
+192.168.1.11 (tablet) |-> uses a port number (the PID) | 81.113.214.4:8934(router address)
+
+static NAT | 1:1
+|-|-|
+dynamic NAT | many:many
+PAT | many:1
+
+#### static NAT
+
+for a few devices is ok, but if you ask for 2000 public ip addresses then you cannot. 
+
+#### dynamic NAT
+
+i have 2000 people who want to speak to the internet, but only 100 who would speak at the same time. we create a pool of 100 addresses that then a router would then give to a device when it is going to the internet, then when the conversation ends then the address is returned into the pool for another device to take when it needs to communicate with the internet. 
+
+when more that 100 devices need to connect to the internet then there is a problem
+
+#### PAT (port address translation)
+
+all the devices in your network will share the address of the router but the will use a unique port number that will then be used to handle what device is speaking. 
+
+the pid of the networking process will go to be the outbound port number, this is then what the router will use to differentiate the inbound connections and then send it onto the correct device in the network. 
 
 ## Module 3 - Summary challenge
 
