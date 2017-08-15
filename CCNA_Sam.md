@@ -891,13 +891,42 @@ There are varying types of applications, such as:
 * To display access lists run `show access-list`
 * ACL can be implemented in 3 types:
 
-|ACL Type         |Identifier or Range      |
-|-----------------|-------------------------|
-|Numbered Standard|0 to 99 & 1300 to 1999   |
-|Numbered Extended|100 to 199 & 2000 to 2699|
-|Named            |Name                     |
+	|ACL Type         |Identifier or Range      |
+	|-----------------|-------------------------|
+	|Numbered Standard|0 to 99 & 1300 to 1999   |
+	|Numbered Extended|100 to 199 & 2000 to 2699|
+	|Named            |Name                     |
+
+* Worked example:
+	* Permitting addresses 172.30.16.0/24 through 172.30.31.0/24
+	* The following wildcard mask would be used: 0.0.15.255, allowing only addresses that begin with 172.30.16-31.0
+	* Using the address 172.30.16.0 and the wildcard mask, the binary value of the third octet:
+	
+		|0  |0  |0  |1  |0  |0  |0  |0  |IP address   |
+		|---|---|---|---|---|---|---|---|-------------|
+		|0  |0  |0  |0  |1  |1  |1  |1  |Wildcard Mask|
+		
+	* This shows that the first 3 bits in octet 3 must be 0s and the fourth must be a 1, forcing the value to be more than 15 but less than 32, thus denying or permitting this source address range.
+* Abbreviations can be used, such as typing `access-list permit host 172.30.16.3` instead of `access-list permit 172.30.16.3 0.0.0.0` to permit only the host with an IP address matching the address provided. Likewise the `any` prefix will ignore all bits in an address, the equivalent of a wildcard mask of `255.255.255.255`.
+* If the wildcard mask is unspecified, the default is always 0.0.0.0.
+* adding `log` to the end of a access-list statement will produce a log of denied requests. 
+* Differing ACLs can be set inbound and outbound on an interface, e.g. `access-group 1 out` when configuring an interface to apply ACL 1 to outbound connection.
+* Named ACLs allow you to specify line numbers when adding lines.
 
 ### Enabling Internet Connectivity
+* Dynamic Host Configuration Protocol (DHCP) is used to assign IPs to devices governed by a central domain.
+* Private addresses cannot connect to the internet, and so require a router to send traffic intended to other networks in encapsulated packets.
+* Network Address Translation (NAT) is used to translate a inside local to an inside global address.
+* NAT removes the need to readdress hosts with global addresses. e.g 192.168.1.10 becomes 81.11.214.6 when communicating with the internet.
+* Addresses are conserved using port-level multiplexing, by using Port Address Translation (PAT), multiple hosts can share a single public IP address.
+* NAT provides a layer of security by allowing private networks to not advertise themselves on the internet.
+* However NAT is process consuming on a router as addresses have to be translated.
+* NAT can exist in 3 ways:
+	* Static NAT, where each individual device has a inside global address of its own
+	* Dynamic NAT, whereby a router has a pool of addresses (that is likely less than the number of hosts in a network) that can be leased to a host to use to communicate with the internet and retuned to the pool when the communication is complete.
+	* PAT, using a single inside global address, but many ports to allow many internal users to communicate on the internet. This is achieved using port numbers to manage sessions.
+* To configure NAT use `ip nat outside` to state that the interface being configured is the outside interface. `ip nat inside` is used to mark an internal interface.
+* When configuring static NAT use `ip nat pool *NAME* (range start) (range end) netmask`, then configure a ACL for the internal network & finish with `ip nat inside source list 1 pool *NAME*`
 
 ## Module 3: Summary Challenge 
 
