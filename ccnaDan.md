@@ -2041,6 +2041,10 @@ all the devices in your network will share the address of the router but the wil
 
 the pid of the networking process will go to be the outbound port number, this is then what the router will use to differentiate the inbound connections and then send it onto the correct device in the network. 
 
+but if two of the devices select the same port, so they have the same networking pid, then the router will handle a change and deals with it all separately. 
+
+the port selection is handled by the devices when they are going outbound, but if there is a clash then the router will handle the change seamlessly.   
+
 ## Module 3 - Summary challenge
 
 ## Module 4 - Building a Medium sized network
