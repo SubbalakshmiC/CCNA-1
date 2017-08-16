@@ -2025,6 +2025,10 @@ static NAT | 1:1
 dynamic NAT | many:many
 PAT | many:1
 
+the outside global address is the destination ip. 
+
+the NAT table is used to translate the local to the global ip address and also the port. 
+
 #### static NAT
 
 for a few devices is ok, but if you ask for 2000 public ip addresses then you cannot. 
@@ -2044,6 +2048,51 @@ the pid of the networking process will go to be the outbound port number, this i
 but if two of the devices select the same port, so they have the same networking pid, then the router will handle a change and deals with it all separately. 
 
 the port selection is handled by the devices when they are going outbound, but if there is a clash then the router will handle the change seamlessly.   
+
+Demarcation - is the point at where responsibility of the network changes - for example the cable in your wall is where the ISP will handle everything. 
+
+fibre to the curb is where the fibre goes to the green box and then copper to the home. but fibre to the house is actually fibre to your house. 
+
+2g covers 85% of the populated earth. 
+
+when you set ip on a router you will need to also set the route. or you can do "ip address dhcp"
+
+when setting NAT you have to tell the router the IP address of the ports.
+
+on the outside port you set the ip and type "ip nat outside"
+
+on the inside port you set the ip and type "ip nat outside"
+
+you must define what is inside add what is outside. then you do 
+
+```
+ip nat inside source static insideIP outsideIP
+```
+
+to see all the nat:
+
+```
+show ip nat translations 
+```
+
+clear ip nat translation *
+
+```
+show ip nat translations
+```
+```
+show ip nat statistics - what ports are set up what way - THEY MAY BE THE WRONG WAY AROUND
+```
+```
+show access-list
+```
+
+```
+debug ip nat
+```
+this is basically verbose mode. 
+
+NEVER EVER TYPE "debug all"
 
 ## Module 3 - Summary challenge
 
