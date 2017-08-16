@@ -2343,7 +2343,63 @@ relaying over the networks will take too long and so on... to solve this all we 
 
 ### Network device management and security
 
+networks are prone to attacks:
+* remote access
+* local access
+* physical
+* theft
+* environmental
+* electrical
+* maintain once 
 
+The first thing that you NEED to do is secure enable mode. to set the plaintext password you will do:
+```
+enable password Cisco123
+```
+this will be visible when you look at the config files
+
+but to set an encrypted password WHICH YOU SHOULD DO, you would type:
+```
+enable secret sanfran
+```
+this will be hashed and not able to see what the password actually is. 
+
+when you set a secret password it will disable the plaintext password. 
+
+if you want to encrypt the passwords again then run:
+
+```
+service password encryption 
+```
+but this is not too secure as it uses an old system. 
+
+we just protected enable mode, here is how to protect the user mode. 
+
+by default there is no password and so you should add one. 
+
+```
+line console 0 	// this will only work for the local connection, not for VTY
+password Cisco123
+login 	// when to request the password
+```
+the console port is what you are protecting 
+
+login can be login local, AAA server authentication, authoritarian, accounting where the creds are stored so they can be pointed to. 
+
+to set a timeout you will type:
+```
+exec-timeout 5
+```
+
+this will mean that if you dont send a message in 5 minutes then the connection will cut. 
+
+to secure the vty lines then you would do:
+```
+line tvy 0 15 	// the range that you want to set the password for. 
+login
+password Cisco
+```
+vty is disabled until a password is set as a security measure.                                       
 
 ## Module 5 - Network device management and security 
 
