@@ -2226,6 +2226,53 @@ switchport mode trunk
 switchport trunk native vlan 99 	// this is the backup if the vlan fails due to being done configured on one side
 ```
 
+#### VLAN design configuration
+
+* the maximum number of VLANs is switch dependant
+	* based on the number of ports that the switch has
+* VLAN 1 is the factory-default Ethernet VLAN
+	* the management VLAN will be in the same one by default and you should change that
+	* most people change the management VLAN to be 99
+* a use-dedicated VLAN is for the Cisco switch management IP address
+* keep management traffic in a separate VLAN 
+* change the native VLAN to something other that VLAN 1
+
+DTP - dynamic trunking protocol
+* two ports work out if they are trunk or access.
+
+if you have a loop of switchs, this could be good as you will then have two different paths to get to where you want to go. BUT it will create a broadcast storm. This is where a BC will keep looping around the switches until the bw is all taken up and nothing that you want to get in actually can. this is stopped by the spanning tree protocol. 
+
+#### routing between VLANs
+
+##### one router and interface between VLANs
+
+to communicate between the VLANs you will need to have a router in order to communicate between them. if there are 3 VLANs then the router will need to have 3 ports so that it can access all of the different networks and have a network address for each of them. This is one way for doing it, but its a really bad way to do it. 
+
+##### router connected to the trunk port
+
+this is where you connect the router to the trunk port and read the traffic for all the VLANs. but you can only assign one ip address to one interface. you can then take the interface on the router like Fa0/0 and then create virtual interfaces or sub ports. you can then assign the one physical port to act as and work with multiple network that have different addresses. this is know as router on a stick due to how the network diagram looks.  
+
+```
+conf t
+int f0/0.1
+```
+the ".1" in this case will will the virtual interface into existence and then set it. you will set that number to be the VLAN number because that makes sense. 
+```
+encapsulation dot1q 1 	// setting the encapsulation for the extra frame section that is added
+ip address 10.1.1.1 255.255.255.0 	// setting the ip address for the certain VLAN
+int f0/0.2 	// creating a second Vinterface
+encapsulation dot1q 2
+ip address 10.1.2.1 255.255.255.0
+```
+
+##### level 3 switch
+
+this is where you have a router and a switch in the same box. this means that all of the data goes through a system bus rather than a port and so you will get a higher data throughput. 
+
+the management vlan is the vlan that the trunk port is on. 
+
+> the management VLAN is the one that is used just for communicating between switches with information that they want to share with each other. This will be default be vlan 1 the same as all of the normal traffic on the network. for security reasons you should change the management VLAN so that it cannot be accesses easily. 
+
 ## Module 5 - Network device management and security 
 
 ## Module 6 - Summary challenge
