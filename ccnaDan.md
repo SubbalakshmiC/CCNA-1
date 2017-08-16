@@ -2094,9 +2094,75 @@ this is basically verbose mode.
 
 NEVER EVER TYPE "debug all"
 
+Floating static route is when the best route that you have is not there so the next one down will float into the place. 
+
 ## Module 3 - Summary challenge
 
+just a lab that we have done
+
 ## Module 4 - Building a Medium sized network
+
+### VLANs and trunking
+
+this is still true of bigger networks, they will just have more of them. its just that we are covering it now. 
+
+VLAN is virtually segmenting a broadcast domain. in this room (bc domain) the boundary if the 4 walls, the process of the VLAN would be left half vs right half. would be bad for rob to teach one side something and then have mike teach the other half something else. there would be too much going on. to solve this you would put a wall in the room. VLAN is segmenting switches or a series of switches. 
+
+|port 1|port 2|port 3|port 4|port 5|port 6|port 7|port 8
+|-|-|-|-|-|-|-|-|
+sales pc|sales printer|sales server|sales pc|HR|HR|HR|HR
+
+the sales people are not interested in the HR stuff and vice versa. this would mean that only half of the data on the network is useless, so to cut that down we could segment it so that the sales and the HR people will not hear all of the bc of the other people that they do not need to hear. we would literally split the switch in half so that it acts as two switches with two MAC tables and so on. so the switch would look like this:
+
+|port 1|port 2|port 3|port 4|\||port 5|port 6|port 7|port 8
+|-|-|-|-|-|-|-|-|-|
+sales pc|sales printer|sales server|sales pc|\||HR|HR|HR|HR
+sales vlan|||||||||HR vlan
+
+![image of the vlan](https://wiki.mikrotik.com/images/9/9a/Image12005.gif)
+
+in this image you can see that we have three different vlans, each is a different network, with different network addresses, different bc domains and so on. 
+
+you can configure it port by port so they dont have to be next to each other. so if a bc comes in on a certain vlan interface then it will come out of the interfaces with the same vlan. 
+
+you can do this over multiple switch devices and still have the same vlans. to do this you will need to connect up the switches with a cable. to do this you would normally use the specific uplink ports, but you can actually use any port on the device. 
+
+* normal port = access port
+	* can only be accessed by one vlan
+
+normal ports can only be associated to one vlan so the cable that is connected to the other swith will have to be a trunk port. a trunk port can be associated with many vlans. 
+
+when a bc comes into a port the switch will send the bc out of the same ports in the vlan AND the trunk port. by default the bc will all go through the trunk port and the switch will have no knowledge of what vlans the other switch has, but by a process of vlan pruning you can set what vlans can be sent through a trunk port. 
+
+ethrnet frame:
+
+|DA|SA|Type|Data|fcs|
+|-|-|-|-|-|
+
+if you look you will see that there is no place for the storage of the vlan that the data is part of when it goes through the trunk port. in the old days you would encapsulate it again with additional information about what the vlan ID is this was only supported by cisco, but NOT USED ANY MORE. instead of encapsulating the data an extra field is inserted in the frame between the SA and the Type, and this is called the vlan tag
+
+this would turn 
+
+|DA|SA|Type|Data|fcs|
+|-|-|-|-|-|
+
+into this. 
+
+|DA|SA|vlan tag|Type|Data|fcs|
+|-|-|-|-|-|-|
+
+the trunk tagging is an industry standard and can be thought of as a sub-category of the Ethernet frame standard and is called IEEE 802.1q but is commonly known as "dot1q". the vlan tag is 4 bytes in size so its 32 bits in size. BUT NOT all of those bits are for the vlan tag and thats far too much so only 12 bits are for the number of the vlan tag. This means that there can be 2^12 vlans between connected switches. THE NORMAL VLAN RANGE IS UP TO 1000, but the extended range 4094. there are about 5 reserved vlan addresses. 
+
+a frame bigger than 1518 bytes is called a giant (frame). but because the tagged frame is just over the limit its called a baby giant frame. 
+
+there are 3 types of switches when vlans are used:
+* access
+	* what people are connected to 
+* distribution
+	* shares the load between switches
+	* only connects to switches
+* core
+	* this will connect all of the switches and actually connect the network together
 
 ## Module 5 - Network device management and security 
 
