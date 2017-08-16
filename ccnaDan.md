@@ -2117,7 +2117,7 @@ the sales people are not interested in the HR stuff and vice versa. this would m
 |port 1|port 2|port 3|port 4|\||port 5|port 6|port 7|port 8
 |-|-|-|-|-|-|-|-|-|
 sales pc|sales printer|sales server|sales pc|\||HR|HR|HR|HR
-sales vlan|||||||||HR vlan
+sales vlan||||||||HR vlan
 
 ![image of the vlan](https://wiki.mikrotik.com/images/9/9a/Image12005.gif)
 
