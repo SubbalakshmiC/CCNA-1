@@ -2151,18 +2151,80 @@ into this.
 |DA|SA|vlan tag|Type|Data|fcs|
 |-|-|-|-|-|-|
 
+what the vlan tag is made up of
+
+|type|priority|flag|vlanID|
+|-|-|-|-|
+
 the trunk tagging is an industry standard and can be thought of as a sub-category of the Ethernet frame standard and is called IEEE 802.1q but is commonly known as "dot1q". the vlan tag is 4 bytes in size so its 32 bits in size. BUT NOT all of those bits are for the vlan tag and thats far too much so only 12 bits are for the number of the vlan tag. This means that there can be 2^12 vlans between connected switches. THE NORMAL VLAN RANGE IS UP TO 1000, but the extended range 4094. there are about 5 reserved vlan addresses. 
+
+the tag is only added between the switches, it is read by the switch, removed and then sent out
 
 a frame bigger than 1518 bytes is called a giant (frame). but because the tagged frame is just over the limit its called a baby giant frame. 
 
 there are 3 types of switches when vlans are used:
+
+![image of network design](http://ncs.fnal.gov/nvs/documents/architecture/Hierarchical-Topology.png)
+
 * access
 	* what people are connected to 
+	* end points are here
 * distribution
 	* shares the load between switches
 	* only connects to switches
+	* where the access layer aggregates (meets)
 * core
 	* this will connect all of the switches and actually connect the network together
+	* where the data centre lies so that everyone can access it
+	* high performing switch
+		* nexus in the core 
+		* others are catalyst
+
+access ports - clients plug in
+
+trunk ports - switches plug in 
+
+if you dont design it well:
+* large broadcast domains
+* security vunerability
+ and so on.....
+
+how to do it in IOS
+
+```
+# conf t
+(config)# vlan 2
+(config-vlan)# name Sales
+```
+
+> when you create any vlan you create a special file called vlan.dat, this is saved to flash with the OS rather than to the vram. THIS IS NOT SAVED IN THE RUNNING CONFIG 
+
+```
+show vlan 
+```
+
+```
+show vlan id *number*
+```
+
+the number will show you the just the information for the certain vlan number. 
+
+```
+conf t
+int e 0/3
+switchport mode access
+switchport access vlan 2
+```
+
+> when you see switchport think layer two. 
+
+
+```
+conf t
+int e 0/3
+switchport mode trunk
+switchport trunk native vlan 99 	// this is the backup if the vlan fails due to being done configured on one side
+```
 
 ## Module 5 - Network device management and security 
 
