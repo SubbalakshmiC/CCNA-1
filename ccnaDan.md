@@ -2273,6 +2273,78 @@ the management vlan is the vlan that the trunk port is on.
 
 > the management VLAN is the one that is used just for communicating between switches with information that they want to share with each other. This will be default be vlan 1 the same as all of the normal traffic on the network. for security reasons you should change the management VLAN so that it cannot be accesses easily. 
 
+### using a cisco IOS device as a DHCP server
+
+Dynamic Host Configuration Protocol
+
+used to get ip address for devices on a network.
+
+manual ip addressing:
+* time consuming
+* prone to errors
+* unfavorable to employee mobility
+ 
+a dhcp ip address assignment in a segmented LAN is as follows:
+* (re)assigned on a per VLAN basis. 
+
+|Host||server|
+|-|-|-|
+discover (broadcast)| -> ||
+|| <- | offer(unicast) |
+request (broadcast) | -> |
+|| <- | acknowledge(unicast) |
+
+Discover, Offer, Request, Acknowledge = DORA
+
+#### Discover
+
+bc sent out to whole network
+
+#### Offer
+
+unicast through unspecified address
+
+#### Request
+
+where you accept the 
+
+#### Acknowledge
+
+the DHCP will send your device the following:
+* IP address
+* Default gateway
+* DNS server
+* Domain name
+* and maybe some more
+
+server will have a pool of offer able addresses that it can assign to devices on the network. the pool is also called the scope. if you have a few devices in another network to the main dhcp server then all the requests will be dropped. to fix this you would use DHCP relay. 
+
+to do this on a router you would do:
+
+```
+(config)# int fa0
+(config-it)# ip helper 10.1.1.1 	// the ip address for the dhcp server
+```
+
+the router will then send a message to the dhcp server with the network ID so that the dhcp server will know what type of address to return to the device. basically the whole thing will happen in the background so that the host device will never know what happened. 
+
+relaying over the networks will take too long and so on... to solve this all we do is make the router able to be a dhcp server in its own right. 
+
+```
+(config)# ip dhcp excluded-address 10.1.50.1 10.1.50.50 // this will prevent any addresses in the range of these from being assigned to a device on the network. 
+(config)# ip dhcp pool guests
+(dhcp-config)# network 10.1.50.0 /24
+(dhcp-config)# default-router 10.1.50.1 	// the default gateway
+(dhcp-config)# dns-server 10.1.50.1
+(dhcp-config)# domain-name example.com 	// used for active directory 
+(dhcp-config)# lease 0 12 	// 0 days, 12 hours
+(dhcp-config)# exit
+```
+
+### Network device management and security
+
+
+
 ## Module 5 - Network device management and security 
 
 ## Module 6 - Summary challenge
