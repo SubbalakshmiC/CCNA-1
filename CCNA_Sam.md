@@ -947,7 +947,7 @@ There are varying types of applications, such as:
 * As a network increases more switches may be added to a VLAN, it may even span over multiple sites. 
 * 'normal' ports on a switch are called access ports, and may only be configured to work on a single VLAN.
 * 'trunking' ports can be used to link switches and are able to be configured to work with multiple VLANs. These trunk ports are configured to pass any network traffic intended to go to VLANs found on other switches.
-* The command `switchport mode (mode)` can be used to change the mode of these ports.
+* The command `switchport mode (access/trunk)` can be used to change the mode of these ports.
 * Trunking ports are non-physical and can be configured on any port.
 * An extra field within an ethernet frame is inserted between Source Address and Type, called VLAN Tag. This is added as data leaves a switch through a trunk and is used to help with finding the correct destination at the other end of the trunk. This is IEEE standard 801.1Q or DOT1Q. This is a 32 bit field.
 * The tag fields are:
@@ -955,11 +955,50 @@ There are varying types of applications, such as:
 	* Priority (3 Bits) - The priority level of the frame
 	* Flag (1 Bit) - if this is 1 the MAC address format is non-canonical, if this is 0 then the MAC format is canonical.
 	* VLAN ID (12 Bits) - Used to identify the VLAN that the frame is intended for.
- * The Standard VLAN range is 1 to 1000, and the Extended Range is 1006 to 4094.
+* The Standard VLAN range is 1 to 1000, and the Extended Range is 1006 to 4094.
+* the Hierarchical model for LANs is composed of:
+	* Access Layer - providing endpoints and users with direct network access.
+	* Distribution layer - Aggregates access layers and provides service connectivity.
+	* Core layer - provides connectivity between distribution layers for large LAN Networks
+* When VLANs are created, a file titled 'vlan.dat' is created and stored in flash memory.
+* The maximum number of VLANs that can be operated on a network is dependant on the switch being used.
+* VLAN 1 is the factory default Ethernet VLAN.
+* A dedicated VLAN is for the Cisco switch management IP address.
+* It is important to keep management traffic in a separate VLAN, and change the default to something other than VLAN 1.
+* In a network that features switches organised in a loop, broadcasts may end up being endlessly forwarded. This is called a broadcast storm. A protocol called Spanning Tree is used to remedy this, whereby if a loop is detected a port is put into a blocking state. STP allows for networks with physical redundancy to function without the risk of broadcast storms getting out of control.
 
 ### Routing between VLANs
+* Each VLAN requires a unique IP address to function.
+* Inter-VLAN routing can be achieved in one of 3 ways:
+	* Giving each VLAN an interface on a router, though this is not sustainable.
+	* Configuring a physical port with virtual interfaces that allow many VLANs to operate on a single physical port.
+	* A L3 Switch can be used, negating the need for a router.
+* A logical interface can be set up by typing:
+	* `int f0/0.1` (The part of the address after the period shows that the interface is non physical and functions via a logical interface
+	* `encapsulation dot1q (VLAN number)`
+	* `ip add (address) (subnet mask)`
+
+|Command and Variable                  |Description                                                                      |
+|--------------------------------------|---------------------------------------------------------------------------------|
+|interface (interface)                 |Enters interface configuration mode                                              |
+|encapsulation dot1Q (VLAN number)     |Defines the encapsulation format as IEEE 802.1Q and specifies the VLAN identifier|
+|ip address (ip address) (network mask)|Assigns an IP address and network mask to an interface                           |
+
 
 ### Using a Cisco IOS Networking Device as a DHCP Network Server
+* DHCP - Dynamic Host Configuration Protocol
+* Manually configuring IP addresses can be:
+	* Time consuming
+	* Prone to error
+	* Unfavourable to mobility
+* The DHCP Process is as follows:
+	1. New hosts broadcast to *Discover* a DHCP server (DHCP Discover Message)
+	2. DHCP server responds to *Offer* new hosts IP addresses via unicast
+	3. Host responds with a *Request* message to confirm that it accepts the address that it has been offered.
+	4. DHCP server *Acknowledges* this via unicast, and offers a lease period.
+* This is known as the DORA Process.
+* By specifying `ip helper (address)`, any DHCP Discover messages can be converted from broadcast to directed broadcast (unicast) by the router to reach the DHCP server more efficiently.
+* 
 
 ### Implementing RIPv2
 * Routing protocols can determine:
