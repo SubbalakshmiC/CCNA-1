@@ -927,11 +927,35 @@ There are varying types of applications, such as:
 	* PAT, using a single inside global address, but many ports to allow many internal users to communicate on the internet. This is achieved using port numbers to manage sessions.
 * To configure NAT use `ip nat outside` to state that the interface being configured is the outside interface. `ip nat inside` is used to mark an internal interface.
 * When configuring static NAT use `ip nat pool *NAME* (range start) (range end) netmask`, then configure a ACL for the internal network & finish with `ip nat inside source list 1 pool *NAME*`
+* To troubleshoot NAT:
+	* `show ip nat translation`
+	* `show nat statistics`
+	* `show access-lists`
+	* `show ip route`
+	* `debug *THING*` *BE CAREFUL. RESOURCE HEAVY.*
 
 ## Module 3: Summary Challenge 
 
 ## Module 4: Building a Medium-Sized Network 
 ### Implementing VLANs and Trunks
+* Virtual LANs (VLANs) can be used to:
+	* Segment a network.
+	* Allow a network to be more flexible.
+	* Secure a network better.
+* By segmenting a network into VLANs, the number of broadcast domains is increased, This can help to reduce network overheads.
+* logical groups of addresses can be separated to act as if they are on their own LANs.
+* As a network increases more switches may be added to a VLAN, it may even span over multiple sites. 
+* 'normal' ports on a switch are called access ports, and may only be configured to work on a single VLAN.
+* 'trunking' ports can be used to link switches and are able to be configured to work with multiple VLANs. These trunk ports are configured to pass any network traffic intended to go to VLANs found on other switches.
+* The command `switchport mode (mode)` can be used to change the mode of these ports.
+* Trunking ports are non-physical and can be configured on any port.
+* An extra field within an ethernet frame is inserted between Source Address and Type, called VLAN Tag. This is added as data leaves a switch through a trunk and is used to help with finding the correct destination at the other end of the trunk. This is IEEE standard 801.1Q or DOT1Q. This is a 32 bit field.
+* The tag fields are:
+	* Type (16 Bits) - This is set to 0x8100 to show an 801.1Q tagged frame.
+	* Priority (3 Bits) - The priority level of the frame
+	* Flag (1 Bit) - if this is 1 the MAC address format is non-canonical, if this is 0 then the MAC format is canonical.
+	* VLAN ID (12 Bits) - Used to identify the VLAN that the frame is intended for.
+ * The Standard VLAN range is 1 to 1000, and the Extended Range is 1006 to 4094.
 
 ### Routing between VLANs
 
