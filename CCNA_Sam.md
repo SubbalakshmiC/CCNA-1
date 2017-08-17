@@ -998,7 +998,14 @@ There are varying types of applications, such as:
 	4. DHCP server *Acknowledges* this via unicast, and offers a lease period.
 * This is known as the DORA Process.
 * By specifying `ip helper (address)`, any DHCP Discover messages can be converted from broadcast to directed broadcast (unicast) by the router to reach the DHCP server more efficiently.
-* 
+* to configure DHCP:
+	* `ip dhcp pool (name)`
+	* `network (ip) (mask)`
+	* `default-router (ip)`
+	* `dns-server (ip)`
+	* `domain-name (address)`
+	* `lease (days) (hours) (minutes (seconds)`
+	* `exit`
 
 ### Implementing RIPv2
 * Routing protocols can determine:
@@ -1038,6 +1045,96 @@ There are varying types of applications, such as:
 > Find useful posters at [PacketLife.net](http://packetlife.net/library/cheat-sheets/)
 
 ## Module 5: Network Device Management & Security 
+### Securing Administrative Access
+* To enable varying passwords perform the following commands:
+	* Privileged EXEC password: `enable password (password)`
+	* Encrypted Privileged EXEC password: `enable secret (password)`
+	* Encrypt all plaintext passwords: `service password encryption`
+	* Secure console passwords:
+		* `line console 0`
+		* `password (password)`
+		* `login`
+	* To set a mode timeout perform: `exec-timeout (minutes)`
+	* Enabling Remote Access passwords:
+		* `line vty 0 15`
+		* `login`
+		* `password (password)`
+	* To configure SSH:
+		* `hostname (name)`
+		* `ip domain-name (domain)`
+		* `username (name) secret (password)`
+		* `crypto key generate rsa modulus 1024`
+		* `line vty 0 15`
+		* `login local`
+		* `transport input ssh`
+		* `exit`
+		* `ip ssh version 2`
+
+### Implementing Device Hardening
+* Using range selection multiple interfaces can be simultaneously configured:
+	* `interface range (interface) 0 - 2`
+	* `switchport access vlan 999` - Assigning to an unused VLAN for contingency 
+	* `shutdown`
+* When data is traveling through trunk ports, frames intended for the native VLAN are not tagged.
+* Several implementations port security exist:
+	* Static Learning - MAC addresses that use a specific port can be configured, preventing access to those not permitted from sending frames through that port.
+	* Dynamic Learning - A number of addresses can be added and permitted at one time. This does not allow you to specify *which* addresses are allowed, however.
+	* Combination - Some specific addresses are allowed, but a range is specified of new addresses that can be learned. e.g. allow up to 4 addresses per port, but statically learn 2 addresses.
+	* Sticky Learning - Dynamically learned addresses are converted to 'sticky learned addresses' and stored in running config as if they are statically learned. The admin must save the config to move these addresses to NVRAM.
+* MAC Layer Flooding Attack - filling the MAC address table and resending frames so that the entries are not forgotten, in order to force all devices to have an Unknown Unicast Address, flooding all frames and allowing a device to intercept all network traffic.
+* When security violations occur, a port can be configured to:
+	* Protect - Drops packets with unknown SAs, until enough addresses are un-learned to drop below the maximum value.
+	* Restrict - Performs Protect functions, but also reports on security violations.
+	* Shutdown - Shuts down the port, logs the attack and forces the admin to re-open the port manually.
+* To configure Port security:
+ 	* `int (interface)`
+ 	* `switchport mode access`
+ 	* `switchport port-security`
+ 	* `switchport port-security maximum 1`
+* To allow the switch to re-open ports after a violation, run:
+	* `errdisable recovery cause (cause)`
+	* `errdisable recovery interval (seconds)`
+* To disable Cisco Discovery Protocol (CDP): `no cdp run`
+* To disable the http server: `no ip http server`
+* Network Time Protocol (NTP) is used to synchronise all network devices to use a shared time. Cisco Devices can be used as NTP servers. Configure with `ntp master`. Any devices on the network can be told to synchronise with `ntp server (ip)`.
+* Switches can are configured to use the router they are connected to in able to synchronise their times. As each devices becomes a layer further from the time source its Stratum Level increases by 1 as it becomes less accurate, starting from 1. 15 is the highest active level.
+* `Clock timezone (code)` can set the device timezone.
+
+### Configuring System Message Logging
+* System logging allows event notifications to be sent over IP networks. By default these are sent to a logging program.
+* These can be configured to be sent to 4 types of location:
+	* A logging buffer
+	* Console lines
+	* Terminal Lines
+	* Syslog Server
+* e.g. to send syslog messages to a server, `run logging (ip)`
+
+|Severity Level   |Explanation                     |
+|-----------------|--------------------------------|
+|0 - Emergency    |System is unusable              |
+|1 - Alert        |Immediate action needed         |
+|2 - Critical     |Critical condition              |
+|3 - Error        |Error condition                 |
+|4 - Warning      |Warning condition               |
+|5 - Notification |Normal but significant condition|
+|6 - Informational|Informational message           |
+|7 - Debugging    |Debug message                   |
+
+"**E**liminate **a** **c**risis, **e**ven **w**hen **n**obody **i**s **d**ying"
+
+### Managing Cisco Devices
+* On a Router or Switch, ROM contains:
+	* Bootstrap - detailing the startup behaviour of a device
+	* POST - Power on Self Test
+	* ROM Monitor - A backup OS, used for recovery
+* The process is:
+	* Reads Bootstrap
+	* Run POST
+	* Load IOS
+	* If IOS is corrupt or missing, run ROM Monitor
+	* If IOS is acceptable, then load IOS
+	* Read startup-config
+	* Start running-config
 
 ## Module 6: Summary Challenge 
 
@@ -1045,3 +1142,9 @@ There are varying types of applications, such as:
 
 ---
 # ICND2
+
+---
+# A typing exercise
+> I'm practicing Dvorak, so here is some random story I am using to practice:
+
+Once upon a time there was a dog and it had at least four legs, but maybe more. It often depended on which Saturday of the month it was. This dog had a favourite toy called Andreas, which was a (tatty looking) four dimensional rhomboid. Francine (the dog, if you could even call it that) love play with the toy and even buried him in the garden. This did however lead to time causality issues. 
