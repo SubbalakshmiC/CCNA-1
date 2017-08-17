@@ -2399,9 +2399,159 @@ line tvy 0 15 	// the range that you want to set the password for.
 login
 password Cisco
 ```
-vty is disabled until a password is set as a security measure.                                       
+vty is disabled until a password is actually set as a security measure.                                       
+
+telnet is a clear text based protocol. dont do this as you know. Instead use SSH due to the fact that it is not in plaintext. SSH it not trend on by default. 
+
+```
+(config)# hostname SwitchX
+(config)# ip domain-name cisco.com
+(config)# username user1 secret Cisco12 	// creates a user on the switch that the ssh will apply to, also a fallback for AAA. 
+(config)# crypto key generate rsa modulus 1024 	// when the key is generated the hostname and the domain name will be used 
+the name for the keys will be: SwitchX.cisco.com
+% The key modulus size will is 1024 bits
+% Generating 1024 bit RSA keys, keys will be non-exportable...
+[OK] (elapsed time was 1 seconds)
+(config)# line vty 0 15
+(config-line)# login local 		// use the local account on the device (the one we just set up ssh for)
+(config-line)# transport intput ssh 	// allow ssh as an inbound transport (enables only ssh but you can do "ssh telnet" for both )
+(config-line)# exit
+(config)# ip ssh version 2 	// sets the version, 1 has issues so use 2 when you can. 
+```
+
+YOU MUST CHANGE the hostname on the device due to the fact that otherwise the key will be insecure. 
+
+AAA uses protocol radius or tacacs. 
+
 
 ## Module 5 - Network device management and security 
+
+### implementing device hardening
+
+unsecured ports on switches. shutdown the ports that you done use on the switch. 
+
+in ios there is an interface range command. this will allow you to put a configuration on a grout of ports. this will only work on ethernet ports. 
+
+```
+(config)# interface range FastEthernet0/1 - 2 		// this is a range of ports set
+(config-if-range)# switchport access vlan 999
+(config-if-range)# shutdown
+```
+this will set the config for all of the ports but cannot be used for anything specific like ip addresses. 
+
+for ports that you dont use you will shut then down AS WELL AS putting them in an unused VLAN so that if they come up you they wont have any information with you 
+
+default vlan is vlan 1 that is set by default and that all traffic will go through if you don't change it. 
+
+The native vlan is the one that is used by the trunk cables and this will have no tag value in the Ethernet frame. this is used by ip phones when there is a pc connected to the internet through the phone, the phone will understand the vlan and the tag but the pc will not, due to this the vlan tag cannot be used to communicate to the pc. but the tag is dealt with by the phone. 
+
+#### port security
+
+mainly this will stop mac layer flooding attack. this is a passive attack that can allow people to see things that they can not normally see. 
+
+mac layer flooding works on the flooding layer of the switch. 
+
+in port 1 is in the CEO, in port 3 is the financial director, in port 2 is someone else... person X
+
+CEO mac address 1, FD 2, person X 4.
+
+person X sends something to the switch and so the mac table now knows that the mac address of 4 is in port 2. then they use macchanger to set their mac address to 5 and in the mac table there is the link to address 5 and port 2. this keeps happening over and over again going filling up all of the table with different mac addresses that will all be sent to them. so when a packet goes in to the switch for the CEO with the mac address of 1 then the switch will see that the mac table is full and so the switch cannot learn the address and does not know where to send it. this will then act as an unknown unicast and will be flooded to all devices on the network. 
+
+* fill the mac address table with random addresses
+* the switch cannot store where the data needs to go as its table is full
+* the incoming packet will then be flooded and seen by the attacker
+
+to fix this you would make a vlan between these people and therefor they are in different networks. but that will not fully work
+
+if you think about it when there is an access switch there can only be one mac address for each port as that represents only one user. the admin will then set port security. 
+
+port security will then:
+* allow at max one mac address per port
+* but if there is a change to the mac address then the port can be shutdown. 
+
+there are 3 different ways that the port can react
+
+protect
+* drops unauthorised but doesn't tell you 
+restrict
+* drops but sends syslog
+shutdown
+* shut-down the port
+
+```
+(config)# interface FastEthernet0/5
+(config-if)# switchport mode access 		// must statically set the port mode
+(config-if)# switchport port-security 	// switchport means layer two
+(config-if)# switchport port-security maximum 1 	// port-security will auto set up the max of 1 address and so on
+(config-if)# switchport port-security mac-address sticky 	// this would copy the secure mac addresses into running config in nvram
+(config-if)# switchport port-security mac-address violation shutdown 	// here is the protected or restricted thing
+```
+the MAC address table is stored in the RAM, and that would delete the secure port assignment if it was power cycled. 
+
+if you have a service on your device that you dont need or use then disable it so that it cant be exploited. 
+
+* disable http is a good idea. 
+* disable CDP where it is not needed so that other devices cannot read the information
+	* this can be done globally or on a specific port. 
+
+```
+no cdp run
+no ip http server
+```
+
+### NTP (Network Time Protocol)
+
+this will share time within a network to any devices that request it. it will allow all devices to sync their times. 
+
+a cisco router can be an NTP source. to set this up do:
+
+```
+ntp server ipAddress
+```
+
+this will sync the clock on the router with that of the server. 
+
+to set up a server you wold assign the ip address to the one of the device. 
+
+```
+ntp server 10.1.1.1
+```
+
+stratum level - the steps taken from the original clock and therefor the time inaccuracy.  max is 15, so 16 is not syncd
+
+to show ntp associations just do:
+
+```
+show ntp associations
+```
+
+to see the status of ntp run:
+
+```
+show ntp status
+```
+
+### configuring syslog 
+
+syslog is a protocol that 
+
+the format of syslogs is:
+
+```
+seq no:timestamp: %facility-severity-MNEMONIC:description
+```
+
+severity = 0 REALLY BAD, 7 debug
+
+|level|explanation|
+|-|-|
+emergency| system is unusable
+critical| immediate action needed
+error| critical condition
+warning| error condition
+notification| normal but significant condition
+informational| informational message
+debugging| debugging information
 
 ## Module 6 - Summary challenge
 
