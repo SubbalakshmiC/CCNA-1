@@ -2553,6 +2553,117 @@ notification| normal but significant condition
 informational| informational message
 debugging| debugging information
 
+Eliminate, A, Crisis, Even, When, No one, Is, Dead
+
+the syslog messages can be sent to any place but by default they are sent to the console port. the logging buffer is there to keep a small about of buffer for the syslog information. or you could send it to the syslog server where it is stored permanently. we can also send them to the vty lines for when you are remote accessing the system.  
+
+you can nest the sessions by going into one device and then use that to create another session to a device that only that device could access. 
+
+when you ssh to a device you can run "debug ip rip" now the router will display all the information about rip. but this will be displayed to the console port NOT the vty so you will need to change this. to do this run:
+
+```
+# terminal monitor 
+```
+
+to switch it off you would do:
+
+```
+terminal no monitor
+```
+this is slightly different to normal but its still the same thing as what you would expect.
+
+to send syslog to a server you would do:
+
+```
+logging 10.1.10.100
+logging trap informational 	// this will send only information from severity level 1 to 6
+```
+
+### managing Cisco devices 
+
+In ROM we have:
+* bootstrap
+	* how to start up the device and run the kernel and OS
+	* part of this will call the POST
+* POST
+	* power on self test
+	* will test all of the hardware to ensures that it is actually working 
+* ROM monitor
+	* a backup operating system in case the main OS fails so that there is basic functions. 
+	* basically a recovery mode that can do only basic functions
+	* used if you wanted to upgrade the OS then you would download it to your server and then to the router, but if the new version didn't work then it would boot to ROM monitor so that the device will still work.  
+
+a router can boot from:
+* flash
+* usb
+* server
+
+configuration register = 0x2102
+* the least significant four bits (second 2) are known as the boot field
+* case boot field = 0x0
+	* load ROM monitor
+* 0x1
+	* boot normally
+* 0x2 - 0xf // normal operation 
+	* check for boot commands then boot normally
+
+the other bits will change basic dip switch functions
+
+```
+show file systems
+```
+
+you can backup and load your current image. ALWAYS BACKUP YOUR OS
+
+device type|image type|file format m~ram z~compresses|digital sighed image|version|extension
+|-|-|-|-|-|-|-|
+
+how to back up OS:
+* verify connection to server
+	* ping
+* check that there is enough space on the server
+	* show flash:
+* copy the file over
+	* copy flash0: tftp:
+
+how to upgrade:
+* download the new image to server
+* make sure router can connect to server
+* check that you have enough space
+* copy the file over
+* set the boot command to the new os
+* save config
+* reload the device
+
+config from:
+* nvram
+* terminal
+* tftp server
+
+### password recovery
+
+you can only do this when you are plugged into the device physically by the console port. 
+
+> quote "the welcome to slough sign, what has it been stolen?"
+
+* switch off the router
+* switch on the router and press control+break to enter ROM monitor mode
+* when in ROMmon mode check the configuration register
+
+```
+rommon 1> confreg 0x2142
+```
+
+setting bit six to 1 will ignore the NVRAM which contains the passwords
+
+2142 means that bit 6 will be set to 1. 
+
+> 2101 is default
+
+when you do this all the interfaces will be down due to the fact that the blank configuration merged and that had all interfaces down. you will also need to reset the bits back to the default value so that it will load the config like normal. 
+
+# do the licencing homework stuff
+
 ## Module 6 - Summary challenge
 
 ## Module 7 - Introducing IPV6
