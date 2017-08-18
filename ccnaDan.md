@@ -2798,3 +2798,35 @@ ipv6 address autoconfig
 ```
 ipv6 unicast-routing 	// this will make it actually act like a router rather then a generic devcice
 ```
+You must remember this command otherwise many bad things will happen. 
+
+### configuring ipv6 static routes
+
+they have tried to keep it the same as the ipv4 static routes. 
+
+RFC - request for comment - basically the way that a standard is defined by many suggested.
+
+you now have many different protocols for routing with an ipv6 network
+* RIPng - 2080
+* OSPFv3 - 2740
+* MP-BGP4 - 2545/4760
+* EIGRP for IPV6 - proprietary
+
+for static routing you will use basically the same commands, in the same format just ipv6
+
+```
+ipv6 route networkThatYouWantToReach nextHop
+```
+
+for a branch router you would do:
+```
+ipv6 route ::/0 nextHop
+```
+this is because you would send any data that you have to the HQ router due to the fact that it is a stub network. 
+
+to verify that you have the static route:
+```
+show ipv6 route static
+```
+
+> THATS IT, ALL OF ICND 1!!!!!! whoo
