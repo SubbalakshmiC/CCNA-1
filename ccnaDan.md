@@ -2668,6 +2668,133 @@ when you do this all the interfaces will be down due to the fact that the blank 
 
 ## Module 7 - Introducing IPV6
 
+### VLSM (variable length subnet mask)
+
+efficient use of address space, the idea came about because we ran out of IP addresses. if you had subnets with 100 hosts and some with only 2 then it would be wasteful to ure 9 bits for the subnets. 
+
+you have been given the address of 150.1.0.0/16 and you have 3 networks of 250 hosts and then 2 with only 20 hosts. you would set the subnet mask then you could have 256 hosts per notwork, this is wastefull for the networks with only 20 hosts. having /24 everywhere would be a HUGE waste and this is why we use VLSM. for the networks with only 20 users you would only need 5 bits for the subnet ro that would be a /27. then for the routers where there are only 2 hosts you would only need 2 hosts and so that would be a /30. 
+
+example
+
+ip address of 200.1.1.0/24
+
+we will need:
+* 6 networks with 30 hosts per network
+* 6 network with 2 hosts per networks 
+	* this is for the routers that get to the branch offices
+
+6 branch offices with 30 users each, 6 connections for users. 
+
+this totals to 12 networks, so you need to borrow 4 bits, one for each network. this will leave 4 bits for the hosts. 
+
+basically you will take an unused network that you have subnetted and then break that down to more networks. basically you will then have many different slash notations in the same network. 
+
+### ipv6
+
+this will just be an introduction for the moment. 
+
+we have exhausted the ip address space for ipv4 and so we need a new way to actually connect everything that we need. ipv4 was made in the mid 1950s. 
+
+several mechanisms were made to help with this:
+* CIDR
+* VLSM
+* NAT
+	* breaks the end to end model of ip
+	* breaks security
+	* some things are not nat friendly
+	* a lot of load on the router
+* DHCP
+
+move to ipv6, its not new because it has been around for a long time. 
+
+the benefits:
+* larger address space
+* simpler header
+* security and mobility
+* transition richness
+
+ipv4 is 32 bits long while ipv6 is 128 bits long
+
+RFC (request for comments) ~ where people suggest how to make it easier to actually use
+
+and ipv6 address is represented by a 16 bit hex number. leading zeros are optional. additionally, a range that it just zeros it can be reduced to just :: but only once in the address
+
+2001:0db8:010f:0001:0000:0000:0000:0acd - main example
+
+2001:db8:10f:1:0:0:0:acd - suppressing leading zero
+
+2001:db8:10f:1::acd - suppressing consecutive zero 
+
+ipv4 loopback - 127.0.0.1
+
+ipv6 loopback - ::1
+
+ipv4 unspecified - 0.0.0.0
+
+ipv6 unspecified - ::
+
+ipv6 address types:
+* unicast
+* multicast
+	* used for dhcp by using a reserved address
+	* only ipv6dhcp servers listen for that specific request
+* anycast
+	* instead of one to anybody, you go to the nearest device
+* NO BROADCAST
+
+you cat have ipv6 addresses in different scopes
+* global (global unicast address)
+	* like public addresses
+* site (unique local unicast address)
+	* like private addresses
+* link local (Link local unicast addresses)
+	* allows device to communicate with each other 
+
 ipv6 is 128 bit
 * 64 bit for network
 * 64 bits for device
+* built in 16 bits for JUST subnetting 
+THIS IS FIXED
+
+global unicast address is always 2000::/3 = 001
+
+|002|global routing prefix|SLA|interface ID|
+|-|-|-|-|
+
+fc00::/7 to identify a local unicast address = 1111 110
+
+link local address always begin fe80::/10 = 1111 1110 10
+
+then the other 54 bits for the network ID will be zero
+
+this will be acquired auto magically 
+
+because the interface section is soo big you can fit in a mac address but its still not big enough, so in-between the OEM and the device section on the mac address we put in FF FE to make it the correct size. ONLY FOR LINK LOCAL ADDRESSES. this is called EUI-64 bit interface ID
+
+when you change the 7th bit of the host ID to a one it will tell that you have changed the value and that it is only locally unique (local address) rather than globally unique (public address)
+
+you can set the address manually, or automatically or...:
+
+stateless auto configuration
+* this is done automatically by the device
+* when you set a router with an ipv6 address, it will send out a new icmp message called the router advertisement. this will send out the networkID, the default route and to on 
+* the host device will then take the advertised networkID and add in its padded mac address to give it a unique and reachable ID all over the internet. this removes the need for NAT. 
+* arp is no longer needed, due to this because the neighbour's all know each other
+stateful auto configuration
+* you used a dhcp v6 server to assign the ip addresses. 
+
+neighbour solicitation and advertisment
+
+FF02::1 is the all nodes multicast address (basically a broadcast)
+
+source address is :: because it doesnt have an address, destination is ff02::2 as that goes to all devices. 
+
+to set the router to automatically get the ipv6 address, you would do
+
+```
+ipv6 address autoconfig
+```
+
+```
+ipv6 unicast-routing 	// this will make it actually act like a router rather then a generic devcice
+```
