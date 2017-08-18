@@ -486,6 +486,10 @@ There are varying types of applications, such as:
 	4. The device with a matching destination MAC Address replies to the unicast with a unicast frame addressed to PC A.
 	5. The switch enters the source MAC Address of PC B and the port number of the switch port that received the frame into its MAC Address table.
 	6. The switch can now forward frames between these addresses without flooding, as these addresses are now in its MAC Address table.
+* VLSM is Variable length subnet masking, and is used to make the most efficient use of the subnet range.
+* It came into effect as the remaining IPv4 addresses were depleted.
+* e.g. A provider may offer an address of 150.1.0.0/16 to a router. There may be 5 networks connected to the router, all with varying numbers of hosts on each network. It would be inefficient to provide all networks with the same subnet, in order to match the largest size network, huge numbers of host addresses would be wasted.
+* Therefore, varying the length of the subnet mask allows the mot efficient use of the address range available. 
 	
 ### Troubleshooting
 * Troubleshooting issues may happen in a couple of ways:
@@ -934,9 +938,7 @@ There are varying types of applications, such as:
 	* `show ip route`
 	* `debug *THING*` *BE CAREFUL. RESOURCE HEAVY.*
 
-## Module 3: Summary Challenge 
-
-## Module 4: Building a Medium-Sized Network 
+## Module 3: Building a Medium-Sized Network 
 ### Implementing VLANs and Trunks
 * Virtual LANs (VLANs) can be used to:
 	* Segment a network.
@@ -1044,7 +1046,7 @@ There are varying types of applications, such as:
 
 > Find useful posters at [PacketLife.net](http://packetlife.net/library/cheat-sheets/)
 
-## Module 5: Network Device Management & Security 
+## Module 4: Network Device Management & Security 
 ### Securing Administrative Access
 * To enable varying passwords perform the following commands:
 	* Privileged EXEC password: `enable password (password)`
@@ -1135,10 +1137,83 @@ There are varying types of applications, such as:
 	* If IOS is acceptable, then load IOS
 	* Read startup-config
 	* Start running-config
+* The config register is a 16 bit hex value that denotes how a router acts. Each of the config bits have different meanings:
+	* 0 to 3 - boot field (Hex 0 to F)
+	* 6 - causes system to ignore NVRAM contents
+	* 7 - disables boot messages
+	* 8 - break disabled
+	* 9 - causes the system to use the secondary bootstrap (typically not used)
+	* 10 - IP broadcast with all 0s
+	* 05, 11, 12 - Console line speed
+	* 13 - Boots default ROM software
+	* 14 - IP broadcasts do not have net numbers
+	* 15 - enables diagnostic messages and ignores NVRAM contents
+* e.g. if the registry is 0x2102 (router default) then:
+	* Bit 2, 8 and 13 are on.
+	* Therefore, the system will load the 1st file in flash, break is disabled and the default ROM software is booted into.
+* Loading Cisco IOS configuration files process:
+	* Boot up router
+	* Startup config in NVRAM? → If yes, load startup config → If no, look for TFTP server for config
+	* If none, launch setup
+* IOS file name key:
+	* Cs900-universalk9-mz.SPA-152-4.M1.bin
+	* Platform (Cisco 2900 Router) - Feature set (universal - File format (M: runs in RAM, Z: Zipped) . Digitally Signed - Version (15.2, release 4 . M1) . File type (Binary executable).
+* Device config can be loaded from:
+	* NVRAM
+	* Terminal
+	* TFTP Server 
+* To enter password recovery, set the boot process to ignore NVRAM:
+	1. Switch off router
+	2. Press **break** (Ctrl-C) on launch to enter ROM Monitor
+	3. Type `confreg 0x2142`
+	4. Save running config and reboot to start setup
 
-## Module 6: Summary Challenge 
+## Module 5: Introducing IPv6 
+### Introducing IPv6 Basics
+* To circumvent IPv4 address shortages, the following methods are used:
+	* CIDR
+	* VLSM
+	* NAT
+	* DHCP
+* These have issues however.
+* IPv6 has benefits over IPv4:
+	* Larger address volumes:
+	* Simpler header format
+	* Security and mobility
+* The format is 8 x 16 bit hex fields
+* Leading 0s are optionalv
+* e.g 2001:0DB8:010F:0001:0000:0000:0000:0000:0ACD becomes 2001:DB8:10F:1:0:0:0:ACD
+* Successive 0s can be suppressed to form 2001:DB8:10F:1::ACD
+* The IPv6 loopback is ::1
+* IPv6 is classless and has 3 address types:
+	* Unicast
+	* Multicast
+	* Anycast
+* There are 3 types of IPv6 Address:
+	* Global
+	* Unique Local
+	* Link-Local
+* The address format for a unicast address is split in half to form a Network ID and a Host ID portion, each 64 bits in size.
+* There are very types of unicast:
+	* Global Unicast:
+	
+		|Provider                  |Site  |Host        |
+		|--------------------------|------|------------|
+		|48 bit                    |16 bit|64 bit      |
+		|001, Global Routing Prefix|SLA   |Interface ID|
+		
+		* Here the first three bits are set to 001, an identifying feature of Global Unicast Addresses.
+		* Therefore these addresses always start with 2000::/3
+		* The global routing prefix is set by the ISP
+		* The Site-Level Aggregator, or Subnet ID is set by the organisation. This can support up to 65,535 different subnet addresses.
+		* The interface ID is often the MAC address of the device, as it forms a unique identifier that can easily be used as it is too a 64 bit address.
+	* 
+ 
+### Understanding IPv6 Operation
 
-## Module 7: Introducing IPv6 
+
+### Configuring IPv6 Static Routes
+
 
 ---
 # ICND2
@@ -1147,4 +1222,4 @@ There are varying types of applications, such as:
 # A typing exercise
 > I'm practicing Dvorak, so here is some random story I am using to practice:
 
-Once upon a time there was a dog and it had at least four legs, but maybe more. It often depended on which Saturday of the month it was. This dog had a favourite toy called Andreas, which was a (tatty looking) four dimensional rhomboid. Francine (the dog, if you could even call it that) love play with the toy and even buried him in the garden. This did however lead to time causality issues. 
+Once upon a time there was a dog and it had at least four legs, but maybe more. It often depended on which Saturday of the month it was. This dog had a favourite toy called Andreas, which was a (tatty looking) four dimensional rhomboid. Francine (the dog, if you could even call it that) love play with the toy and even buried him in the garden. This did however lead to time causality issues. Sometimes 
