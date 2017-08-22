@@ -455,10 +455,15 @@ There are varying types of applications, such as:
 		
 	* Optical Fibres
 		* These fibres come in two types, Single and Multi Mode
-		* They have the following properties:
-			* **PROPERTIES**
+		* Unlike copper cables, which transmit data as electrical signals, fiber-optic cables transmit data as pulsesof light; in addition, fiber-optic cables are not susceptible to radio frequency interference (RFI) or electromagnetic interference (EMI).
+		* Therefore, implementing fiber-optic cabling can be useful in buildings that contain sources of electrical or magnetic interference.
+		* Fiber-optic cables are also useful for connecting buildings that are electrically incompatible.
+		* Because fiber-optic cables support greater bandwidth and longer segment distances than UTP cables, fiber-optic cables are commonly used for network backbones and for high-speed data transfer.
+		* Fiber-optic cables can be used to create Fiber Distributed Data Interface (FDDI) LANs, which are 100-Mbps dual-ring LANs.
+		* However, Cisco switches and Cisco routers do not require fiber-optic cable connections in order to communicate with each other.
+		* Although fiber-optic cables are useful in situations where there are problems or incompatibilities related to electrical issues, fiber-optic cables typically cost more than copper UTP, shielded twisted-pair (STP), or coaxial cables.
 		* These cables can also be terminated with differing connectors:
-			* **CONNECTORS**
+			![Connectors](http://i.imgur.com/WLFysNY.png)
 	* Wireless (This has no connection media)
 
 * Ethernet frames have a fixed structure. This may be:
@@ -770,8 +775,6 @@ There are varying types of applications, such as:
 	* Detection and Remediation of duplicate or out-of-order data
 	* Avoidance of congestion in the network 
 
-**TCP HEADER**
-
 #### UDP
 * UDP is a best effort protocol that favours speed over reliability.
 * Offers applications access to the network layer without the reliability overheads of TCP.
@@ -779,7 +782,7 @@ There are varying types of applications, such as:
 * Provides no way to resend or discover lost packets
 * Offers a low over-head
 
-**UDP HEADER**
+![TCP & UDP Headers](https://skminhaj.files.wordpress.com/2016/02/92926-tcp_udp_headers.jpg)
 
 * Common Application Layer Protocols and corresponding Ports
 
@@ -836,7 +839,7 @@ There are varying types of applications, such as:
 	* Delay: The time required to move along a link, dependant on bandwidth, port queues, congestion etc. (the lower the better).
 	* Cost: arbitrary value assigned by an administrator, based on bandwidth, technology preference etc. (the lower the better)
 	* Hop Count: The number of routers a packet must travel through to reach its destination (the lower the better).
-* Different protocols use different metrics in order to determine path. e.g. RIP uses Hop Count, EIGRP uses Cost, OSPF uses Bandwidth and Delay.
+* Different protocols use different metrics in order to determine path. e.g. RIP uses Hop Count, OSPF uses Cost, EIGRP uses Bandwidth and Delay.
 * Path Determination is used to populated routing tables.
 * Admin Distances are used to determine how trustworthy paths are.
 	* Directly connected devices have an admin distance of 0
@@ -1168,6 +1171,29 @@ There are varying types of applications, such as:
 	3. Type `confreg 0x2142`
 	4. Save running config and reboot to start setup
 
+### Licensing
+* `show license` command will display active licenses on the system.
+* Routers ship with an evaluation licence for most packages and features that are supported on the router. In order to activate a package, you must purchase a new licence.
+* PAK - Product Authorisation Key
+* To permanently activate a a software package:
+	1. Purchase the package, in order to obtain a PAK
+	2. Obtain the license file via Cisco License Manager or Cisco license Registration Portal.
+	3. Use the CLI to install the license.
+* `show license udi` may need to be used to show the product ID and Serial number of the router.
+
+	|Package               |Features                                    |
+	|----------------------|--------------------------------------------|
+	|IP Base               |Entry-level Cisco IOS functionality         |
+	|DATA                  |MPLS, ATM & Multiprotocol Support           |
+	|Unified Communications|VoIP an IP Telephony                        |
+	|Security              |Cisco IOS Firewall, IPS, IPSec, 3DES and VPN|
+
+* `show license feature` shows the licenses supported by the router.
+* `license install` installs a license file. After this the router must be reloaded to apply changes.
+* e.g. `license boot module c2900 technology-package uck9` would install package UCK9 
+* Using `license save flash:all_licenses.lic` will backup all licenses to the flash memory of the router.
+* 
+
 ## Module 5: Introducing IPv6 
 ### Introducing IPv6 Basics
 * To circumvent IPv4 address shortages, the following methods are used:
@@ -1207,13 +1233,77 @@ There are varying types of applications, such as:
 		* The global routing prefix is set by the ISP
 		* The Site-Level Aggregator, or Subnet ID is set by the organisation. This can support up to 65,535 different subnet addresses.
 		* The interface ID is often the MAC address of the device, as it forms a unique identifier that can easily be used as it is too a 64 bit address.
-	* 
- 
-### Understanding IPv6 Operation
+	* Unique Local Unicast Address
+		* These are used for local communication within a network.
+		* This features a unique prefix, followed by a subnet prefix (48 bits long) and a subnet ID (16 bits) before the interface ID.
+	* Link Local Unicast Address
+		* These are auto configured on devices at manufacture.
+		* They are formatted as a 10 bit link local prefix - FE80::/10
+		* There is padding up to the 64th bit, whereby the device MAC address follows.
+	* IPv6 Multicast Address
+		
+		|Prefix|Lifetime|Scope         |Padding|Interface ID|
+		|------|--------|--------------|-------|------------|
+		|FF FF |0 or 1  |1,2,5,8 or E  |0s     |MAC address |
+		
+		* In the lifetime portion, 0 means permanent address and 1 means temporary.
+		* Scope can be to the Node (1), Link (2), Site (5), Organisation (8) or Global (E)
+ 	* IPv6 Anycast Address
+ 		* The nodes that an any cast address are assigned to have to be specifically configured to recognise it as an any cast address.
+ 		* The format is: Prefix, 0s, Interface ID.
+ * Stateless Auto-configuration allows devices to neighbour discovery mechanisms to find routers.
+ * Stateful Auto-configuration uses a DHCPv6 server to assign addresses and other parameters to hosts.
+ * Devices can also have their addresses manually configured. 
 
+### Understanding IPv6 Operation
+ ![IPv4 Header vs IPv6 Header](https://i2.wp.com/www.ebrahma.com/wp-content/uploads/2013/12/ipv4-ipv6-header.gif)
+
+ * Internet Control Message Protocol v6 is used for diagnostic services.
+ 	* Diagnostic Tests 
+ 	* Router Discovery
+ 	* Neighbour Discovery
+ * These packets can be added to IPv6 Frames, and look like:
+ 
+ ![ICMPv6 Frame](https://notes.shichao.io/tcpv1/figure_8-2.png)
+ 
+	|ICMP Message|Description            |
+	|------------|-----------------------|	
+	|1           |Destination Unreachable|
+	|128         |Echo request           |
+	|129         |Echo reply             |
+	|133         |Router Solicitation    |
+	|134         |Router advertisement   |
+	|135         |Neighbour solicitation |
+	|136         |Neighbour advertisement|
+
+* Neighbour discovery is used in IPv6 in the same way ARP is used in IPv4.
+* It performs the following functions:
+	* Determining the data link layer address of devices on the link.
+	* Finding neighbour's on a link
+	* Keeping track of said neighbours
+	* Querying duplicate addresses
+* A solicited-node address is composed of FF02:0:0:0:0:1:FF/104 as a prefix, combined with the final 24 bits of the corresponding unicast address.
+* This type of address must have a link-local scope.
+* These addresses are used for neighbour solicitation and are used when another node needs the data-link layer address off a neighbour device.
+* This avoids the need for broadcasts, as seen on ARP.
+* However, if an IPv6 address is known, the associated solicited-node multicast address must also be known.
+* e.g. the IPv6 Address 2001:0DB8:1001:F:2C0:10FF:FE17:FC0F would be FF02::1:FF17:FC0F.
+* The prefix used for multicast ethernet addresses is 33:33 and is added before the last 32 bits of the IPv6 Address.
 
 ### Configuring IPv6 Static Routes
+* IPv6 features some routing protocols from IPv4 that had to be changed to function with IPv6 - such as:
 
+	|Protocol      |Full Name          |RFC        |
+	|--------------|-------------------|-----------|
+	|RIPng         |RIP Next Gen       |2080       |
+	|OSPFv3        |OSPF Version 3     |2740       |
+	|MP-BGP4       |Multiprotocol BGP-4|2545/4760  |
+	|EIGRP for IPv6|EIGRP for IPv6     |Proprietary|
+
+* Most IPv6 Protocols are still Interior Gateway Protocols, however BGP is the only Exterior Gateway Protocol in use.
+* Static routing is configured in the same way using IPv6 as it is with IPv4.
+* e.g. `ipv6 route (IPv6 address of the outgoing interface) (IPv6 next hop)`
+* Using `show ipv6 static`, static routes can be displayed.
 
 ---
 # ICND2
@@ -1222,4 +1312,4 @@ There are varying types of applications, such as:
 # A typing exercise
 > I'm practicing Dvorak, so here is some random story I am using to practice:
 
-Once upon a time there was a dog and it had at least four legs, but maybe more. It often depended on which Saturday of the month it was. This dog had a favourite toy called Andreas, which was a (tatty looking) four dimensional rhomboid. Francine (the dog, if you could even call it that) love play with the toy and even buried him in the garden. This did however lead to time causality issues. Sometimes 
+Once upon a time there was a dog and it had at least four legs, but maybe more. It often depended on which Saturday of the month it was. This dog had a favourite toy called Andreas, which was a (tatty looking) four dimensional rhomboid. Francine (the dog, if you could even call it that) love play with the toy and even buried him in the garden. This did however lead to time causality issues.
