@@ -159,4 +159,61 @@ YOU WOULD NOT use no shutdown because that would not enable port security, it wo
 >
 > lease 4
 
- 
+"The pool is active and ready to start allocating IP addresses from the 192.168.1.0/24 network".  The reason that this is true is because the network command tells the dhcp server to allocaste ip addresses from the network address 192.168.1.0 and then with a subnet mask of 255.255.255.0. this will then mean that all addresses from the 192.168.1.\* will be allocated from the server. 
+
+"the lease time is set to 4 days" is another true statement due to the fact that the command "least 4" will do that. The format of the lease command is that thee the numbers will be in the format of:
+```
+lease days hours.minutes
+```
+from the config above you can see that the lease command will actually set the lease time on the ip addresses to be 4 days. 
+
+THE CONFIG WILL allow the ip address of 192.168.1.10 to be assigned by the dhcp server. One important thing to note is the dhcp server will actually allocate its ip address if it is in the range that it is told to allocate its ip address from, this is because the dhcp serving and the reachable ip address of the device are two different processes. The way that you would fix this would be to set the ip address of the server with an ip exclude command as that will mean that it wont allocate that address:
+```
+ip dhcp excluded-address 192.168.1.10
+```
+
+> A web server named Web Server 1 is sending a web page to a web browser on a computer name Web1 using three separate messages. Each message has a TCP header and HTTP information in addition to the actual data. Each message has a sequence number. As shown in the exhibit, the web server sends three messages with their respective sequence numbers to Web1. Two messages with sequence number 1 and 3 reach their destination, but the message with sequence number 2 fails to reach the destination. Which action occurs so that web1 receives message number 2?
+
+the way that this would be handled is that "Web1 sends a TCP Acknowledgement to the web server for the missing segment". the reason that this would work is that Web1 will send the Acknowledgement which means that the server will have to send back the segment that the missing message was in. One thing to note here is that the individual message cannot be resent, instead the server will have to send the whole segment again. The segment is different to the message as the segment is the window of information that will be sent before the end has to confirm that all of the data has been received. So to get the missing message the server will have to send the 1000 or so packets that came along with the missing one as they were all in the same window or segment.
+
+YOU WOULD NOT discard the message and then get the web server to send that and only that message again due to the fact that you cannot only send across one message, you need to send across the whole window or segment.  
+
+> Which command should you run to verfy that RIPv2 is running and to verify that RIPv2 update and hold down timers?
+
+the command that you would use would be:
+```
+show ip protocols
+```
+the reason that you would do this is that this will display the RIP process running as well as the settings for the hold down timers and update timers. Additionally, this command will show other information like filter lists, version and other protocols that are running on the device.  
+
+YOU WOULD NOT RUN THE "show ip rip timers" command as that does not exist. what you would need to do is that you would run the "show rip timers basic" command, but it would not show that RIP is actually working, just how it is configured. 
+
+> You are the network administrator for your company. You configure your network using the subnet 172.16.10.0/24. You are unable to access a remote host with the IP address 62.168.10.20. You check the connectivity using the ping command on the network router. The exhibit shows the output of the ping command. "U.U.U" what conclusion can be drawn from the output?
+
+from the output of the ping command you can see that there is no route to the host, this is known by the fact that instead of "!!!!!" meaning all packets went through, or even "....." for none of the packets made it though we instead got "U.U.U" so the packets didn't even make it out of the network. From this we can assume that the packets would have not been able to find their way to their destination. The only conclusion that we can then make is that the router didnt know where to send the packets and therefor dropped them, and that is the answer. 
+
+THE PACKETS COULD NOT HAVE BEEN blocked by an ACP as then the output would be "....." as none of them made it through, but the fact that there was not a route to the host means that its a problem with the router. 
+
+> Which command should you use to verify the interfaces that have been configured on a router and are included in the RIP routing process?
+
+to verify that certain interfaces and so on are actually running the RIP process then you would have to run the:
+```
+show ip protocols 
+```
+command. This is because you want to know if the **interfaces** are involved in the RIP process and so that command will show you that information. Additionally, if you wanted to know that RIP was actually running then you would want to know if it is in the running config and actually loaded in the system. The way that you would do this is that you would run the command:
+```
+show running-cofig
+```
+This will then show that RIP is loaded and currently active on the device. 
+
+YOU WOULD NOT run the "shop ip rip database" as this would only show you the routing entries and not the interfaces and weather it is running. Additionally, you would not run the "show ip route" command as this would not actually show you the interfaces that have been discovered by the routing process just the ways that you can reach other networks.
+
+> Which three statements are true about enabling port-security? 
+
+When setting up port security "the default violation mode is shutdown". This is an important fact to remember because if the default mode was not shutdown then attacks could be allowed to  happen on the network due to the fact that after the timeout the attacker will have another attempt. To make sure things are the most secure the default mode should be to shutdown the port to keep everything safe. 
+
+In addition to this you can use the command:
+```
+switchport port-security
+```
+to enable port security 
