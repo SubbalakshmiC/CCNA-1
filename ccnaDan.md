@@ -2830,3 +2830,11 @@ show ipv6 route static
 ```
 
 > THATS IT, ALL OF ICND 1!!!!!! whoo
+
+access-
+* list
+	* applies to list
+* class
+	* vty lines
+* group
+	* in going and outgoing
