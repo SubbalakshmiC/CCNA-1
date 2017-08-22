@@ -465,14 +465,34 @@ The lower this number the better the rating.
 |---|---|
 |Directly connected|0|
 |Static route|1|
-|RIP|120|
 |EIGRP|90|
 |OSPF|110|
+|RIP|120|
 
 
 ### Module 3 - Summary Challenge
 
 ### Module 4 - Building a Medium Sized Network
+
+#### Introducing VLANS
+
+The point of a vlan is to segment up a network.
+This is so that the amount of traffic that goes accross the network is decreased.
+The way that this works is by telling a switch that certain ports belong to different vlans.
+For example, HR, Sales, Engineering and Research will all be on different vlans.
+This proccess can be done over multiple switches.
+To connect multiple vlans on multiple switches, you need a special kind of port called a trunk port.
+This is 2 special configuration that can be done over any port and any cable.
+At the poinnt that a frame is sent over a trunk cable, a special header is put between the SA and the type field.
+This is called the VLAN tag.
+This has the data size of 32 bits (or 4 bytes) however, only 12 bits of this header are used to represent the VLAN ID.
+The number of VLANS you can make is 1,000, however, if using the extended range, the maximum is 4,094 so, in total thats 5,094
+This is only used on a trunk cable, and is removed when it exits the trunk.
+This is a recognised standard (ieee 802.IQ) or commonly known as 'dot iq'.
+
+When you create a vlan, the switch creates a file in flash called vlan.dat
+
+
 
 ### Module 5 - Network Device management and Security
 
