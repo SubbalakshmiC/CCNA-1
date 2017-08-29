@@ -2838,3 +2838,65 @@ access-
 	* vty lines
 * group
 	* in going and outgoing
+
+
+# ICND 2 
+
+lets go and do this again, hopefully better this time. But apparently this one is easier so there is no problem. 
+
+## Implementing scalable medium sized networks
+
+> "you will be tested in the exam" - Rob
+
+you set up and use vlans so that you have less broadcasts going around and more broadcast domains to reduce the traffic that is on the network. the end devices will have to process the information that they get and so if you reduce the broadcasts then you will save processing time on the devices. we used to use routers for all of the broadcast domain, but that was expensive, so VLANs were used instead. but you still need a router to connect data and information between the VLANs. you would want to have a layer 3 switch as you will have high data throughput and will only have to manage one box. 
+
+* create a vlan
+* then assign the port to vlan otherwise it might break
+
+```
+switchport trunk allowed vlan 2 - 4
+```
+this command will only allow VLANs 2 to 4 to pass through the cable.  
+
+in a switch thing with 3 clans, then you would have 4 broadcast domains due to the fact that VLAN 1 is always there. 
+
+The native VLAN will be used for when data is not tagged for a VLAN. 
+
+an access port can only access one vlan, apart from if you have an ip phone, then the phone and the connected PC will be in different vlans. this will do layer 2 and 3 prioritisation. 
+
+* Native VLAN mismatch
+* management VLAN mismatch
+* vlan access mismatch on each side
+
+.
+
+* the native is for untagged traffic
+* management is for management traffic like CDP messages. 
+
+### troubleshooting VLAN connectivity
+
+```
+conf t
+vlan 3
+name telephone
+switchport voice vlan 3
+```
+some useful commands
+```
+show interface status
+shof interface trunk
+```
+
+the default mode for all ports on switches is that they have DTP turned on. (Dynamic Trunking Protocol). this negotiates the trunking state with the other end of the link. 
+
+> auto is a passive state
+
+## Troubleshooting basic connectivity 
+
+## Implementing an EIGRP based solution
+
+## Implementing a scalable OSPF based solution
+
+## Wide-Area networks
+
+## Network device management and security 
