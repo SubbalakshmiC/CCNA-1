@@ -3070,6 +3070,27 @@ the reason it takes time to transition between the states is because the port ha
 
 and these processes are set to a timer of 15 seconds. 
 
+IEEE 802.1D
+
+Normal spanning tree is not really used in Cisco stuff, instead you would have one spanning tree per VLAN. but this would mean that you would then have many instances of other spanning tree protocol on the same router for the same network and this will mean that.  
+
+802.1s is where you assess the spanning tree for multiple vlans. 
+
+default:
+* PVST+
+* enabled on all ports in VLAN 1
+* slow convergence. 
+
+for the intervlan spanning tree, Cisco need 12 bits for the VLAN ID so it takes them from the 16 bits for priority. But this then means that you have to make jumps of 4096 due to the fact that you are changing the 13th bit.
+
+to set one switch as the primary or root switch you will run the command 
+```
+spanning-tree vlan 1 root primary
+```
+then to set one as the secondary you would run the command
+```
+spanning-tree vlan 1 root secondary
+```
 ## Troubleshooting basic connectivity 
 
 ## Implementing an EIGRP based solution
