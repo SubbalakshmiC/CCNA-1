@@ -2891,6 +2891,185 @@ the default mode for all ports on switches is that they have DTP turned on. (Dyn
 
 > auto is a passive state
 
+due to the fact that the ports will be in a passive state (auto) by default, and so a trunk will not be made and it will be in access mode not trunk. this will then default to the native VLAN. 
+
+due to this fact, all broadcasts will then be sent to one device and so there may be a security problem. 
+
+#### VTP (Vlan Trunking Protocol)
+
+a Cisco proprietary protocol. 
+
+this will advertise the VLAN.dat to all of the other switches. 
+
+if you have 100 vlans then you would need to create the VLANS on all of the switches and that will take a lot of work. so you will just create the vlans on one switch and then VTP will send out all of the data to the other switches. the switch that this comes from is the VTP server. Whenever you change the VLAN.dat on the VTP server the revision number will go up by one, this will then let devices know if they are out of date through the advertising. for this to work, all of the devices will have to be in the same domain. This will send information through TRUNK LINKS only. you can then get it to do pruning by setting it up on the individual device, this is callid VTP pruning. VTP is commonly banned due to the fact that it generates traffic and can mean that a rouge vlan.dat can propagate through a network. 
+
+* server mode
+	* the default
+	* creates and deletes VLANS
+* client mode
+	* can only read the stuff
+* transparent mode
+	* will not take changes, but will forward them
+
+> if you add in a switch to a network, then you should set it to transparent so that it will not mess up the network. 
+
+some useful commands. 
+
+```
+vtp domain name
+vtp mode transparent
+vtp password
+show vtp status
+```
+
+### Building redundant switched topologies
+
+#### Spanning tree protocol / algorithm (STP or STA)
+
+if you wanted to have redundancy in a layer 2 network then you would have to have two or more routes from one host to another. if you only had one connection between the devices then so many things could go wrong that would bring down the network. But, if you have switches that form a loop then you could create a switch storm when an unknown broadcast goes into one of the switches. 
+
+spanning tree will discover the looping in a network and it will then logically block some interfaces on other or its device. Anything that comes through that port, apart from one thing will be discarded, and nothing can be sent out of the port. 
+
+you want to eliminate single points of failure. but this causes 3 specific problems:
+* broadcast storms
+	* when a frame gets flooded out of each switch it will keep going in a loop over and over again taking up network bandwidth. 
+* multiple frame copies
+	* if a frame in the network has the correct mac address then the packet could go one way through the network and get there, but then the same frame could go through a slower part of the network and get there later. on a router this would mean that it could drop the packet as the router will see that there is a problem with the tcp/ip numbers. 
+	* basically the same frame gets to its destination twice as two different routes will get there at different times. 
+* MAC table instability 
+	* when due to the loop a switch will associate the incorrect port to a host device. 
+
+Spanning tree will stop all of these problems from happening. the way that spanning tree works means that you have basically disconnected the two switches but in a way that can quickly that can come back up. 
+
+> IEEE 802.1D
+
+spanning tree will do the following things:
+* elect a route bridge
+* elects a route port for each non-root switch
+* elects a designated port for each segment
+* ports transition to forwarding or blocking state. 
+
+spanning tree will work in a broadcast domain of a layer two network. 
+
+* elect a route bridge
+	* you will need to have a start, reference point. that switch is called the route bridge. 
+	* there is only ever ONE in the spanning tree. 
+	* everything is calculated from the perspective of that route bridge. 
+	* the switches will do this auto matically work this out in the background, but they dont always make a good decision when deciding. 
+		* normally you would have to make the route bridge selection. 
+* elects a route port for each non-root switch
+	* this is used so that non-root switches can send stuff to the route bridge. 
+* elects a designated port for each segment
+	* TBE
+	* if the interface is not a route port or a designated port then it is blocked. 
+* ports transition to forwarding or blocking state. 
+
+The route bridge has the lowest bridge ID within the broadcast domain. 
+
+#### Elects a route bridge
+
+The bridge ID is made of the bridge priority and a MAC address. 
+
+This bridge priority can be a range between 0 and 65535, due to this the default value would be 32768 as that is half of the range. 
+
+The MAC is the base Ethernet address, this is the address of the whole switch rather than that of a specific port. the address of the ports is made from the MAC address, plus the number of the port. e.g. Fa0/1 will have a MAC address of the base MAC +1 and then Fa0/2 will have a MAC address of the base MAC +2 and so on...
+
+| Bridge Priority | MAC address |
+|-|-|
+Range: 0-65536, Default: 32768 | Unique for every device
+16 bits of value |
+
+```
+connections + (MAC address)
+A(1) -> C, B
+B(2) -> A, C, D
+C(3) -> A, B, D
+D(4) -> B, C
+
+ID:
+A - 327681  
+B - 327682  
+C - 327683  
+D - 327684  
+```
+In this example switch A would be the route with due to the fact that it has the lowest ID out of all the devices on the network. 
+
+The way that these switches send the ID that they have is through the use of Bridge Protocol Data Units (BPDU). the switches exchange the ID numbers by the BPDU's 
+
+BPDU contents:
+* Bridge ID
+* Root ID
+
+the Root ID is the lowest value that the switch knows about. At the start the switch only knows that it has the lowest value so they are the same. 
+
+all of this is made into a table and compared so that the switch can see if anyone else has a lower number on the network. 
+
+For example, B would see that A has a lower ID and so the root ID that will be sent out is that from A. 
+
+as you know, the time that it will take for all of the ID's to get to the smallest value will vary depending on the size of the network. Due to this you will have a MAX age timer for the protocol. 
+
+the default for the Max age is 20 seconds.
+
+when you start up all of the switches then the BPDU's would take up all the bandwidth on the network and it would become unusable. to solve this, all of the ports will be put into a blocked state so that they will not forward all of the information around. BUT the exception to the blocking of the ports is that BPDU's are allowed and are read by the switch.  
+
+#### elect a route port
+
+the route port is the port that is used to communicate to the root switch about any changes to the network topology. 
+
+The root port is the port that has the lowest route cost to the root switch. 
+
+the cost is generated from the speed of the interfaces. 
+
+```
+This is the 1998 standard
+RPC value
+10Mbps link - cost = 100
+100mbps link - cost = 19
+1Gi - cost = 4
+10Gi - cost = 2
+```
+
+| | A | B | C | D |
+|-|-|-|-|-|
+| A |  | Gi | Gi| |
+| B | Gi |  | Gi | Gi |
+| C | Gi | Gi | | Gi |
+| D | | Gi | Gi |  |
+
+ The hello interval means that every 2 seconds the root switch will send out the RPC. 
+
+ When switch B gets the hello from A it will get data on the path cost to A, and that will be 4 due to the fact that the Gi connection is worth 4. Then B will forward the BPDU with the RPC to switch D, but it will then add on 4 to the RPC due to the fact that it goes off on a Gi connection. 
+
+ Basically the cost to get to the route switch it sent through the network and then all of the switches will select the lowest value that they get to work out the lowest cost to get to the root switch. 
+
+ This then means that all switches will get ONE port on them that has access to the path that has the lowest cost. 
+
+ BUT if a switch will get multiple BPDU's that say the same lowest score, then the switch will select the port that has the lowest sender ID. Basically the connected switch that has the lowest MAC address value. 
+
+#### elect a designated port for each segment
+
+the way that you chose the designated port is that you choose the port that has the lowest route cost to the root switch. So basically a segment is a connection between two switches, so there are two options to select from. You will then choose the port that is closest to the root switch in terms of the cost for the path. 
+
+> DESIGNATED PORTS ARE NEVER BLOCKED
+
+if two ports have the same value then then device with the lowest bridge ID will be chosen. 
+
+Designated ports are assigned to propagate the BPDU's onto that segment
+
+if a non-root switch doesn't hear from the root switch for 21 seconds then the process will start again and that switch that detected the dead root switch will start sending out its own BPDU's.  
+
+when a blocked port becomes a root port then it will take 30 seconds. 
+
+the default that is used on Cisco devices is IEEE 802.1D think (D)efault for cisco devices. 
+
+IEEE 802.1w = RSPT (Raping spanning tree) - newer version (Wapid spanning tree) will only take 2 - 5 seconds. 
+
+the reason it takes time to transition between the states is because the port has to go through 2 stages:
+* Listning
+* Learning
+
+and these processes are set to a timer of 15 seconds. 
+
 ## Troubleshooting basic connectivity 
 
 ## Implementing an EIGRP based solution
