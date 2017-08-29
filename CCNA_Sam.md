@@ -1310,7 +1310,88 @@ There are varying types of applications, such as:
 ---
 # ICND2 Module Notes
 ## Module 1: Implementation of Scalable Medium-Sized Networks
-* 
+### Troubleshooting VLAN Connectivity
+* VLANs can be used to segment a network and reduce broadcast messages.
+* Hardware used across a campus LAN may be:
+	* Distribution Switches
+	* Access Switches
+	* WAPs
+* Routers ignore broadcasts and do not forward them out of it's ports - however this is an expensive solution to a broadcast storm issue on a LAN.
+* Fewer cable connections offer fewer points of failure - a L3 switch is a good solution here.
+* To implement trunking on a network:
+	* `switchport mode vlan`
+	* `switchport trunk native vlan (number)`
+	* `switchport trunk allowed vlan (numbers)`
+* Verify connectivity with `show interfaces (interface) switchport)`
+* By default, Cisco Catalyst switches have Dynamic Trunking Protocol enabled. It negotiates the trunking state of a port, which can be understood with the table below.
+
+	|Switchport Mode ↓ →  |Dynamic Auto|Dynamic Desirable|Trunk  |Access |
+	|---------------------|------------|-----------------|-------|-------|
+	|**Dynamic Auto**     |Access      |Trunk            |Trunk  |Access |
+	|**Dynamic Desirable**|Trunk       |Trunk            |Trunk  |Access |
+	|**Trunk**            |Trunk       |Trunk            |Trunk  |Limited|
+	|**Access**           |Access      |Access           |Limited|Access |
+
+* To make a voice VLAN: `switchport voice vlan (number)`
+* Cisco have a proprietary protocol called VLAN Trunking Protocol (VTP), which advertises the VLAN.dat file on a switch to other switches on the network. For this to operate, all devices must be on the same VTP domain.
+* The version of the VLAN.dat file in use is advertised on trunk ports only. Devices can request and receive updated versions of the VLAN.
+* VTP Pruning can be enabled so that the entire table isn't sent to all devices, however this can generate a lot of advert traffic.
+* The process is:
+	* VLAN is added or deleted at the VTP Server
+	* Revision number incriments
+	* Change propagated
+	* Devices synchronise to changes
+* VTP has 3 modes:
+	* Server - Creates, Modifies and Deletes VLANs & Synchronises changes
+	* Clients - Can only Synchronise changes
+	* Transparent - Has a local database, which it does not synchronise
+
+### Building redundant switched topologies
+* Physical redundancy in a LAN is important to offer alternate routes for traffic.
+* Redundant topologies eliminate single points of failure.
+* This kind of topology does however cause: 
+	* Broadcast storms
+	* Frame copies arriving at a device at the same time, which may cause errors.
+	* MAC address table instability - MAC addresses for ports may appear on other devices
+* STP solves all of these issues.
+* In the event of a broadcast storm, spanning tree will choose one or more interface to be logically blocked, blocking all traffic in and out of the port. This is in the 802.1D specification, which is now a legacy standard.
+* STP is enabled by default on Cisco devices.
+* The operation of STP is:
+	1. Spanning tree elects a root bridge. There can only be one per network, and this device is chosen because it has the lowest Bridge ID.
+		> Bridge Priority Number is a combination of BID and the MAC address of the deice, and can range from 0 to 65535, incrementing by 4096. The default is 32768.
+	
+	2. Elects a root port for each non-root switch
+	3. Elects a designated port for each segment
+	4. Ports transition to forwarding or blocking state
+
+* Bridge Protocol Data Units (BPDUs) are Spanning Tree Hello packets and are exchanged between devices to discover who has the lowest BID, and should be the Root Bridge.
+	> A BPDU contains Bridge ID and Root ID.
+* These are compared by the switches to find out which BPDU is *superior* to the others. Once compared, if the switch finds it's self to be of a higher bridge ID, it proclaims the other switches claim to be root as true, no longer suggesting that it is the root device.
+* Root ports are defined by ports closest to the root, by having the lowest root path cost.
+* This can be calculated via the following table:
+
+	|Data Rate|STP Cost (802.1D-1998)|STP Cost (802.1D-2004)|
+	|---------|----------------------|----------------------|
+	|4 Mbps   |250                   |5000000               |
+	|10 Mbps  |100                   |2000000               |
+	|16 Mbps  |62                    |1250000               |
+	|100 Mbps |19                    |200000                |
+	|1 Gbps   |4                     |20000                 |
+	|2 Gbps   |3                     |10000                 |
+	|10 Gbps  |2                     |2000                  |
+
+* The RPC (Route Path Cost) is combined when the link travels across another switch
+	* e.g. from A → (RPC 4) → B → (RPC 2) → C 
+	* This has a RPC total of 6 across A to C.
+	* The fastest route is marked as the Root Port on the switch, and is used to inform the network of topology changes within the network, in a TCMP PDU.
+	* If two routes coming into the switch have the same RPC, the route with the lowest BID is marked as the root port into and out of the switch.
+* Root ports are **never** blocked
+* Designated ports propagate BPDUs onto the local network segment.
+* Any port that isn't an RP is blocked for all traffic but BPDUs, in order to prevent the Layer 2 loops panning tree was created to solve. These BPDUs travel roughly every 2 seconds.
+* Without this the root is assumed dead and the BPDU Root Bridge allocation starts again.
+* IF a link goes down, the root device is no longer present, a blocked link opens and becomes a forwarding port, and the new root port.
+* IEEE 802.1D is standard STP, the wait time is 30 second before a link is considered dead. This is because the port must transition to Listening, then to Learning. The default delay between state changes is 15 seconds, hence the 30s wait time.
+* IEEE 802.1W is Rapid Spanning Tree Protocol, which has a 2 to 5 second wait before considering a link dead.
 
 ## Module 2: Troubleshoot Basic Connectivity
 ## Module 3: Implementation of an EIGRP-Based Solution
