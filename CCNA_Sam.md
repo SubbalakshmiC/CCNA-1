@@ -3,8 +3,25 @@
 All notes made here relate to ICND 1 or 2, and may be a little lacking or nonsensical. Sorry.
 
 ---
-# ICND1
 # General Notes
+## Exercise Types:
+* Challenge Exercises
+* Discovery Exercises
+
+## Certified Mock Exam Questions:
+* MeasureUp
+* Boson.com
+
+# Exam Notes
+* Exam pass is a requirement to continue the Apprenticeship Program.
+* ICND1 is marked out of 1000.
+* 300/1000 marks for participating.
+* 90 minutes for the exam.
+* ~ 825/1000 marks to pass.
+* Results immediately displayed upon exam completion.
+* Qualification is valid for 3 years, and completing the next exam in the series (e.g. CCNP) will re-validate any lower exams.
+
+# ICND1 Admin Notes
 
 ## Timeline
 * 2 Weeks Training (Week 1 GPK, Week 2 BFL).
@@ -21,25 +38,7 @@ All notes made here relate to ICND 1 or 2, and may be a little lacking or nonsen
 ## Extra Content
 * CEF: Cisco Express Forwarding
 
-## Exercise Types:
-* Challenge Exercises
-* Discovery Exercises
-
-## Certified Mock Exam Questions:
-* MeasureUp
-* Boson.com
-
-# Exam Notes
-
-* Exam pass is a requirement to continue the Apprenticeship Program.
-* ICND1 is marked out of 1000.
-* 300/1000 marks for participating.
-* 90 minutes for the exam.
-* ~ 825/1000 marks to pass.
-* Results immediately displayed upon exam completion.
-* Qualification is valid for 3 years, and completing the next exam in the series (e.g. CCNP) will re-validate any lower exams.
-
-# Module Notes
+# ICND 1 Module Notes
 
 ## Module 1: Building a Simple Network
 ### What is a Network?
@@ -919,6 +918,9 @@ There are varying types of applications, such as:
 * adding `log` to the end of a access-list statement will produce a log of denied requests. 
 * Differing ACLs can be set inbound and outbound on an interface, e.g. `access-group 1 out` when configuring an interface to apply ACL 1 to outbound connection.
 * Named ACLs allow you to specify line numbers when adding lines.
+* `access-list` - create/edit list
+* `access-class` - apply to vty
+* `access-group` - apply to packet filtering
 
 ### Enabling Internet Connectivity
 * Dynamic Host Configuration Protocol (DHCP) is used to assign IPs to devices governed by a central domain.
@@ -1306,7 +1308,15 @@ There are varying types of applications, such as:
 * Using `show ipv6 static`, static routes can be displayed.
 
 ---
-# ICND2
+# ICND2 Module Notes
+## Module 1: Implementation of Scalable Medium-Sized Networks
+* 
+
+## Module 2: Troubleshoot Basic Connectivity
+## Module 3: Implementation of an EIGRP-Based Solution
+## Module 5: Implementation of a Scalable OSPF-Based Solution
+## Module 6: Wide-Area Networks
+## Module 7: Network Device Management
 
 ---
 # A typing exercise
