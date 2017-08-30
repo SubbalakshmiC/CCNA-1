@@ -3245,7 +3245,33 @@ standby [groupNumber] preempt 		// will redo election of active router
 standby version [1/2]
 ```
 
+HSRP v2 uses a different multicast address. 
 
+### Extended ACL
+
+to tell that there is an ACL on an certain interface run:
+```
+show ip interface [interface]
+
+inbound access list is 101
+
+```
+
+standard access list checks source IP only. extended access list checks source IP AND destination IP and more like protocol and port. 
+
+to permit all HTTP traffic on the network: 
+
+```
+access-list 100 permit tcp any any eq 80
+```
+
+you can block by protocol, and you can have many additional options like equal to, and not, and range and so on. 
+
+a firewall will automatically write the rules for the ACL that will allow response packet. 
+
+224-239 are reserved multicast addresses
+
+224.0.0.2 is the multicast address for all routers in a network. 
 
 ## Troubleshooting basic connectivity 
 
