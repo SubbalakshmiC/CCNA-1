@@ -3122,6 +3122,129 @@ spanning-tree point bpduguard default
 spanning-tree portfast default
 ```
 
+### Improving Redundant Switched Topologies with EtherChannel
+
+when you have two switches connected together then you would want to to have high bandwidth. this would mean that you would want to put in two cable to double the bandwidth, but that would create a loop and so EtherChannel will make the switch think that both of the cables are one. This will work with up to 8 interfaces. 
+
+spanning tree will see the connection as an addition of the individual bandwidth. 
+
+sometimes called link aggregation, so EtherChannel is just the Cisco name for it. It will allow us to create a higher bandwidth cable and will also load balance between the cables. If one cable goes down, then all the data is just put through the rest of the cables. this will mean that spanning tree will still see the connection there, its just that it will see the speed go down.  
+
+when you create an EtherChannel port you will create a new virtual interfaces on the switch. 
+
+there are two protocols that are in place to allow the creation of EtherChannel auto magically:
+* PAgP Port Aggregation Protocol
+	* Cisco proprietary
+* LACP Link Aggregation Control Protocol
+	* IEEE 802.3ad standard
+
+YOU CANNOT MIX AUTO AND STATIC CONFIGURATION
+
+#### PAgP
+
+can be:
+* desirable
+	* active
+* auto 
+	* passive
+* ON
+	* basically static
+
+x|On|Desirable|Auto
+|-|-|-|-|
+On| y|n|n
+Desirable | n|y|y|
+Auto|n|y|n
+
+#### LACP
+
+can be:
+* Active
+* passive
+* On
+
+THESE MUST MATCH for EtherChannel to work
+* speed and duplex
+* made
+	* access or trunk
+* Native and allowed VLANs on trunk port
+* Access VLAN on access ports
+
+if any of these things to not the same then the offending port will be kicked out of the EtherChannel. Otherwise the EtherChannel could be down compliantly. 
+
+mode active = LACP
+mode auto = PAgP
+
+the channel group does not NEED to be the same but you should have them the same to make it easier.
+
+``` 
+show EtherChannel summary
+show EtherChannel port-channel
+```
+
+```
+int range e0/0 - 3
+channel~group 1 mode active/passive
+int port-channel 1
+```
+
+## Understanding Layer 3 Redundancy
+
+First Hop Redundancy
+
+This will be the first hop that you see / get to from the host device. THIS WOULD NOT BE A SWITCH. but the first router. 
+
+Basically you would have two default gateways for the network so that if one was to go down then you would still be able to get the internet. two independent network links from one network to another, with each having two routers leading to the internet. 
+
+> The default gateways needs to be ONE of the branch routers. 
+
+First Hop Redundancy Protocol (FHRP)
+
+HSRP - Hot Standby Routing Protocol
+* proprietary and made by Cisco
+
+there is version 1 and 2. basically version 2 supports ipv6. 
+
+there is also:
+* VRRP
+	* Virtual Router Redundancy Protocol
+	* an industry standard
+* GLBP
+	* Gateway Load Balancing Protocol
+	* Cisco only
+	* advantage is that you get redundancy and load balancing
+
+The way that this works is that you will have two physical routers, you actually have 3 or more routers. This third one is virtual. This virtual router has its own IP address and MAC address. THe mac address will look like: "0000:0C07:AX0x" in this case the X will equal the HSRP group number. 
+
+you will tell the routers about this virtual router. 
+
+if a request for the virtual router comes through the network, then the router that gets the request will act upon it on the virtual routers behalf, this then becomes the active router. 
+
+on the client, you would set the default gateway to be the ip address of the virtual router. 
+
+the reason that you would have more than one virtual router is so that you have one for each VLAN as they will all have different default gateways. 
+
+every 3 seconds the two routers will send a hello message to each other. The first one to start will become the active router. Then the second one to be turned on will see the hello messages and set itself to be the standby router. 
+
+if the first router fails, then the second one will stop seeing the hello messages and will then becomes the active router. The new router will then send out the hello messages.o
+
+It will wait for 3 of the hello messages before becoming the active router. So there will be a 10 second delay before it sorts itself out.
+
+VRRP has a dead time of a second, so it will take 3 seconds total to sort out the problem. 
+
+you can force an election so that the router with the Gi connection to the internet will be the active one all of the time rather that the other router that could have only 10mbps. 
+
+* HSRP defines a group of routers, one active, one standby
+* Virtual IP and MAC are shared between the routers
+* `show standby` will tell you the state. 
+
+```
+standby [groupNumber] ip [ipAddress] 		// set ip address and MAC address
+standby [groupNumber] priority [priority]
+standby [groupNumber] preempt 		// will redo election of active router 
+standby version [1/2]
+```
+
 
 
 ## Troubleshooting basic connectivity 
