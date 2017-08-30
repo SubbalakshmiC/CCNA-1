@@ -3091,6 +3091,39 @@ then to set one as the secondary you would run the command
 ```
 spanning-tree vlan 1 root secondary
 ```
+|Blocking 20s|
+|-|
+Listning 15s|
+learning 15s|
+
+* PortFast
+	* immediate transition to forwarding state
+	* can only be on access ports
+* BPDU guard
+	* if BPDU is received, the port will shut down
+	* usually used with PortFast
+
+PortFast will basically disable spanning tree on that port. You would only do this on access ports as that is where the clients of the network will lie, and these will not create loops as they are terminators. 
+
+PortFastTrunk is for use on trunk ports like you could find on a vm server which is still an end dvice. 
+
+BPDU's will never come from end devices as they are not switches. due to this anything plugged into a PortFast port will not send any BPDU. so if you plug a switch into itself then two PortFast ports will be connected and so they will send BPDU's into the switch. BPDU guard will then error disable the ports so that they will not create a loop and will stop the broadcast storm going to the rest of the network. 
+
+to set this for all of the interfaces that you want it on. 
+
+```
+int e 0/1 - 20
+spanning-tree portfast
+spanning-tree bpduguard enable 		// REMEMBER THIS ONE
+```
+and to automatically apply it to all access ports. 
+```
+spanning-tree point bpduguard default
+spanning-tree portfast default
+```
+
+
+
 ## Troubleshooting basic connectivity 
 
 ## Implementing an EIGRP based solution
