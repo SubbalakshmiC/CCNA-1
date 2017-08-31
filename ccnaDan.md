@@ -3356,7 +3356,7 @@ monitor session 1 destination interface Fa0/1
 
 ### extended access list
 
-you can add in a remark so that you know where you are. like a printf(); for when you are debugging. 
+you can add in a remark so that you know where you are. like a printf(); for when you are debugging.  
 
 ## Implementing an EIGRP based solution
 
