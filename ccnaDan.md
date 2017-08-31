@@ -3247,6 +3247,11 @@ standby version [1/2]
 
 HSRP v2 uses a different multicast address. 
 
+> MST = Multi spanning tree - used for when you need to use STP on multiple VLAN's so that you dont need to run many instances of the protocol. 
+> mst 1 1-500
+> mst 2 501-1000
+> this way, only 2 STP are running on the switches. 
+
 ### Extended ACL
 
 to tell that there is an ACL on an certain interface run:
@@ -3273,7 +3278,85 @@ a firewall will automatically write the rules for the ACL that will allow respon
 
 224.0.0.2 is the multicast address for all routers in a network. 
 
-## Troubleshooting basic connectivity 
+## Troubleshooting IPv4 network connectivity
+
+SLA, switch port analysis, access list
+
+in reality, only SPAn will actually be used in troubleshooting. 
+
+to troubleshoot you will need to follow some kind of logic. One of your best tools is knowledge of the OSI model. one of the reasons for having the OSI model is to simplify how a device connects to the network. 
+
+one troubleshooting the mothed is called "follow the path", this is where you will go hop by hop along the network to see where the problem will be. 
+
+ping is an icmp type 8 message and a type 0 message. 8 is the echo, 0 is the reply. when you ping you will generate a icmp packet. traceroute is also an icmp packet, with the tty set to 1 initially. when the packet gets to the first router the ttl will get set to 0, then the router will drop the packet and then send back a message to the sender telling you that the packet was dropped by that router. Then the sender will send out the same packet but with a ttl of 2 and so on...
+
+the type is the message telling the reason and the code is to say specifically why 
+
+when you get a ping of U.U.U its because the router could not route the packet and so it told you that it couldn't. its an icmp Type 3 message to say that it is unreachable and a code as follows:
+* 0 = destination network unreachable
+* 1 = destination host unreachable
+* 2 = destination protocol unreachable
+* 3 = application unreachable
+in this case the host is not there, and so you would get the code of 1 because the host is unreachable. 
+
+code 13 will mean it is administratively filtered. 
+
+icmp is a messaging protocol used by network devices to communicate basic information. these are FUNDAMENTAL to troubleshooting a network problem. 
+
+you may also get ".....", this will mean that you sent the message all ok, but a response could not get back to your machine for some reason. so when you get a "....." then you know to look at unbound connections, but when you get a "UUUUU" then you will need to look at your connection to the device. 
+
+"....." the two most common reasons are that a firewall has blocked the packet and that 
+
+you should try to do a ping twice so that you KNOW for sure that the ARP tables are populated and that all the conversations have happened. 
+
+rebooting a networking device should be the LAST THING that you do, think of spanning tree, non-saved running configs and so on, this can also happing with routing protocols. icmp will also contain the first 8 bytes of the original packet that was sent so that you can get an idea for what it was. 
+
+the process of name resolution starts with your local device, this contains two devices, the localhost file and the cache. if QA changed their servers provider then the new ip address could not have filtered through to the local storage. 
+
+on a router you can set up an SLA that will perform automatic testing, like testing that you can always contact an ISP or branch office and that your connection is good. you would need to ensure that the connection doesn't drop packets or has low speed. 
+
+a multihomed solution is where with HSRP one router will contact one service provider and the other will use the other. if the serial port on one router becomes shutdown then the router will not change over and the connection to the internet will not be reachable. so the router may have to then redirect all the traffic that it gets to the other router and then out to the internet, but that will not be efficient. 
+
+what you could then do is set up an SLA so that it will ping the ISP. then when it cannot ping then you would degrade the hsrp value so that eventually when you cant reach the ISP then the other router will have a higher rating and so the other router will become the active one and the normal router will go into standby. 
+
+how to create an SLA:
+
+```
+ip sla [operation number]
+(confip-ip-sla)# icmp-echo [destination ip address]
+(config)# ip sla schedule [operation number] life [life time] start-time [start time]
+```
+
+the life can be forever. 
+
+```
+ip sla 1
+icmp-echo 10.10.3.30
+frequency 300
+```
+
+### SPAN / port mirroring
+
+duplicating frames through a switch to a receiving station. 
+
+by default the you will capture B/C, multicast and unknown unicast by just being in the switch. 
+
+normally the switch will send the data out of only the relevant ports. but if you turn on SPAN (switch port analysis) then it will send a copy of every frame from certain interfaces in or out to a certain other port. 
+
+RSPAN (remote span) is used for when you want to listen for information on different subnets. 
+
+this is called baseline testing and is what wireshark is actually supposed to be used for
+
+to set up:
+
+```
+monitor session 1 source interface Fa0/3 both
+monitor session 1 destination interface Fa0/1
+```
+
+### extended access list
+
+you can add in a remark so that you know where you are. like a printf(); for when you are debugging. 
 
 ## Implementing an EIGRP based solution
 
