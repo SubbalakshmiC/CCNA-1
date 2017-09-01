@@ -3358,6 +3358,52 @@ monitor session 1 destination interface Fa0/1
 
 you can add in a remark so that you know where you are. like a printf(); for when you are debugging.  
 
+### Troubleshooting IPV6 Network Connecting
+
+link local: FE80
+* not globally routable 
+	* not even routable
+* used for discovering neighbours and the router
+* FF02::1 is the messages for ipv6
+* routers have a specific address ~ all routers address = ff02::2
+* leading zero compression :0201: = :201:
+* zero compression :2038:0000:0000:0031: = :2038::0031:
+
+unicast addresses   
+
+* global address : 2000::/3
+* Unique-local : FC00::/7
+* link local : FE80::/10 - FEB0::/10
+* Loopback : ::1
+* Unspecified : ::
+
+in ipv6 you ONLY HAVE named and extended access lists. in ipv6 its called a "traffic-filter". 
+
+```
+show ipv6 neighbours
+```
+
+### recap on distance vector based routing
+
+distance vector based routing is where you have a map of the network. 
+
+link state is where you have a signpost. 
+
+* Distance - hop count
+* vector - direction. 
+
+when you are using RIP the hop count is the metric and any directly connected network will have a hop count of 0 and this will be called the seed metric when you are talking about it as a reference point for the hop count. when R1 will send its routing table to R2 then it will send the information that its directly connected networks can be accessed by this router ant the hop count will increment by one
+
+the holdtime timer for RIP means that for that network the messages will be ignored for that time. if a port kept going up and down then it would make sure that other devices on the network will not have too much traffic about the 
+
+one problem that can arise from distance vector is that a network can be advertised to its own router. this would not be a problem due to the fact that you would use the directly connected network. but if that were to go down then the router would send all the data to router 2 due to the fact that thats all the information is has about that network. this could then mean that R1 will send all the data to R2 and then R2 will send all the data to R1 and this is a routing loop. 
+
+distance vector will use a thing called split horizon, this will ensure that a network learned by a port will not be sent out back to that port. 
+
+when a network is disconnected then the router will send out a flash update to rip that will let the others know the network is 16 hops away. called route poisoning. 
+
+a poison reverse message will make R2 send the poisoning message back to R1 so that no loops could EVER occur. 
+
 ## Implementing an EIGRP based solution
 
 ## Implementing a scalable OSPF based solution
