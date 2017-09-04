@@ -3768,6 +3768,37 @@ this is where both of the routers have the same information
 
 this is where the best routes are found and calculated and this leads to the routing table. 
 
+the costs of the network path is done by the routers adding the values to the ones that they receive to what they know the connection to be. 
+
+some of the downsides of OSPF is that it needs a lot of processing power and storage. 
+
+OSPF has its own method of reliable communicating so it does not rely on TCP.  
+
+### OSPF packet
+
+hello
+DBD
+LSU
+LSAck
+
+OSPF uses protocol number 89 
+
+### OSPF header
+
+version number| type| packet length| router ID| area ID| checksum| authentication type| authentication| data
+|-|-|-|-|-|-|-|-|-|
+
+ICMP, OSPF, EIGRP are maybe layer 3 protocols. 
+
+to active OSPF you would run:
+```
+router ospf [process number]
+```
+
+the process number is a locally significant (only on this one router) number. 
+
+you can also just go into an interface to turn on OSPF rather that specifying the networks that you want to add. 
+
 ## Wide-Area networks
 
 ## Network device management and security 
