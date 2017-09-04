@@ -1392,15 +1392,280 @@ There are varying types of applications, such as:
 * IF a link goes down, the root device is no longer present, a blocked link opens and becomes a forwarding port, and the new root port.
 * IEEE 802.1D is standard STP, the wait time is 30 second before a link is considered dead. This is because the port must transition to Listening, then to Learning. The default delay between state changes is 15 seconds, hence the 30s wait time.
 * IEEE 802.1W is Rapid Spanning Tree Protocol, which has a 2 to 5 second wait before considering a link dead.
+* Per VLAN Spanning Tree (PVST+) is a Cisco protocol that provides a 802.1D spanning tree instance per VLAN in a network. This is slow and resource intensive however, so Rapid PVST+ was developed to help solve the issue, which used a tree for multiple VLANs.
+* By default:
+	* PVST+ is enabled
+	* PVST+ is active on all ports within VLAN 1
+	* Slower convergence is present however, after changes in topology than that of RSTP
+* A root bridge can be forced by doing the following:
+	* `spanning-tree vlan root 1 root primary` making the given switch the root device.
+	* `spanning-tree vlan root 1 root secondary` on an alternate device, forcing it as the secondary.
+* PVST+ uses an extended bridge ID, meaning that the latter 12 bits of the 2 byte field traditionally reserved for bridge priority is now used for the extended system ID. This is why using PVST+ the Bridge Priority Number increments by 4096.
+* PortFast jumps from blocking to forwarding without listening or learning prior. This can only be configured on access ports. PortFast should only be configured on ports leading to end devices.
+* BPDU Guard shuts down a port when a BPDU is received on it. This is used in combination with PortFast.
+* PortFast disables the functionality of spanning tree on a given switch port.
+* Devices connected to PortFast Interfaces should not ever generate BPDUs, and so if the topology is changed to connect a switch to a link with PortFast enabled, by using BPDU block, the port will be shut down if a BPDU is received to prevent any loops occurring.
+* When a voice VLAN is enabled, PortFast is also enabled by default.
+* To configure PortFast and BPDU Guard:
+	* `interface (interface)`
+	* `spanning-tree portfast`
+	* `spanning-tree bdpuguard enable`
+* Or to enable globally on all non-trunk ports:
+	* `spanning-tree portfast bpduguard default`
+	* `spanning-tree portfast default`
+
+### Improving Redundant Switched Topologies with EtherChannel
+* Multiple links can be made between switches to improve bandwidth, however if spanning tree is enabled, all bar one of these links will be disabled to prevent a broadcast storm. This can be mitigated with EtherChannel.
+* EtherChannel aggregates links between switches on a logical basis.
+* It can be used to offer a more high-bandwidth connection
+* It allows load sharing across links
+* It allows for redundancy in a switched network.
+* As far as spanning tree is aware, when EtherChannel is enabled, the EtherChannel link appears as a one-to-one connection, instead of a many-to-many.
+* If STP decides to disable the link on an interface that the EtherChannel is enabled on, the entire EtherChannel link goes down.
+* The cost is assessed by the combined speed of the links, e.g. 10 x 1Gbps links will be seen as 1 x 10Gbps link by STP when EtherChannel is enabled.
+* Two protocols can be used to automatically configure EtherChannel on a switch:
+	* PAgP - A Cisco Proprietary protocol (Port Aggregation Protocol)
+	* LACP - An IEEE 802.ad standard (Link Aggregation Control Protocol)
+	* These **CANNOT** be mixed - else an EtherChannel will not be created.
+* PAgP has two modes: 'PAgP Desirable' (Actively desiring to be come an EtherChannel, requesting if the other side of the link can) and 'PAgP Auto' (willing to become an EtherChannel but will not seek to create one)
+* LACP has two modes: 'LACP Active' (Actively desiring to be come an EtherChannel, requesting if the other side of the link can) and 'LACP Passive' (willing to become an EtherChannel but will not seek to create one)
+* Static EtherChannels can also be configured without the need to use either of the protocols. These show as mode 'On'
+* Both ends of an EtherChannel need to be the same in the following regards:
+	* Speed
+	* Mode (Trunk/Access)
+	* Native and Allowed VLANs
+	* Duplex
+* To configure EtherChannel:
+	* `interface range e0/0 - 3`
+	* `channel-group (number) (mode)`
+	* `exit`
+	* `interface port-channel (number)`
+	* `switchport trunk encapsulation dot1q`
+	* `switchport mode trunk`
+	* `switchport trunk allowed vlan (numbers)`
+
+### Understanding Layer 3 Redundancy
+* By making a network redundant at layer 3, there is a fail-safe in the event that a router goes offline.
+* However, access devices can only have a single default gateway, which means that devices cannot access the network if their default gateway router goers offline, irregardless of whether there is a layer 3 redundancy within the network or not.
+* To solve this, a First Hop Redundancy Protocol (FHRP) can be used.
+* Cisco were first to market here with Hot Standby Routing Protocol, a proprietary protocol.
+* Virtual Router Redundancy Protocol (VRRP) is an alternative available, which is an open standard. VRRP is defined within RFC 5798.
+* Gateway Load Balancing Protocol (GLBP) is another Cisco protocol, which spreads traffic across the redundant routers in the network.
+* When a route fails:
+	1. The standby router stops seeing hello messages from the forwarding router.
+	2. The standby router takes on the role of the forwarding router.
+	3. There is no noticeable change in service because the router assumes the Virtual IP and Virtual MAC of the virtual router.
+* When HS or VRRP is enabled, the virtual IP and is provided to the hosts that would otherwise by connected to the physical router in a non-redundant L3 Network. The routers used to produce the redundant network have the alias of the virtual router and can both act upon requests.
+
+	> The Virtual MAC of a HSRPv1 virtual router follows the naming scheme 0000:0c07:ac0**x**, where **x** is the HSRP group number.
+	
+* With HSRP, client requests are always processed by the active router. When the active router fails, the standby router becomes the active router.
+* The Virtual MAC will therefore only be known to be on the port of the active device, as it replies to and sends traffic to and from that address.
+* VRRP sends Hello every second, with the dead time being 3 seconds.
+* HSRP sends Hello every x seconds, with the dead time being 10 seconds.
+
+**MAKE NOTES ON PAGE 25 to 44**
 
 ## Module 2: Troubleshoot Basic Connectivity
+### Troubleshooting IPv4 Network Connectivity
+* When end to end connectivity cannot be made, perform the following:
+	* Verify physical connections - cable and interface.
+	* Verify path decisions between source and destination.
+	* Verify default gateway settings.
+	* Verify resolution settings (DNS).
+	* Verify ACLs to ensure traffic is not being blocked.
+* By understanding the OSI model, the layer that the issue is occurring on can be discovered, and this will help to cut down the number of possible issues to increase the rate of fault mitigation.
+* Three methods can be used:
+	* Top-to-Bottom
+	* Bottom-to-Top
+	* Divide-and-Conquer
+* ICMP is a layer 3/4 protocol that can be used to verify connection.
+	* Ping is an ICMP type 8 (echo) and Type 0 (reply) message.
+	* Traceroute is an ICMP type 11 message
+* Ping procedure:
+	* PC issues Ping command to IP
+	* Router receives the request
+	* Makes an ARP request to that address
+	* If no reply is made, an ICMP Type 3 message is sent to the host with a code. 
+		* 0 meaning detention network unreachable
+		* 1 meaning destination host unreachable
+		* 2 meaning destination protocol unreachable
+		* 3 meaning destination application unreachable
+		* 13 meaning administratively filtered
+	* `UUUUU` is returned as there is some kind of unreachable error.
+	* `.....` means that the router has forwarded the message, but an error occurred further downstream.
+	* `.!.!.` meaning that a load-balancing system is in place, and one of the routers is not functioning correctly. `show ip route` should be sued next.
+* On a network device, rebooting should be the last port of call, especially if protocols such as spanning tree are in place.
+* Multiple ISPs can be used to produce a redundant L3 network. 
+* Service Level Agreements (SLAs) can be used to perform actions autonomously on a network.
+* e.g. SLA 100:
+	* ping ISP 1
+	* If fails, degrade HSRP 20
+* ICMP redirect (type 5) messages can be sent in the event of failing a SLA to inform the switch to stop using that interface, as the ISP is unreachable.
+* To configure this:
+	* `ip sla (number)`
+	* `icmp-echo (destination ip)`
+	* `exit`
+	* `ip sla schedule (number) life (seconds) start-time (hh:mm:ss day month)`
+* Switch Port Analysis (SPAN) allows you to instruct a switch to send copies of packets to another port on the device. This is also called port mirroring.
+
+### Troubleshooting IPv6 Network Security
+
+|Address Type|Value            |Description                  |
+|------------|-----------------|-----------------------------|
+|Global      |2000::/3         |Public Networks              |
+|Unique-Local|FC00::/7         |Private Networks             |
+|Link Local  |FE80 to FEB0::/10|Auto-Configured, not routable|
+|Reserved    |range            |Specific types of anycast    |
+|Loopback    |::1              |Local testing                |
+|Unspecified |::               |Unknown address              |
+
+* IPv6 can be configured using DHCP for IPv6, with stateless auto configuration or statically.
+* IPv6 can be configured statically by:
+	* `interface (interface)`
+	* `ipv6 address (host address)(/notation) OR (network address) eui-64`
+
+* In IPv6, ACLs are called Traffic Filters. They are only available in a named variety and only an equivalent version of an Extended ACL.
+* To configure an IPv6 ACL, use:
+	* `ipv6 access-list (name)`
+	* `(conditions)`
+* To apply to an interface do:
+	* `ipv6 traffic-filter (name)`
+
 ## Module 3: Implementation of an EIGRP-Based Solution
+### Implementing EIGRP
+* EIGRP is a dynamic routing protocol.
+* Dynamic Routing Protocols can:
+	* Discover remote networks by exchanging routing information between devices
+	* Maintain up-to-date routing information
+	* Choose the best path to destination networks
+	* The ability to find a new best path if the currently used path is no longer available.
+* All routing protocols are used to learn about remote networks and adapt to changes in network topologies.
+* Different Routing Protocols use differing metrics to make these decisions.
+* There are two types of routing protocols, Interior Gateway (maintained by a single administrative authority) and Exterior Gateway (e.g. via the internet).
+* They may use either Distance Vector (e.g. RIP and EIGRP) or Link State (e.g. IS-IS and OSPF), and can be classfull or classless. Classfull routing protocols cannot handle VLSM.
+* Every 30s, Distance Vector protocols share routing tables with one another, whereas link-state protocols use link state advertisements, which are flooded to the entire network using a reserve multicast address.`
+* Multiple routing protocols and static routes can run simultaneously.
+* Routers prefer sources with the lowest AD possible.
+* Enhanced Interior Gateway Routing Protocol EIGRP) has the following properties
+	* Rapid (2 to 5 second( convergence
+	* Load balancing acr
+	* Loop free classless routing
+	* Reduced bandwidth usage
+	* No broadcast address
+	* Guarantee a loop free network.
+* EIGRP uses the DUAL algorithm to ensure the network is loop free.
+* EIGRP will send the route table to another divice initially and then only sends again when there is an update to that routing table.
+* Two EIGRP routers exchange hello messages every 5 seconds to ensure the device saline
+* An EIGRP Topology table shows all of the hosts and networks discovered by communication with neighbours.
+* A Routing table is built from this table by selecting the best route to the connected networks, and the outbound interface used to access it.
+* The feasible distance collected from the Topology Table is used as the Metric for that route.
+	* Feasible distance = advertised distance + reported metric to neighbour.
+* To avoid loops, it is only safe to use a neighbouring router as a next hop to another network if the FD is lower than your locally calculated FD. This prevents a router sending traffic to a next hop router that is further from the destination, only to have it sent back. This is called a Feasibility Condition (FC).
+* The next hop router chosen is referred to as the successor.
+* EIGRP Query messages are used when a link goes down, in order to request new successors.
+* A topology Table will only ever show feasible routes.
+* The criteria for metric calculation by EIGRP is with Bandwidth and Delay.
+* $$Metric = (BW+Delay) \times 256$$
+	* Where Bandwidth is Kbps and Time is in Microseconds (µsec)
+* To enable EIGRP:
+	* `router eigrp (autonomous system number)` - this number must be the same on all device you wish to share data.
+	* `network (IP)` - enabled for any interface with the first octet matching the one inputted here. A wildcard mask can be added to overwrite this feature.
+	* The network statement can be repeated to enable EIGRP on other interfaces also.
+	* `show eigrp neighbors` will reveal adjacencies made.
+	* `show ip eigrp interfaces` will reveal interfaces EIGRP is enabled on.	
+* EIGRP calculates a successor for every next hop address where possible, which allows it to offer rapid convergence.
+* The routing table is only shared upon table changes, and it only advertises said changes.
+* EIGRP advertises on EIGRP 224.0.0.10.
+* Feasible successors must also have advertised distances lower than the lowest feasible distance for that same route.
+* The recorded bandwidth for calculation is always the slowest data travel rate value in the path. 
+* The main downside to EIGRP is in the poor readability of the metric, without the formula, it is hard to understand it's meaning.
+* AS numbers are Autonomous System Number, and must be the same along the network EIGRP is running on.
+* `show eigrp neighbours` will reveal:
+	* Handle - the order that the devices have been discovered in
+	* The neighbours IP Address
+	* The interface it is attached to
+	* The Hold Time
+	* The Uptime
+* `show eigrp interfaces` will reveal:
+	* Information about EIGRP interfaces within a given AS.
+	* The number of peers on the interface specified.
+	* etc.
+* `show eigrp topology` will reveal the EIGRP topology table, which only shows feasible routes unless the `all-links` flag is supplied in addition.
+* **Note:** on an EIGRP topology table, P means passive, but not in the passive interface sense. It simply means that a valid successor is being used instead of that interface.
+* `show ip protocols` will, among other things, reveal the Metric Weight. This shows K1 through 5, where K1 is bandwidth and K3 is delay. The higher the number, the larger the impact the value will have on the metric calculation. These changes must match for all devices on the same AS.
+* EIGRP uses Equal Cost Load balancing, whereby routes with the same metric will share load equally, also called round robin load sharing.
+* Unequal Cost Load Balancing is also used when two routes to a network are of different metrics, whereby traffic will still be load balanced, though in accordance to the speeds of the link.
+
+### Implementing EIGRP for IPv6
+* EIGRP for IPv4 and IPv6 can run together on a single Cisco router.
+* This protocol performs in the same way as EIGRP for IPv4, though it does use a link-local (FE80) address for adjacencies and next-hop attributes.
+* To enable, run `ipv6 router eigrp (AS Number)` followed by `no shutdown` at the interface level, as opposed to running `router eigrp` followed by the network that the protocol will operate on.
+
+### Troubleshooting EIGRP
+* When suffering from loss of connectivity on an EIGRP network, it will be either a Neighbour Adjacency or Routing Issue.
+* `show ip eigrp neighbours` will show as empty if no neighbours can be discovered.
+* To prevent adjacency issues:
+	* Ensure the interface is up.
+	* Ensure the AS is the same.
+	* Ensure EIGRP is enabled.
+	* Ensure the interfaces are not passive interfaces.
+* To prevent a routing table issue:
+	* Ensure networks are being advertised
+	* Ensure no ACL are preventing advertisement
+	* Ensure Automatic Route Summarisation is not causing confusion in the network. Use `no auto-summarisation` to disable this.
+
 ## Module 5: Implementation of a Scalable OSPF-Based Solution
+### Understanding OSPF
+* OSPF is a link-state protocol.
+* The benefits of these types of protocol over that of a DV protocol are:
+	* Scalability is much better
+	* Each router has an understanding of the full network topology.
+	* Updates are only send as and when changes to the routing table occur.
+	* Faster response times to changes in the network topology.
+	* Greater breadth information communicated between routers.
+* During Operation, OSPF:
+	* Creates neighbour relationships by exchanging hello packets.
+	* Propagates Link-state advertisements rather than entire routing tables.
+		* These are composed of 'Links' (The router interface) and 'States' (The description of the interface and it's relationship to its neighbours)
+	* Floods LSAs to all OSPF Routers
+	* Pieces together received LSAs to form a database.
+	* Uses SPF to calculate the shortest path to each destination within its routing table.
+* The metric used by OSPF is Cost.
+* This can be calculated with $$10^8 \times Bandwidth$$
+* LSAs have a validity of 60mins. They use sequence numbers to ensure that if these messages are received in the wrong order, it isn't just always the last advert that is actioned upon.
+* OSPF can be logically separated into areas. This must include a Backbone, other areas must be connected to this.
+* In this however, the scope of routers becomes reduced, and so devices are only aware of what's within their area, unless the device borders 2 areas whereby it will have an understanding of both areas it falls under.
+* Areas serve to reduce the size of routing tables and the impact of a change within the network topology.
+* The contents of a hello message is:
+	* Router ID
+	* Hello/dead interval
+	* Neighbours
+	* Area ID
+	* Router priority
+	* DR IP Address
+	* BDR IP Address
+	* Authentication Data
+	* Sub-Area flag
+* In order to establish adjacency, the Hello/dead Interval, Area ID Authentication Data and Stub Area Flag must match.
+* The OSPF routers go through different OSPF states:
+	* Both devices are in a down state, a Hello is sent by R1.
+	* A Hello is received by R2, who changes into an Init state and sends a Hello. This is received by R1 and it changes into an Init State
+	* R2 sends a Hello again, this time with the R1s address in it as well as any other neighbours of R2 both devices are now in a Two-Way State.
+	* Now both devices are in an Exstart state. Adjacencies are established with other routers in the network. A master-slave relationship is developed. The router with the highest ID becomes the master. This denotes who will start the process of exchanging information.
+	* The master and slave router exchange Data Base Descriptions. The routers are now in the exchange state.
+	* A router compares the DBD it receives within the LSAs it has. If the DBD is more up to date than the router it's self, an LSR is sent to the other router. This begins the loading state.
+	* Once all devices have synchronised databases, they are in the full state.
+
+### Implementing Multiarea OSPF IPv4
+### Implementing OSPFv3 for IPv6
+### Troubleshooting Multiarea OSPF
+
 ## Module 6: Wide-Area Networks
 ## Module 7: Network Device Management
 
 ---
 # A typing exercise
-> I'm practicing Dvorak, so here is some random story I am using to practice:
+> I'm learning Dvorak, so here is some random story I am using to practice:
 
 Once upon a time there was a dog and it had at least four legs, but maybe more. It often depended on which Saturday of the month it was. This dog had a favourite toy called Andreas, which was a (tatty looking) four dimensional rhomboid. Francine (the dog, if you could even call it that) love play with the toy and even buried him in the garden. This did however lead to time causality issues.
