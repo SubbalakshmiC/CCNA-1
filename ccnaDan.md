@@ -3695,6 +3695,79 @@ Area Border Router (ABR) is the name of the router that will allow routing betwe
 
 routers between areas will basically have two tables, one for each. 
 
+"reduce the table size and the impact of a change" this is all you need to know about why we use areas
+
+### hello message 
+
+for a relationship to happen between two routers the following must be the same:
+* Area ID
+* Hello/Dead interval
+* Authentication data
+* Stub Area Flag
+
+the wull data that is in a hello message is as follows:
+* Router ID
+* Hello/Dead Interval
+* Neighbours
+* Area ID
+* Router priority
+* DR IP address
+* BDR IP adders 
+* Authentication data
+* Stub Area Flag
+
+the hello message and SLA's are send out of address "224.0.0.5"
+
+### 7 steps to form a router relation
+
+#### 1 - DOWN
+
+to start with, both of the routers are in the down state
+
+this means that they are sending hellos
+
+if they then reiceive an hello back, they jo into an INIT state
+
+#### 2 - INIT (fam)
+
+reiceiving a hello 
+
+#### 3 - TWO WAY
+
+Receive a hello message containing my router ID, I now know that the other router will know about  
+
+#### 4 - Exstart
+
+The routers are in an exchange state 
+
+The start of the exchange. 
+
+They will then decide who will be the master and who will be the slave. and who will take charge of the relationship.
+
+the highest router ID will become the master. 
+
+#### 5 - exchange
+
+where data is actually exchanged
+
+the master will share DB first, then slave second
+
+summary databases (DBD [DataBase Descriptor]) packets are exchanged
+
+#### 6 - loading
+
+further information requested 
+
+this is where you get the additional information that you need 
+
+#### 7 - full (in sync)
+
+this is where both of the routers have the same information 
+
+#### finally - run Dijkstra's algorithm 
+
+this is where the best routes are found and calculated and this leads to the routing table. 
+
 ## Wide-Area networks
 
 ## Network device management and security 
