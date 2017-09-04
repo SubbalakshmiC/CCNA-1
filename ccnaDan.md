@@ -3406,7 +3406,294 @@ a poison reverse message will make R2 send the poisoning message back to R1 so t
 
 ## Implementing an EIGRP based solution
 
+this is a distance vector based protocol. so you will have a signpost telling you where to send information rather than having a map of the network. 
+
+dynamic routing protocols do the following things:
+* discover remote networks
+	* this is done by offering information or requesting for it
+* maintaining up to date routing information
+* choosing the best path to destination network
+	* this is where the metric will come into play
+* find a new best path if the current path is no longer available. 
+	* when you are using RIP then the time to find a new path is 3 minutes
+	* for EIGRP the time is 2 to 5 seconds. 
+
+an IGP ir a group of routers that are under the control of one authority this is also called an "autonomous system". basically all the stuff that you own and maintain you can use IGP, but when you need to work with someone elses routers then you would have to use an EGP so that it will be compatible and so you cant steal information and so on. "there are rules and regulations that you have to follow"
+
+within IGP you get Distance vector and link state. 
+* distance vector is simple and you would send over the whole route table to other routers. 
+* link state routers never send route tables to each other, they instead stand link state adverts and these will flood through the network.  
+
+there are then also classless and classfull protocols. 
+* classless protocols allows you to use VLRM networks and there are no problems. 
+* classfull protocols needs the masks to be consistent in the same major networks. basically they don't have space to store information about the subnet masks and so it will have to use its own. 
+
+Admin distance
+
+this is an assigned value that all routing protocols carry and this will indicate what route to use based on what protocol is more trustworthy. 
+
+### EIGRP (Enhanced Interior Gateway Protocol)
+
+here are the features:
+* Rapid convergence
+	* takes only about 2 to 5 seconds to converge
+* Load balancing
+	* can load balance against paths that have different metric costs. 
+	* non equal cost path load balancing 
+* loop-free, classless routing
+	* this will actually stop loops from happening, rather than dampening the effects of one. 
+* Reduced bandwidth usage
+	* Bounded updates 
+	* No broadcasts 
+
+EIGRP was made Cisco proprietary but is now available to all vendors if they want, but most, if not all, choose not to. 
+
+Underneath, EIGRP uses DUAL (diffusing update algorithm) and thats why its called "D" in the ip routes. 
+
+RIP would tell the routing table every 30 seconds, that makes no sense if nothing actually changes, so EIGRP does not do that. 
+
+EIGRP will send the whole routing table once at the beginning and ONLY then. but will then only send updates when a change is made and will then only send the changes of the table. EIGRP will then not know when a router dies, so every 5 seconds they will send a hello message to ensure that they are still alive. This communicatin will happen on a reserved multicast address: **224.0.0.10** 
+
+the first thing to say is that EIGRP does not send all its route table, 
+
+hello are sent every 5, but are pronounced dead after 15 seconds, so you get 3 tries. 
+
+tables:
+* neighbour 
+	* what routers by what interfaces
+* topology 
+	* all the networks that it has learned
+* routing
+	* the best of the topology table for each network only once. 
+
+Distances:
+* feasible
+	* the distance from your router to the network
+* advertised 
+	* the distance from the advertised router to the network
+
+basically you know your distance to the network and the next routers distance to the network. 
+ 
+the DUAL algorithm enforces the feasibility condition. to avoid a loop, you can only use the neighbouring router for a certain network if its advertised distance is lower than yours, but if your value is lower then you don't use the neighbouring router. Basically, you will just use the best path that you know of. 
+
+> only use a neighbouring router if it is closer than you are 
+
+the next hop router is called the successor. 
+
+then all the other routes that have a value that will be feasible to actually use then there will be called feasible successor. 
+
+a router that is the same distance away to the network will not be a feasible successor, because why would you go that way when i am the same distance away. 
+
+#### metric
+
+the metrics that are used are:
+* b/w
+* delay
+
+but you can also use:
+* reliability
+* load
+
+b/w is calculated by:
+```
+10^7 / the minimum of (the advertisedB/w or the linkB/w) 
+```
+delay is calculated by:
+```
+the sum of (advertisedDelay and linkDelay)
+```
+this is then combined by:
+```
+( B/W + delay ) * 256
+```
+
+
+```
+router eigrp [autonomous network value]
+network 10.0.0.0 		// enable EIGRP on all interfaces that have the first byte of the network address as 10
+netowrk 192.168.1.0 	// you can also use a wildcard mask for more control, so its optional. 
+```
+the autonomous netowrk value needs to be the same as this is used to send the routing into macho to the correct routers. the routers will only communicate EIGRP information if the autonomous network value is the same. 
+
+the main reason that EIGRP is so fast is due to the fact that it has already calculated other paths and so it can just switch instantly. 
+
+you will get a feasible successor if to get to the network the distance that another router has is less than your current way to get there. This will only happen if the feasible distance from your current router is less that your current route, or it will switch to the better one.  
+
+if there is an issue with EIGRP then normally its a problem with the metric. Another things is that the AS numbers must be the same. 
+
+to see neighbor information. 
+
+```
+show ip eigrp neighbors
+```
+
+the "H" that you see here is the handle number which is the order that they were learnt in. 
+
+to see all the interfaces that you have applied EIGRP to then you would run:
+
+```
+show ip eigrp interfaces
+```
+
+so see the topology table you would run:
+
+```
+show ip eigrp topology 
+show ip eigrp topology all-links 	// this will show all of the routes, not lust the feasable ones like normal
+```
+
+the "P" that you may see at the beginning means that there is a feasible valid successor. Passive because you wouldn't send anything out of that interface because you already have a path. Simply means that there is a valid successor. 
+
+"A" for active will mean that it is trying to ask around for a new successor due to its normal one being down. 
+
+"passive interface default" will mean that all of the interfaces will be passive, THIS COULD EASILY BE A QUESTION IN THE EXAM. 
+
+### K numbers
+
+1| bandwidth
+|-|-|
+2 |load
+3 |delay
+4 |reliability 
+5 |MTU
+
+if the K numbers are different then the routing protocols will not work. but you 
+
+### load balencing
+
+EIGRP uses equal cost load balancing, this is where if multiple paths have the same metric cost then data will be split equally between the two. 
+
+there is also another version called unequal cost load balancing, this is where data is sent in proportion to the metrics of multiple paths to get to the destination. 
+
+### Implementing EIGRP for ipv6 
+
+EIGRP has a module that allows it to work for ipv6, this means that EIGRP and ipv6 can run at the same time. 
+
+FF02::A is the multicast address for ipv6 EIGRP. 
+
+you can shutdown an ipv6 EIGRP process by just running:
+```
+no shutdown 	// when you are in router mode "ipv6 router eigrp"
+```
+
+when you are looking at ip route the numbers in the brackets will be FD and AD. (FD/AD)
+
+### troubleshooting EIGRP
+
+when you have an issue you should first check if EIGRP is working and then over to the router. but FIRST FIRST you should chesk the routers are actually on, and you can ping, show cdp neighbors. 
+
+first run commands like:
+```
+show ip neighbors
+show ip interface brief
+shof ip eigrp interfaces
+show ip protocols
+```
+
+then after that you would run:
+```
+show ip interfaces
+show ip router
+show ip protocols
+show ip access-list
+```
+
+you would also check:
+* does the AS number match the rest of the network. 
+* are the interfaces set up for EIGRP
+* are the interfaces passive
+
+
+Discontinuous networks is where one there is a classfull network boundary, so a network advertisement will have to be summarised because the advert when through a different network class. 
+
+auto summary will be shown in "show ip protocol"
+
+you can find the AS numbers with the command "show ip protocols", this will also show if an interface is passive. 
+
 ## Implementing a scalable OSPF based solution
+
+Open Shortest Path First = OSPF
+
+> The first Link State routing protocol.  WHOOO
+
+The first thing that happens when you start OSPF, is a hello mechanism so that it advertises its existence. OSPF has an identity so that it can be recognised, this is normally the ip address of the network. 
+
+in the hello packet the identity of the router is sent out, this is normally the IP address. the ip address is used because OSPF needs to route ip traffic. 
+
+### router ID
+
+the way that the router ID is assigned follows this method. 
+
+* manually set
+* loop back address
+* highest active IP address. 
+
+the reason that the loop back address is preferred is due to the fact that the loop back address will never go down or get reassigned. 
+
+in the hello packet that is sent out tells the other devices, hello I am "\NetworkID"
+
+this will start the neighbour relationship. 
+
+the hello messages are then spread all throughout the network so that all of the devices will become aware of all other devices on the network. This is NOT THE SAME as EIGRP as there the devices will only know about directly connected devices. 
+
+a router will advertise all of the routers that they know about during this initial stage. 
+
+> Step one: build the neighbour table. 
+
+from here the routers will then start to advertise what networks they are connected to. Each router will need to do this. Link State Adverts (LSA) are used to advertise the network. YOU ALSO ADVERTISE YOU LINK TO THAT NETWORK. 
+
+from this, you can then see all of the ip address that all of the routers and work out what routers are connected to what other routers, this will then allow you to get a complete map of the network. Since all of the routers will have the same information then all of the routers will have a complete map of the network. 
+
+in order for this to work, this map MUST be the same on all of the routers. 
+
+> Step two: Build topology (LSDB = Link State DataBase) table 
+
+> Step three: choose the best routes = the routing table
+
+the LSDB will contain information on EVERY connection and path in the network. 
+
+the best routes are then calculated by looking at the path with the lowest metric. 
+
+OSPF metric = cost
+cost = 10^8 / BW of interface in bits per second
+
+each router will calculate the shortest path that it will use to get to any network and it will do this first and put this in the routing table. 
+
+YOU CAN MANUALLY CHANGE REFERENCE BANDWIDTH. 
+
+once a link goes down, the whole route will need to be re calculated and that can take 2 - 5 seconds to sort out, but that will depend on the size. 
+
+you can take a network and break it into areas so that a change in a different area will not force a computation in another area.  
+
+OSPF is the largest used internal gateway protocol. 
+
+110 AD 
+
+hello messages are sent every 10 seconds. Dead interval is 40 seconds. so 4 times with this protocol because reasons. 
+
+updates are sent when there is a change
+
+BUT the adverts have a ttl of 60 minutes, but half way though the routers will retransmit their link state adverts. 
+
+all of the adverts will have a sequence number with them that will let the receiving device know what the newest version is.  
+
+* Discover neighbours
+* Form adjacencies
+* flood LSDB
+* compute shortest path
+* install routes 
+
+### areas
+
+you can chop up a network into areas so that if a topology change happens in one area, then only the routers in that area will have to recompute the path. 
+
+The default is area 0, and in a multiarea network the backbone area will be 0, all areas will have to connect to area 0. 
+
+Area Border Router (ABR) is the name of the router that will allow routing between the areas basically. 
+
+"summarize network changes between routers in different areas"
+
+routers between areas will basically have two tables, one for each. 
 
 ## Wide-Area networks
 
