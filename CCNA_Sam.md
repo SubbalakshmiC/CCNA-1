@@ -1656,8 +1656,33 @@ There are varying types of applications, such as:
 	* The master and slave router exchange Data Base Descriptions. The routers are now in the exchange state.
 	* A router compares the DBD it receives within the LSAs it has. If the DBD is more up to date than the router it's self, an LSR is sent to the other router. This begins the loading state.
 	* Once all devices have synchronised databases, they are in the full state.
+* Each router advertises it's cost out of each of it's interfaces to connected networks. The router places it's self at the foot of an OSPF tree and calculates the total cost to each destination, based on the information it has been given by it's adjacencies.
+* OSPF has different types of packets:
+	
+	|Type|Name |Description|
+	|----|-----|-----------|
+	|1   |Hello|Hello packet discovers and maintains neighbours                         |
+	|2   |DBD  |Contains LSA headers that help to build the LSDB                        |
+	|3   |LSR  |USed to request updated LSAs from neighbours                            |
+	|4   |LSU  |List of LSAs that require updating                                      |
+	|5   |LSAck|Ensure reliable transmission of LSAs, by sending Acknowledgment messages|
+
+* Hello packets include a list of known neighbours.
+* DBD Packets contain a summary of the LSDB.
+* LSR packets contain the type of LSU needed and the router ID that needs it.
+* LSU packets contain the complete LSA entries, multiple of which can fit in a single packet.
+* LSAck packets are empty.
 
 ### Implementing Multiarea OSPF IPv4
+* OSPF Areas allow the network to be segmented, as previously mentioned. 
+* They feature the Backbone Area, and the Normal Areas.
+* The Normal areas cannot by default directly communicate, all traffic must go via the Backbone.
+* An OSPF router can be a:
+	* Backbone Router
+	* Internal Router
+	* ABR
+	* ASBR
+
 ### Implementing OSPFv3 for IPv6
 ### Troubleshooting Multiarea OSPF
 
