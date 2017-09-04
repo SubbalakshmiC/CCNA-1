@@ -3797,7 +3797,19 @@ router ospf [process number]
 
 the process number is a locally significant (only on this one router) number. 
 
-you can also just go into an interface to turn on OSPF rather that specifying the networks that you want to add. 
+you can also just go into an interface to turn on OSPF rather that specifying the networks that you want to add 
+
+### multiarea design
+
+you have areas in a network to reduce the bandwidth usage, reduce the table size and reduce the impact of a topology change. 
+
+ABR = Area Border Router
+
+this is the routes that will be on the boundary between two areas and in most cases will be in the backbone area. 
+
+routers in a normal area are called internal routers. 
+
+you would need to connect the backbone area to the ISP to actually get an internet connection. this router that connects to the outside world (that uses BGP) is called an ASBR (Autonomous system boundary router)
 
 ## Wide-Area networks
 
