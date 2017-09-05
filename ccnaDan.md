@@ -3783,6 +3783,22 @@ LSAck
 
 OSPF uses protocol number 89 
 
+* OSPF has different types of packets:
+	
+|Type|Name |Description|
+|----|-----|-----------|
+|1   |Hello|Hello packet discovers and maintains neighbours                         |
+|2   |DBD  |Contains LSA headers that help to build the LSDB                        |
+|3   |LSR  |USed to request updated LSAs from neighbours                            |
+|4   |LSU  |List of LSAs that require updating                                      |
+|5   |LSAck|Ensure reliable transmission of LSAs, by sending Acknowledgment messages|
+
+* Hello packets include a list of known neighbours.
+* DBD Packets contain a summary of the LSDB.
+* LSR packets contain the type of LSU needed and the router ID that needs it.
+* LSU packets contain the complete LSA entries, multiple of which can fit in a single packet.
+* LSAck packets are empty.
+
 ### OSPF header
 
 version number| type| packet length| router ID| area ID| checksum| authentication type| authentication| data
@@ -3809,7 +3825,66 @@ this is the routes that will be on the boundary between two areas and in most ca
 
 routers in a normal area are called internal routers. 
 
-you would need to connect the backbone area to the ISP to actually get an internet connection. this router that connects to the outside world (that uses BGP) is called an ASBR (Autonomous system boundary router)
+ get an internet connection. this router that connects to the outside world (that uses BGP) is called an ASBR (Autonomous system boundary router)
+
+### Implementing OSPFv3 for IPV6
+
+the tables in OSPFv3 are:
+* neighbour 
+* topology
+* routing 
+
+version 2 is for ipv4, version 3 is for ipv6. 
+
+```
+router ospf [process id]
+```
+
+you can have multiple OSPF processes on a router.  
+
+if more data is needed then you will send an LSRequest, and then this is completed by a LSUpdate and an LSAck
+
+every 10 seconds hello messages are sent, the dead interval time is 40 seconds. Except when a change to the network occurs an LSA will be sent out to update the information. A
+
+when a change comes in the database is changed and then the route table is recalculated. 
+
+a router will reflush its routes every 30 minutes. 
+
+The LSA's are routers LSAdvertisment. 
+
+this router LSA is a type 1 LSA, these are flooded everywhere. 
+
+a point to point network is where the routers are all in a line. when all the routers are connected to the same switch then it is a broadcast network as all of the routers would get the updates in a broadcast. 
+
+in a broadcast network all of the multicast LSA's will be broadcast all over the network and all of the bandwidth will be taken up. 
+
+to solve this OSPF will put someone in charge and that is the Designated router. BUT THIS WILL ONLY HAPPEN IN A BROADCAST NETWORK. 
+
+in case the Designated Router goes down then we have a Backup Designated Router. All of the other routers are called the DRother
+
+changes are now sent to the DR and BDR where they are sent out. 
+
+in this case the multicast address used is: 224.0.0.6
+
+the Priority feild can be used to select the DR, and in this case the highest is the best. if you dont want the router to the a DR or a BDR then you would set the priority to 0. 
+
+the LSA that are sent to the DR are type 2 LSA's, this means that it will be sent to the DR rather then flooded. This is a network LSA. 
+
+type | name | description
+|-|-|-|
+1 | router | flooded across the network
+2 | network | sent only to the Designated Router
+3 | summary | sent out by ABR, type 1 and 2 are put into this to sent information across areas. 
+
+these are flooded within an area. They dont go beyond an area. They are stopped by an Area Border Router. 
+
+all the routers in the backbone area are called backbone routers. 
+
+type 1 and 2 cannot get out of an area
+
+an ABR will sent its own LSA type 3 thats called a summary LSA. 
+
+the type 1 and 2 LSA will get put into a type 3 LSA
 
 ## Wide-Area networks
 
