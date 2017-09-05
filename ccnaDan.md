@@ -3827,8 +3827,6 @@ routers in a normal area are called internal routers.
 
  get an internet connection. this router that connects to the outside world (that uses BGP) is called an ASBR (Autonomous system boundary router)
 
-### Implementing OSPFv3 for IPV6
-
 the tables in OSPFv3 are:
 * neighbour 
 * topology
@@ -3902,6 +3900,52 @@ A totally stubby area means to type 3 or 5 SLA's.
 we know 3 areas: backbone, normal, stub. 
 
 > "its pretty much the same, but slightly different" - Rob
+
+### Implementing OSPFv3 for IPV6
+
+OSPFv3 will support ipv4 as well as ipv6. 
+
+v3 is an implementation that allow OSPF to use ipv6. 
+
+you still have all of the tables that you would do anyway
+
+the address will obviously have to change due to the fact that you are using ipv6. these addresses in OSPFv3 are:
+
+* FF02::5
+* FFO2::6
+
+the router ID's still use 32 bit router ID. it will still go through seeing if there is any manual setting, and loopback and so on. 
+
+YOU WILL NEED TO HAVE AN IPV4 INTERFACE SO THAT IT CAN AUTOMATICALLY GET A ROUTER ID THAT IS 32 BITS IN LENGTH. if it cannot get a router ID then OSPF will not be able to start, and so you will set it manually or set up an ipv4 interface. 
+
+OSPF is enabled on a link basis, not a network basis. so you would have to apply it to an interface, and therefor you would not apply it by the network address. 
+
+### troubleshooting
+
+there are 3 main things that you would want to check if there is a problem:
+
+* OSPF neighbour adjacencies
+	* **different areas**
+	* do all of the things that need to match, actually match. 
+		* look at running config
+		* show ip protocols / other commands
+		* debug
+	* ACL
+	* passive interface
+	* show ip OSPF neighbors
+	* show ip interface brief
+	* show ip OSPF interface
+	* show ip protocols
+* OSPF routing tables
+	* show ip route
+	* show ip protocols
+	* show ip OSPF interface
+	* show ip route [address]
+	* is there another routing protocol running with a lower AD running. 
+	* distance 85 - will set the AD of a protocol
+* OSPF path selection 
+	* show ip route
+	* show ip OSPF
 
 ## Wide-Area networks
 
