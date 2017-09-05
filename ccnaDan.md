@@ -3875,6 +3875,7 @@ type | name | description
 1 | router | flooded across the network
 2 | network | sent only to the Designated Router
 3 | summary | sent out by ABR, type 1 and 2 are put into this to sent information across areas. 
+5 | external | used when you connect to the ISP or a completely different area, external of OSPF. 
 
 these are flooded within an area. They dont go beyond an area. They are stopped by an Area Border Router. 
 
@@ -3885,6 +3886,20 @@ type 1 and 2 cannot get out of an area
 an ABR will sent its own LSA type 3 thats called a summary LSA. 
 
 the type 1 and 2 LSA will get put into a type 3 LSA
+
+### area types
+
+area 0 is the backbone area, this is where all other areas must connect to 
+
+all other areas are normal areas. 
+
+if you want to limit the adverts sent to an area then you would set it to be a stub area. this is where the stub area flag its sent. You will need to tell both the routers that connect the area to the backbone that they are a stub area as the flag needs to match. 
+
+when you make a stub area it will not get adverts for external areas which are type 5 LSA's. 
+
+A totally stubby area means to type 3 or 5 SLA's. 
+
+we know 3 areas: backbone, normal, stub. 
 
 ## Wide-Area networks
 
