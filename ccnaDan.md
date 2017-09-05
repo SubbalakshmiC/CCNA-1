@@ -3901,6 +3901,8 @@ A totally stubby area means to type 3 or 5 SLA's.
 
 we know 3 areas: backbone, normal, stub. 
 
+> "its pretty much the same, but slightly different" - Rob
+
 ## Wide-Area networks
 
 ## Network device management and security 
