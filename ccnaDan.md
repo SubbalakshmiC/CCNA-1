@@ -4034,6 +4034,153 @@ ISDN30 it BT marketing term for the E1 standard i think.
 
 ATM switches on cells, and its basically type of frame. 
 
+circuit switches are basically the public telephone lines and connections. This is also known as POTS (Plain Old Telephone System) 
+
+* ISDN is digital
+* PSTN is analogue - not for data, only voice
+
+packet switched - they act like routing networks 
+
+basically what we are used to with layer 2 devices. 
+
+##### frame relay
+
+it is a frame switched network. Loosely think of it as a HUGE switch network.  
+
+leased lines are costed by speed and length. and from GP to Manchester so to save on costs you would use a shared frame relay network that is already set up. Therefor you would only pay for the lines from your place to the shared network. 
+
+frame windows work off PVC (Permanent Virtual Circuit) and is basically just a number. its kind of like a VLAN tag. The actual number itself is called a DLCI, and this is basically just the VLAN number. when you build a frame you would put the DLCI number at the front of the packet. this then acts as a VLAN tag, where it is just added into the frame and only that is read by the switching devices. then the route that that packet took through the switches will be remembered so that there is now a permanent path to get to the destination, but the route just goes through some switches. Basically its static switching. 
+
+ATM was developed to increase the quality of service of frame relay.  
+
+but ATM has been replaced by MPLS which is a full layer 3 protocol. MPLS will add in a stamp to the packet to force a certain quality of service. 
+
+#### internet 
+
+this is where, DSL - dial up, broadband and wireless and so on reside. This just contains the ways that you know about. these are licences it means that you can just put down cables and so on. 
+
+DSL = Digital Subscriber Line
+
+this was used to allow high speed internet access over a POST line. this line will support a frequency of: 0hz - 1mhz. 
+
+When you speak down a standard land line will only placed in the frequency block of 0hz - 4000hz. But when you look at it the block will have nothing between 4000hz and 1mhz. and that is where the DSL part will be. DSL modems will have a filter to make sure that the voice section doesn't leak into the data section. 
+
+In this DSL data section there is a block of individual frequency blocks. When you get a DSL connection the ISP will perform a Signal to Noise Ratio (SNR) test to see what frequencies you can use. this is based on your individual line. 
+
+these DSL lines have compresses air in them so that no water will get in. This is all done by the MODEM (MODulator DEModulator)
+
+there are two different types of MPLS VPN's:
+
+Multi Protocol Label Switching 
+
+Layer 2:
+* VPLS and VPWS
+	* this will create a 
+	* you have a switch connected to the router. we then have another switch connected to another router in the MPLS network. we send a layer 2 frame into the MPLS router. router1 will takei the layer 2 frame and will then put it in a layer 3 MPLS packet. in the front for the packet, the router will add in the label and the SA, DA and so on. 
+	* Router 3 will then take the ip MPLS packet off and send the frame like is originated from the main network to the switch network that it is destined to. 
+	* when you then add in the MPLS network you add in routing and redundancy and so on. 
+	* this requires you to make the switch connection to the router a trunk port. 
+	* but this is kind of static and wound allow you to route the packets, just send them to another switch. 
+Layer 3:
+* MPLS VPN
+	* this is when you share routing tables with the routers in the MPLS network. But this would then allow you to see other peoples data, and thats not good. 
+	* to stop this you would then set up a VRP (Virtual Routing Forwarding instance), this is basically a virtual WAN that only allow certain networks to speak to each other. This can then mean that all the customers will use the same IP address. 
+
+there are two types of VPN's:
+* Site to site
+	* these are permanently established VPN's 
+	* they may use an ASA firewall. 
+	* this means that all of the individual computers that will not have to be configured for the VPN. 
+* Remote access
+	* this is arranged around individual people
+	* this means that the computer will need to be set up and this will happen on all of the computers that need this service. 
+
+there are many site to site options:
+* IPsec tunnel
+	* this is not just a protocol, it is a group of them
+	* they work together to make a set of security protocols. 
+	* they can authenticate users, encrypt data, 
+* GRE over IPsec
+	* if you want broadcast and multicast information via a VPN, IPsec does not do this by default. 
+* DMVPN
+	* Dynamic Multipoint VPN
+	* lest cisco devices discover each other. 
+
+at the centre of the WAN you would have the CRS routers that are biggo. 
+
+Channel services unit / Digital services unit = the box that will connect to a digital T line (telephone or coax cable). This will be the legal separation point that will set where the network will be in your control. this will be installed and set up for you by the ISP. 
+
+DTE - Data terminal equipment - the router 
+DCE - data communication equipment - the magic box that your ISP give you. 
+
+the VDU is the Visual Display Unit 
+
+
+In the old dasy the DTE would be a computer with only terminal as you would terminate the terminal here.
+
+DTE and DCE is layer 1 stuff, so the raw voltage. 
+
+the two devices would have to communicate by a syncrones serial connection. 
+
+when reading data off a wire you would need to ensure that your timing is correct. if you read the bit a little off then you can read the wrong bit. This is called bit errors. YOU WILL READ THE BIT AS CLOSE TO THE MIDPOINT AS POSSIBLE. 
+
+this is done by a clock reading, that is sent along the cable that will tell the devices when to read the bit. the clock is the speed of the connection. 
+
+but that is OLD OLD OLD OLD and not used anymore, instead we will:
+
+now we would have the switch connected to the router and then have the router connected to the CSU, DSU by serial cable and then that is connected to the ISP. the clock is then sent out by an atomic clock somewhere in BT's network. we have got a layer one connection to the ISP and the clock from the router. but we have a layer 2 connection between both of the routers. the layer two connection can only be up if both of the layer one connect dins are up. 
+
+at the layer two elements of this there are multiple protocols that can be used. the default one is HDLC. if you run:
+```
+conf t
+int s1/0
+encapsulation ?
+```
+you will see all of the layer 2 protocols that are in use on the serial port. The protocol will need to be the same on both ends, come on, you khow why. This would mean that layer 1 will be up, but layer 2 will be down. 
+
+an optical converter will be called a NTU (Network Terminator Unit)
+
+### Point to Point protocols (PPP)
+
+pleziografus 
+
+> T1 = 1.554 Mbps
+> E1 = 2 mpbs
+
+The default speed for a serial connection on a cisco device is T1 at 1.554 mbps. 
+
+Overview of PPP:
+* PPP provides a standard method for transporting datagrams over going-to-point links. 
+* PPP supports PAP and CHAP authentication. 
+
+flag |address |control |protocol |data |flag
+|-|-|-|-|-|-|
+
+when you use PPP we can get the devices to authenticate each other before they speak. 
+
+there are two types of authentication:
+* PAP - password authentication protocol
+	* uses plaintext for username and passwords. 
+* CHAP - Challenge Handshake Authentication Protocol - uses an MD5 based hash. 
+
+PPP is above level 1. at layer 2 it can authenticate the devices connecting. it can also work on layer 3. 
+
+whichever router has the DCE connection, that one will act as the clock. 
+
+> The preamble will tell the NIC card the clock rate. 
+
+## configure and verify MLP
+
+ Multi Link PPP
+
+ think that it is the serial version of EtherChannel. 
+
+when you are in a multi link you can shut down one of the interfaces, but the multi link will still be up. The same applies to EtherChannel.  
+
+## configure and verify PPPoE (PPP over Ethernet)
+
+
+
 ## BGP
 
 ### Configuring single homed EBGP
