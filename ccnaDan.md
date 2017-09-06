@@ -3949,7 +3949,92 @@ there are 3 main things that you would want to check if there is a problem:
 
 ## Wide-Area networks
 
+# \~\~WAN\~\~ :smirk_cat:
 
+so far we have only been looking at LAN. and basically campus networks by extension. 
+
+A WAN is used to connect areas that are far pats geographically. 
+
+### Upstanding WAN technologies 
+
+there is also a thing called a MAN and that stands for (metropolitan area network), this is in between LAN and WAN, so for example there is one in the city of LONDON. 
+
+The internet is a form of WAN, but it is not the only one. 
+
+ATM switch (asynchronous transfer mode)
+
+The WAN can be offerend by BT, Virgin media and so on, but you will have to pay a fee. 
+
+in a WAN, if you are sending your data through just BT then your data will be secure as not every one can see it. but when you are going through the public internet that its under the control of many different people and this can lead to your data being stolen.
+
+### WAN topologies
+
+there are 3 main topologies that are used in WAN:
+* Star / hub and spoke
+	* benefits
+		* network simlicity
+		* low number of circuits
+	* drawbacks 
+		* Suboptimal traffic flow
+		* no redundancy
+	* Used for low cost situations. 
+* Fully meshed 
+	* benefits
+		* any to any connectivity
+		* high level of redundancy
+	* drawbacks
+		* configuration complexity
+		* high number of circuits
+* partially meshed
+	* A really good mix
+
+WAN services are under 3 different groups. 
+
+WAN:
+* dedicated
+	* Leased lines
+		* T1/E1
+* switched
+	* Circuit switched
+		* PSTN
+		* ISDN
+	* Packet switched
+		* frames relay
+		* X.25
+		* ATM
+* internet
+	* broadband VPN
+		* DSL cable
+		* broadband
+		* wireless
+
+#### leased lines
+
+what is multiplexer?
+
+its where you have multiple signals that want to go through a single cable.
+
+the multiplexer will connect eact of the inputs to the outputs on a time basis so each cable will connect for only a few microseconds. lets multiple users send traffic across a single line.  
+
+this process is called TDM (Time division multiplexing)
+
+In the TDM frame you can have 32 different 64k channels. 
+
+this is basically a layer one device.
+
+The TDM is an E1 frame. As you can see that is a dedicated leased line. 
+
+A T1 frame is kind of the same thing but they are under different standard organisations. ant it just so happens that the T1 is smaller and only allow for 24 lines at the same time. E is European standard 
+
+this is part of the PDH thing - DONT WORRY ABOUT IT. 
+
+ISDN30 it BT marketing term for the E1 standard i think. 
+
+#### switched lines
+
+ATM switches on cells, and its basically type of frame. 
+
+## BGP
 
 ### Configuring single homed EBGP
 
