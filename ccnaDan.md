@@ -3949,6 +3949,8 @@ there are 3 main things that you would want to check if there is a problem:
 
 ## Wide-Area networks
 
+
+
 ### Configuring single homed EBGP
 
 all the routing protocols that we have covered so far are interior gateway protocols, that is that they run under one AS. 
@@ -3992,5 +3994,25 @@ you will connect to tier 3 ISP's - small and consumer, then these will connect t
 There are only 17 teir 1 service provider and they must all connect together in a mesh. 
 
 BGP is the MOST scalable protocol but the SLOWEST protocol by design. 
+
+### IBGP
+
+relationships are formed manually, you need to specify neighbours manually as well. 
+
+BGP will also advertise the all the networks that they are connected to. 
+
+when a network is advertised the ip address of the network is sent and this is called the prefix. the subnet mask is then also sent and this is called the prefix length. Finally, the AS number is also advertised. All of this data is known as "Network Layer Reachability Information" (NLRI)
+
+an AS will then advertise out what networks it is connected to, but it will also sent out networks that it has learned through another AS. When this information is sent out then the AS number of this second AS is added onto the end of the othser one. So the AS numbers will make a chain of what AS the advert has been to. this is called the AS PATH
+
+if the advert is then sent to the destination through a different AS then the numbers will be different and then BGP will use the shortest path based on the number of AS numbers that are tagged onto the end of the advert. 
+
+if you have a transit AS that you need to carry BGP information through then you would need to use IBGP inside the AS. this is because the other protocols don't understand the information that BGP will use. 
+
+BGP will NOT load balance. 
+
+BGP will go through like 13 processes to figure out the best path for data to take as it has to work out one. 
+
+not used to route data in an AS but instead to pass BGP data through the AS. 
 
 ## Network device management and security 
