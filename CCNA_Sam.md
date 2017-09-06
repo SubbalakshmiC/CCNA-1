@@ -1596,6 +1596,8 @@ There are varying types of applications, such as:
 * `show ip protocols` will, among other things, reveal the Metric Weight. This shows K1 through 5, where K1 is bandwidth and K3 is delay. The higher the number, the larger the impact the value will have on the metric calculation. These changes must match for all devices on the same AS.
 * EIGRP uses Equal Cost Load balancing, whereby routes with the same metric will share load equally, also called round robin load sharing.
 * Unequal Cost Load Balancing is also used when two routes to a network are of different metrics, whereby traffic will still be load balanced, though in accordance to the speeds of the link.
+* The EIGRP Hello time is 5 seconds by default
+* The Hold time is 15 seconds.
 
 ### Implementing EIGRP for IPv6
 * EIGRP for IPv4 and IPv6 can run together on a single Cisco router.
@@ -1676,17 +1678,78 @@ There are varying types of applications, such as:
 ### Implementing Multiarea OSPF IPv4
 * OSPF Areas allow the network to be segmented, as previously mentioned. 
 * They feature the Backbone Area, and the Normal Areas.
+* A stub area can also be configured, which adds a flag to the Hello packet, and can reduce traffic between the ABR and Backbone devices. This can be configured with `area stub`.
 * The Normal areas cannot by default directly communicate, all traffic must go via the Backbone.
 * An OSPF router can be a:
 	* Backbone Router
 	* Internal Router
-	* ABR
-	* ASBR
+	* Area Border Router
+	* AS Border Router
+*  LSAs have many types:
+	* 1: Router LSA, existent in a point to point network.
+	* 2: Network LSA, existent in a broadcast network.
+	* 3: Summary LSA, sent by ABRs.
+	* 5: External LSA, sent to networks outside of the AS.
+* Type 1 and 2 LSAs are limited by their inability to be propagated over an Area Border Router. When it is received, a Summary LSA is sent be the ABR instead.
+* OSPF sets router types to prevent changes being flooded to every other device:
+	* Designated Router - to which updates are sent to. This devices then propagates the changes via 224.0.0.6 or 
+	* Backup Designated Router - in the event the DR goes down.
+	* DROther - Other router
+* To prevent a device becoming the DR or BDR, the priority needs to be set to 0.
 
 ### Implementing OSPFv3 for IPv6
+* This is the IPv6 implementation of OSPF. It can simultaneously and independently run alongside OSPF for IPv4.
+* The metric system remains unchanged in comparison to OSPFv2.
+* OSPF cannot operate without it's Router ID.
+* Key characteristics of PSPFv3 are:
+	* The router ID is a 32 bit value based on the IPv4 address of the router.
+	* If no address is present, you will be prompted to configure the router ID with the `router-id` command.
+	* Adjacencies and next-hop attributes use link-local addresses.
+	* OSPFv3 must be enabled per interface, not peer network.
+	* IPv6 Multicast messages are used for communication.
+	* The Hello timer is 10 seconds, and the dead timer is 40 seconds by default.
+	* LSAs still have the 3600 second (60 minute) lifetime, and are refreshed every 1800 seconds (30 minutes)
+* OSPFv3 can support IPv4 and 6 with it's tables.
+* FF02::5 and FF02::6 are used by OSPFv3 for communication.
+* Within `show ipv6 route` output:
+	* 'O' means the route has been discovered within your own area.
+	* 'O IA' means the route has been discovered from another area within the same AS.
+
 ### Troubleshooting Multiarea OSPF
+* Major components of troubleshooting OSPF are:
+	* Neighbour adjacencies
+	* Routing Tables
+	* Path Selection
+* Start by using `traceroute` and `ping` to identify whether or not a connection issue is present.
+* Use `show` commands such as `show ip ospf neighbors` to identify whether or not an adjacency has been made.
+* If so, use `shop ip route` to identify whether or not another routing protocol with a lower AD is running and therefore undercutting OSPF.
+* If no other routing protocols are in use, verify that ask networks require are advertised into OSPF, or that all regular non-backbone networks are connected directly to area 0.
+* Next verify all costs are accurate along the path.
 
 ## Module 6: Wide-Area Networks
+### Understanding WAN Technologies
+### Understanding Point-to-Point Protocols
+### Configuring GRE Tunnels
+### Configuring Single-Homed EBGP
+* The internet is composed of multiple AS's that are interconnected to allow a wide breadth of communication.
+* These AS's may operate with their own choice of Interior Gateway Protocols (IGPs), such as RIP, EIGRP or OSPF.
+* In order to connect between the AS's, a protocol called Border Gateway Protocol (BGP) is required.
+* It establishes a neighbour relationship with the AS's it is connected to. These Neighbours must be manually specified.
+* BGP uses TCP Port 179, and so a TCP handshake must take place in order to allow the neighbours to communicate.
+* To configure A BGP peer relationship between two routers:
+	* `router bgp (AS Number of router)`
+	* `neighbour (Neighbour IP) remote-as (AS Number of remote network)`
+	* `network (network being advertised) mask (subnet mask)`
+* A provider who has an AS which is used to connect to other AS's is called a Transit AS.
+* EBGP is:
+	* Reliable via TCP
+	* Scalable
+	* Secure
+	* Able to support routing policies
+* Service Providers are tiered based on their scale and connections. The lower the tier, the more consumer-focussed their business activities are.
+* BGP offers incredibly slow convergence.
+* IBGP is used to pass EBGP traffic through a network.
+
 ## Module 7: Network Device Management
 
 ---
