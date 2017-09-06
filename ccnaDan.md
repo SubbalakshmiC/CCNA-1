@@ -3949,4 +3949,48 @@ there are 3 main things that you would want to check if there is a problem:
 
 ## Wide-Area networks
 
+### Configuring single homed EBGP
+
+all the routing protocols that we have covered so far are interior gateway protocols, that is that they run under one AS. 
+
+AS - a series of networks under one administrative control. 
+
+to connect networks that have different AS you would have to use BGP. 
+
+BGP will establish a neighbour relationship. Two routers that are connected with BGP are called BGP neighbours. YOU WILL HAVE TO MANUALLY SET THIS UP.  
+
+all of the AS will have a AS number that is assigned to them. 
+
+BGP routers will connect with TCP and use port 179. 
+
+```
+(conf)# router bgp [AS number of this router] 
+
+(conf-router)# neighbor [neighbor ip address] romote-as [neighbor AS number]
+```
+
+a router can only be in one AS. 
+
+a service provider can then provide interconnectivity between their own customers and BGP is used to connect those customers to those of other ISP's. to do this you would need to set up a BGP peer relationship between two routers for the different ISP's. 
+
+some service provides will provide a service to other providers. for example, Telefonica provide a service to connect other ISP's networks and this is called a Transit autonomous system because they allow traffic to flow through them . 
+
+when two ISP communicate a lot of data then they will have to pay transit costs for the ISP that they go through, they then may want to set up a direct link so that they dont have to pay the cost. this is called an internet exchange point. 
+
+* 1 turn on routing protocol
+* 2 find neighbours
+* 3 advertise network
+
+```
+network [network address] mask [subnet mask]
+network 20.0.0.0 mask 255.0.0.0
+```
+normally no networks with moose that /24 bits will be advertised.  
+
+you will connect to tier 3 ISP's - small and consumer, then these will connect to tier 2 - businesses, then finally there are teir 1. 
+
+There are only 17 teir 1 service provider and they must all connect together in a mesh. 
+
+BGP is the MOST scalable protocol but the SLOWEST protocol by design. 
+
 ## Network device management and security 
