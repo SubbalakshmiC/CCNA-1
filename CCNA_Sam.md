@@ -1728,7 +1728,94 @@ There are varying types of applications, such as:
 
 ## Module 6: Wide-Area Networks
 ### Understanding WAN Technologies
+* WANs cover a larger geographic scope than LANs. They utilise facilities provided by carriers and service providers to provide interconnections.
+* WANs connect devices hate are separated geographically in an area wider than that of a LAN.
+* WANs use varying connection types to provide the access.
+* Whilst LANs provide speed and efficiency of transmission in small areas, WANs are required to allow communication between these remote sites for the following use cases:
+	* Regional or branch offices needing intercommunication.
+	* Inter-organisation communication.
+	* Mobile working employees that need corporate network access.
+
+> "A network service is a service that is provided by a network service provider" - Mike O'Brian
+
+* WAN topologies can vary:
+	* Star
+		* Simple network with poor traffic flow and poor redundancy. Contains a Single Point of Failure
+	* Full Mesh
+		* High redundancy, but complex and expensive topology. Configuration is complex for devices without multicasting support within a non-broadcast environment.
+	* Partial Mesh
+		* Compromise state
+* Dual Carrier WANs are implemented to allow redundancy for a network in the event that the LAN provider becomes unavailable 
+* WANs connections can be:
+	* Dedicated
+		* Point-to-point connection between sites, often via leased lines from an ISP.
+	* Switched
+		* Either the circuit or packets are switched in other to nirror this service,
+		* Circuit-Switched means that end device has a virtual, dedicated and dynamic connection between the sender and receiver. An example of this is the Public Telephone network or another form of analog transmission.
+		* Packet-Switched networks are fixed bandwidth circuits that are available much more efficiently for communication than that of those in a circuit switched network.  This is usually a digital means of communication.
+* Frame Relay is used to create virtual links between remote routers. DLCIs are used to make these links, and are very expensive.
+* WANs can be connected in a variety of ways, such as:
+	* Fibre 
+	* Coaxial
+	* Wireless
+	* Telephone Line - Operating ADSL and IDSN
+		* These lines support a selection of frequencies. 
+		* 0-4000Hz is reserved for voice communication.
+		* Any higher frequencies are used by DSL for data communication and are separated into ranges.
+	* Satellite
+
+> "Is St. Petersburg in Moscow?" - Vida
+ 
+* VPNs are Virtual Private Networks. They allow for the secure transmission of data across WANs. VPNs can operate at layer 2 and 3.
+* Switching with Frame Relay is L2, X.25 being L3 and ATM is Cell Switching.
+* Multi Protocol Label Switching is designed to support the efficient forwarding of these packets. It is a routed architecture that has largely replaced all of the aforementioned protocols.
+* L2 MPLS VPN Characteristics:
+	* Customer devices exchange routes directly
+	* Some applications need L2 connectivity to work.
+* L3 MPLS VPN Characteristics:
+	* Customer routers exchange routes with service providers.
+	* L3 communication is provided across the backbone.
+* L2 MPLS VPNs are useful for those who run their own L3 infrastructure, and simply need L2 connection to their ISP. The customer will manage their own routing. This does run through L3 at the core level, whereby the L2 data is encapsulated into a L3 IP MPLS Packet. This is the inverse of normal encapsulation procedure.
+* L3 MPLS VPNs provide access across the backbone. A separate IP and subnet is used on each customer site. Neighbour Adjacency occurs between the Customer Edge router and the Provider edge router. L3 is ideal if you do not have the necessary technology to handle the routing internally and wish to outsource it.
+* Organisations need more secure means of communicating to a WAN.
+* There are two main types of VPN network:
+	* Site-to-Site VPNs: an extension upon the classic system. A user within an external site sends it's traffic to a Cisco ASA within the LAN, which encapsulates and encrypts it in order to send it through a VPN tunnel to a Peer VPN elsewhere. This is then de-encapsulated and passed on to the end host.
+	* Remote Access VPNs: These support consumer-to-business communication, e.g. a office worker at home. A client on the host system is responsible for encapsulating the data before it is sent to the target network.
+* Site-to-site VPN options include:
+	* IPsec tunnel - open security standard providing confidentiality, integrity, authentication etc.
+	* GRE over IPsec - enables routing and multicast within IPsec
+	* DMVPN (proprietary) - simple hub-and-spoke configuration
+	* IPsec VTI (proprietary) - simplified IPsec tunnel mode configuration
+* All customer side devices are referred to as CPEs.
+* A CSU or DSU is a device used to connect Data Terminal Equipment to a digital circuit, such as a carrier line. DCEs are sources and destinations of digital data. Routers are DCEs and they carry the DTEs data to the CSU/DSU. 
+* These devices operate at Layer 1, and as such work with raw data. It is of huge importance that these devices read the bit at it's midpoint to make sure that it is not misread. A clock aids in this to ensure that the read time remains consistent. The clock time is set and synchronised by a Service Provider. The clock time used by A DTE is set by the DCE.
+* This forms synchronous communication.
+* In modern day, the DSL modem is combined into the router.
+
 ### Understanding Point-to-Point Protocols
+* Point-to-Point links are used to connect WAN paths when a permanent dedicated link is required.
+* WAN Speeds are categorised into speeds. Such as:
+
+|WAN Speed |Code|Country|
+|----------|----|-------|
+|1.544 Mbps|T1  |USA    |
+|6 Mbps    |T2  |USA    |
+|45 Mbps   |T3  |USA    |
+|275 Mbps  |T4  |USA    |
+|2 Mbps    |E1  |Europe |
+|8 Mbps    |E2  |Europe |
+|34 Mbps   |E3  |Europe |
+|140 Mbps  |E4  |Europe |
+
+* PPP can carry packets from several protocol suites though NCP.
+* PPP controls the setup of links with LCP.
+* When authenticating a Peer-to-Peer link, PAP (which uses plaintext usernames and passwords) or CHAP (which is based on MD5 and uses a handshake system) for authentication.
+* When configuring:
+	* `interface Serial1/1`
+	* `clock rate (number in bps)`
+	* `bandwidth (number in Kbps)`
+	* `end`
+
 ### Configuring GRE Tunnels
 ### Configuring Single-Homed EBGP
 * The internet is composed of multiple AS's that are interconnected to allow a wide breadth of communication.
@@ -1749,6 +1836,10 @@ There are varying types of applications, such as:
 * Service Providers are tiered based on their scale and connections. The lower the tier, the more consumer-focussed their business activities are.
 * BGP offers incredibly slow convergence.
 * IBGP is used to pass EBGP traffic through a network.
+* When making an advertisement, BGP will include the AS number of the source network being shared, as well as the IP. This is called Network Layer Reachability information (NLRI).
+* As this is passed along more BGP routes, the AS path of the network being passed through is prepended to the list of AS numbers.
+* e.g. R1 advertises `11.0.0.0 AS 1234` → R2 passes along the network with it's own AS `11.0.0.0 AS 701 1234` → etc.
+* To allow these BGP packets to be passed across and though the AS, IBGP must be enabled within the network.
 
 ## Module 7: Network Device Management
 
