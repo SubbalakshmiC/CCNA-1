@@ -4179,7 +4179,43 @@ when you are in a multi link you can shut down one of the interfaces, but the mu
 
 ## configure and verify PPPoE (PPP over Ethernet)
 
+## introducing QOS
 
+QOS stands for Quality of service. 
+
+this will just be an introduction to QOS. 
+
+in networks today we are sending lots of different types of traffic, some of this data will be more sensitive to packet drops and so on. 
+
+traffic types:
+* data
+	* smooth / bursty
+	* benign / greedy
+	* Drop insensitive
+	* Delay insensitive
+	* TCP will handle retransmission
+* voice
+	* Smooth
+	* benign
+	* drop sensitive
+	* delay sensitive
+	* UDP priority
+	* one way requirements
+		* latency < 150 ms
+		* jitter < 30
+		* loss < 1%
+		* bandwidth 30 - 128 Kbps
+* video
+	* Bursty
+	* Greedy
+	* drop sensitive
+	* delay sensitive
+	* UDP priority
+	* one way requirements
+		* latency < 150 ms
+		* jitter < 30
+		* loss < 0.1 - 1%
+		* bandwidth 384 Kbps - 20+ Mbps
 
 ## BGP
 
