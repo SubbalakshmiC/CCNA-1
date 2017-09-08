@@ -1186,7 +1186,7 @@ There are varying types of applications, such as:
 	|Package               |Features                                    |
 	|----------------------|--------------------------------------------|
 	|IP Base               |Entry-level Cisco IOS functionality         |
-	|DATA                  |MPLS, ATM & Multiprotocol Support           |
+	|DATA                  |MPLS, ATM & Multi-protocol Support           |
 	|Unified Communications|VoIP an IP Telephony                        |
 	|Security              |Cisco IOS Firewall, IPS, IPSec, 3DES and VPN|
 
@@ -1815,8 +1815,30 @@ There are varying types of applications, such as:
 	* `clock rate (number in bps)`
 	* `bandwidth (number in Kbps)`
 	* `end`
+* MLP is similar to EtherChannel, but is for use on Serial interfaces.
+**CONFIG FOR MLP**
+**CONFIG FOR PPPoE**
 
 ### Configuring GRE Tunnels
+* Tunnels are interfaces that allow headers for:
+	* A passenger or encapsulated protocol such as IPv4 or IPv6 
+	* A carrier or encapsulation protocol
+	* A transport delivery protocol
+* GRE is a tunnelling protocol developed by Cisco that allows routing data to pass between AS's. No encryption is used by GRE.
+* GRE does the following:
+	* Use protocol-type field in the GRE header to support encapsulation of L3 Protocols.
+	* Offer stateless connection, with no flow control mechanisms.
+	* It doesn't include any strong mechanisms to protect data.
+	* The Header creates 24 bytes of additional overhead for the packets being tunnelled.
+* To configure GRE:
+	* `interface tunnel (tunnel ID)`
+	* `tunnel mode gre ip`
+	* `ip address (IP address) (mask)`
+	* `tunnel source (IP address)`
+	* `tunnel destination (IP address)`
+* IPv6IP is a protocol that can be used to provide the ability for IPv6 traffic to travel over an IPv4 network. It is often referred to as 4in6.
+* A static route can be made to a tunnel in the same way that it would for a Dialler. 
+
 ### Configuring Single-Homed EBGP
 * The internet is composed of multiple AS's that are interconnected to allow a wide breadth of communication.
 * These AS's may operate with their own choice of Interior Gateway Protocols (IGPs), such as RIP, EIGRP or OSPF.
@@ -1842,6 +1864,132 @@ There are varying types of applications, such as:
 * To allow these BGP packets to be passed across and though the AS, IBGP must be enabled within the network.
 
 ## Module 7: Network Device Management
+### Implementing Basic Network Device Management and Security
+* Cisco provide services that mitigate access layer threats with the following features:
+	* Port security - restricting a port to a specific range of addresses.
+	* DHCP Snooping - preventing rogue DHCP servers being present on a network by only allowing Offer and Acknowledge on pre determined ports.
+	* Dynamic ARP Inspection - Preventing ARP attacks on a network 
+* Identity-based networking is also used to protect network resources and provide user mobility.
+* Identity Based Networking is an IEEE 802.1X standard. It utilises authentication, access control, and user privacy agreements in order to provide users with the services that they are entitled to.
+* Physical security of network ports is no longer relied on, and the user is now identified why they connect to a port, authenticates them using an Authentication, Authorisation and Accounting server, and places them on the appropriate VLAN based on their identity, not the switch port they have connected to. 
+* There are 3 devices at play here:
+	* Client - the device connecting that is 802.1X compliant.
+	* Authenticator - Usually the switch, which controls the physical network access and acts as a proxy between the client and authentication server.
+	* Authentication Server - The devices that authenticates each client that connects to a switch port before allowing any services that are present on the LAN. Example of this are Cisco TACACS, or RADIUS (which is non-disco technology).
+* The Authenticator may be a router or a switch that is running one of the aforementioned protocols.
+* To configure RADIUS:
+	* `aaa new-model`
+	* `username username password password`
+	* `radius server configuration-name`
+	* `address ipv4 hostname [auth-port integer] [acct-port integer] `
+	* `key string`
+	* `aaa group server radius group-name`
+	* `server name configuration-name`
+	* `aaa authentication login [default | list-name] group group-name local`
+* Simple Network Management Protocol is a management protocol that supports message exchange. It has 3 main components:
+	* SNMP Manager - polls network agents and displays data
+	* SNMP Agent - stores information and responds to manager requests and generates traps
+	* MIB - contains a database of objects (information variables)
+* SNMP has 3 versions:
+	|SNMP Version|Security                               |Bulk retrieve mechanism?|
+	|------------|---------------------------------------|-------------------------------|
+	|SNMPv1      |Plaintext auth w/ community strings    |No
+	|SNMPv2c     |Plaintext auth w/ community strings    |Yes
+	|SNMPv3      |Strong auth, confidentiality, integrity|Yes
+	
+* To configure SNMP:
+	* `snmp-server contact contact_name`
+	* `snmp-server location location`
+	* `snmp-server community string [ro | rw]`
+	
+### Learning About the Evolution of Intelligent Networks
+* Intelligent networking can include cloud computing, virtualisation, Software Defined Networking (SDN) and Intelligent WAN.
+* Switch Stacking:
+	* StackWise is a system that allows multiple physical switches to be combined into a single logical switching unit, by a StackWise cable.
+	* StackWise prevents broadcast loops on the now larger logical device by only sending broadcasts through specific interfaces. It also offers load balancing and removes the need for Spanning Tree Protocol.
+	* The StackWise device has a single configuration and IP address.
+	* The combined bandwidth is available to all hosts using the logical device.
+	* New switches added into the stack, the master switch will automatically configure the unit to match that of the other devices in the stack.
+	* Topology that uses a StackWise:
+		* Offers multiple access switches in the same stack
+		* Reduced management overhead
+		* Multiple switches can be used to make a single EtherChannel connection.
+* Cloud Computing:
+	* Cloud computing refers to using network resources that aren't owned by the individual organisation, but are instead virtual content, hardware and applications hosted elsewhere. 
+	* Computing here is a service, instead of a product.
+	* Advantages to the provider are that the cost is much lower than owning the kit, providing that it is used infrequently.
+	* Advantage t other end users are that the technology is available worldwide, without any/little local backups.
+	* Cisco offer 3 main services:
+		* Infrastructure As a Service
+		* Platform as a Service 
+		* Software as a service,
+	* SDN separates the control plane of a network from the forwarding plane. It automates the processes of provisioning, configuration etc. and allows for a more agile and flexible network.
+	* A SDN controller is installed into the network and becomes it's brain. Using APIs, businesses control the controller and inform it of what is needed from the devices.
+* APIs
+	* he SND architecture is different to that of traditional network architecture. It compromises 3 layers:
+		* Data Plane
+		* Control Plane
+		* Application Plane
+	* APIs are used to communicate between layers. Northbound APIs are used to speak to applications and controllers, whereas Southbound APIs are used to communicate between controllers and network elements.
+
+**API NOTES**
+**APIC NOTES**
+**IWAN NOTES**
+
+### Introducing QoS
+* Traffic comes in 3 main forms according to QoS:
+	* Data
+		* Can be smooth or burst like
+		* Delay insensitive
+		* Drop insensitive
+		* TCP retransmits lost packets
+	* Voice
+		* Smooth, continuous traffic
+		* Benign
+		* Drop sensitive
+		* Delay sensitive
+		* UDP priority
+		* Requires < 150ms of latency
+		* Requires < 30 ms of jitter (time variation between packets)
+		* Must have < 1% loss
+		* Bandwidth ranges between 30-128 Kbps
+	* Video
+		* Bursty traffic
+		* Bandwidth greedy
+		* Drop sensitive
+		* Delay sensitive
+		* UDP priority
+		* Requires < 150ms of latency
+		* Requires < 30 ms of jitter (time variation between packets)
+		* Must have < 0.1 to 1% loss
+		* Bandwidth ranges between 384 Kbps to 20+ Mbps
+* Voice has to be sampled to convert it from analog to digital audio, so that it can be transmitted as VoIP traffic. This sampling occurs 8000/sec and are 8 bit values.
+* QoS allows priority to some sessions over others.
+* G.711, G.722 and G.729 are compression algorithms used.
+* QoS has many mechanisms that can be used, such as:
+	* **Classification and Marking** - use a tool such as an ACL to analyse traffic to determine what class it belongs to, and as such which treatment the packets should receive. This should happen as infrequently as possible, to save time and resources. Various fields can be used to mark the traffic, such as: 
+	* CoS for Ethernet tagging. CoS has levels rated from 0 to 7, increasing in importance.
+	* ToS (or 'traffic class' for IPv6) for marking IP. This also has service levels, which are often straight mapped from CoS, as the tagging will be lost upon entry to a router. This 3 bit field is a pre-existing part of an ethernet frame.
+	* DSCP, to describe the meaning of a ToS field. 
+	* Class Selector is used to identify a subset of DSCP values.
+	* TID, which is similar to CoS but is used in wireless ethernet.
+	* The 'label' portion of MPLS can be with the options here.
+	* **Policing, Shaping and Re-marking tools** - Assigning different classes of traffic to certain portions of network resources. Traffic exceeding the allocated resources may be dropped or delayed to avoid congestion. Policing will just cut off traffic or mark it as excess based on configured values. Shaping smooths out traffic so it doesn't exceed it's limit in speed. These are usually implemented to meet SLAs, when the rate or flow is exceeded, the traffic is held back until it can be sent below the contracted rate.
+	* **Congestion management and scheduling** - When traffic exceeds network resources, it is queued. This awaits further available resources. This is ideal for traffic that does not handle being delayed well.
+	* **Link specific tools** - Certain connection types such as a WAN link can be given special tools, such as fragmentation.
+* Trust boundaries can be implemented in areas where the packet marking mat not be trusted. You can create, remote and rewrite packet markings at the point of boundary. These exist as follows:
+	* Untrusted domains are a part of the network that is not being managed.
+	* The Trusted Domain is part of the network with only administrator managed devices.
+	* The trust boundary is a specific point where packets are classified and marked - ideally as close to the data source as possible.
+* Traffic can be classified by:
+	* Marking - Looking at the header and observing existing markings at layer 2 or 3.
+	* Addressing - Looking at the header and classifying based on the source or destination port, interface or L2/3 address.
+	* Application Signatures - Looking at the content of the payload.
+* Traffic can also be Queued or Scheduled. There a differing types of scheduling, such as:
+	* Strict Priority, whereby low priority queues are only served when high priority ones are empty.
+	* Round-robin, in which packets are queued and served in a set sequence.
+	* Weighted fair, whereby queues of varying importances are served based on turn. This does not offer bandwidth guarantees however, as it depends on the queues and their sizes.
+* Queues can be formed as FIFO, PQ (4 queues that serve strict-priority order), CQ (16 queues using a round robin structure) and WFQ (which splits the bandwidth equally in order to offer good service.
 
 ---
 # A typing exercise
