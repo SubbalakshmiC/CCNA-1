@@ -4417,9 +4417,53 @@ There are 3 versions
 
 > YOU CAN MAKE REQUEST CHANGES ON ALL VERSIONS, BUT YOU WOULD ONLY WANT TO USE V3!!!
 
+## evolution of intelligent networks 
 
-wa
+### cloud
 
+used to be for backup storage. but now it is used for anything. and is done by vitalisation. 
+
+switch statcking???
+
+take a 3xxx switch and connect it to another one, max of 9 switches. then you connect them with a cable in a loop so the bottom switch will connect to the top one and connected to the one to the one below. you don't need spanning tree as it will it will stop this auto magically and will load balance between the loop. This will then create a sinple switch that has one config, OS, and so on... its called a "multi chassis switch"  
+
+This can then reserve power that isnt being used for switching and save this into a reserve. This can then power a switch if its PSU that goes down. 
+
+up to 9 switches together, one will be the master switch. 
+
+FLEX 2960x up to 4 switches. This will allow you to connect a range of different switches. 
+
+Multi chassis EtherChannel is where you have an EtherChannel between two switches that have a different channel.
+
+hybrid cloud is a combination of public and private cloud. 
+
+what 3 as a service offerings do Cisco offer:
+* infrastructure
+* platform
+* software
+
+meraki is an example. there is no need for an on site technician as Cisco engineers will handle it all remotely. 
+
+another important thing to Cisco is Software Defined Networking. 
+
+the idea of SDN is middleware that will allow the one admin to control all of the devices through an API. This middleware will know how to talk to all of the different devices. 
+
+> SDN will add a layer of abstraction to controlling different networking hardware 
+
+you can use python for this layer of abstraction. so you can configure a switch only knowing python and not IOS. 
+
+> Admin -> APIC = northbound APIC
+> APIC -> network = southbound API
+
+Cisco have a specific decice called "APIC-EM"
+
+an APIC can do:
+* ACL testing
+* Intelligent WAH testing
+* QoS modification and application
+* write user policies
+* zero touch new devices to get them auto set-up 
+* Network discovery and topology in a nice way. 
 
 ## BGP
 
