@@ -4217,6 +4217,210 @@ traffic types:
 		* loss < 0.1 - 1%
 		* bandwidth 384 Kbps - 20+ Mbps
 
+when you get a human voice that you want to put into a digital signal. to do this you would then sample the voice and apparently that will take up 8 bits of data. One of the bits is used for positive/negative then the other 7 state the amplitude. 
+
+the sample rate is 8000hz ~ 125 micro seconds
+
+for 1 second you will have 8000 * 8bits of data = 64,000 bits per second. the T1 cable was made to carry 24 of these channels, hence the what you thought was a strange value. 
+
+but you cannot send just this as you would need to have a layer 2 frame to it. RTP (Real Time Protocol) is used to do this, basically its voice UDP as it has sequence numbers and stuff but you still use UDP, then you add in IP information and a frame. 
+
+it starts at 64,000 bits per second but with all of the other things that you need to add in you will need about 90,000 bits per second. This means that there is quite a bit of overhead. 
+
+g.729 is a voice compression algorithm that will save about 26 kbps.
+
+there is a system called MOS (mean opinion score) where people rate compression algorithms as to how well it sounds out of five. g.729 pets a score of 3.9 out of 5. 
+
+g.711 gets 4.2 out of 5, this sounds like a landline. 
+
+729 is used in low bandwidth environments. but 711 is preferred 
+
+g.722 gets a score of 4.35 or so, and cisco use this??? but it uses the same bandwidth as 711. 
+
+we can use an ACL to route packets of different types with more or less priority, this is called a policy. basically you can then route voice traffic with more priority over browser traffic. 
+
+there are 4 main QOS mechanisms:
+* classification and marking
+* policing, shaping and remarking 
+* congestion management or scheduling tools 
+* Link specific tools
+
+the trust boundary in a network is where you actually have control of the network and where you can allocate priority without the end users making all of their traffic as high priority. 
+
+normally the priority is done by the IP phone that the PC is connected to. 
+
+the marking mechanisms that we can use are:
+* Class of Service (CoS)
+	* in the 802.1q you have a 12 bit VLAN ID, but you also have a 3 bit class of service field. 
+	* and that CoS field is where the priority is held
+	* there are 8 possible options: 0 - 7
+	* 0 = best effort (no special treatment) using fifo cueing (First In First Out)
+	* 6/7 = network control. spanning tree is used here, and other networking protocols
+	* 5 = voice and video
+	* 3 = Critical data
+	* in layer 2 as it is in the tagged Ethernet frame. 
+	* you dont need a trunk port to do this as you just put it in 802.1q in a special way in VLAN 0.
+* Type of Service (Tos)
+	* layer 3 
+	* this uses 8 bits, so routers will put the CoS and map it to the ToS so that the data is saved in the ip header and not lost by the next device on the network. 
+* Differentiated Services Code Point (DSCP)
+	* this will specify delay and drop chance
+	* rather than just giving it a number. 
+* Class Selector (CS)
+	* wired Ethernet
+* Traffic IDentifier (TID)
+	* wireless Ethernet
+
+classification tools:
+* marking
+	* ToS or so on
+* addressing
+	* look at the header information, so DA, SA, port and so on
+* signatures
+	* look at the contents of the payload
+
+example of classification tool: NBAR (Network Based application recognition)
+* this will captupe traffic and classify it based on certain things and so you will get a summary of the network traffic that you have. 
+
+policing - drop unwanted data - when you have a set size
+
+shapers - delay unwanted data - when you have a set speed
+
+this will normally be done by a router or a firewall. 
+
+if you are sending out more that you can physically put out then you will need to queue the traffic to be sent out. normally we use FIFO but a better one that you can use is: Class Based Weighted fair queuing 
+
+this was then called Priority Queue Class Based Weighted fair queuing 
+
+then they called it LLC (Low Latency queuing) and this is now used on Cisco devices. ensures that one type of traffic will not take all of the bandwidth, but now it allows for discrimination and prejudice of data packets. 
+
+scheduling decides what packets will go out next. 
+
+LLC will allow for a realtime traffic queue. that is one that is always sent out first along with ALL the other queues from the CBWFQ scheduler. 
+
+when you fill up the queue you can:
+* tail drop
+	* NOT GOOD
+	* drop packets as they arrive to the queue
+* congestion avoidance 
+	* drops random packets in the queue 
+	* but it has a skew for certain traffic types
+
+## Configuring GRE tunnels 
+
+VPN's replaced switched virtual circuits 
+
+now we do site-to-site VPN's through the internet. 
+
+but what is tunneling? : encapsulation = putting one thing inside another. we take an IP packet and encapsulate it with additional information. 
+
+you can take a private address packet and then send it to another private network. you can then have the packet opened at the other end like it came from that network. you can then also encrypt the payload in that packet that is the actual packet that you want to send.  
+
+GRE = Generic Routing Encapsulation 
+
+GRE adds a header that has enough information to get the packet from one end to the other over the internet. 
+
+when you configure a tunnel, the router will see it as an interface. 
+
+6in4 is where you put an ipv6 packet and tunnel it through an ipv4 packet. 
+
+if you are sending VPN data though an ISP that only supports ipv4 networks then you would have to put the ipv6 packet in an ipv4 packet to send is across the network. 
+
+to get to *destination network* go though the tunnel interface on your router:
+
+```
+ip route *DN* tunnel 1
+```
+
+ip? replay will allow a hacker to send back the encrypted password that they captured from a conversation and send it back to the server and get a valid connection. IPsec will stop conversations from being replayed. 
+
+to create an GRE tunnel:
+
+* create tunnel interface:
+* assign protocol to use 
+* assign source and destination ip address
+* do the same on both routers 
+
+## Network Device Management and Security 
+
+we have looked up passwords, ssh, port security, 
+
+you could find a printer, gets its mac address and use that, boom port security done with. you could do an Man In The Middle attack. you know what this is.
+
+this could lead to fake DNS server injection, default gateway injection and so on. 
+
+Cisco provide a service called dhcp snooping, this will only allow Offer and Acknowledge packets to come from a particular port. so only DCHP offer messages are allowed if they are from E0/2 for example. 
+
+an ARP attack can also happen, this is where you hijack the ARP request and set that to be you, a default gateway injection. this is stopped by dynamic arp inspection, this is where the ip address to mac is actually checked by another device. 
+
+port security is a layer 2 thing. but there is also another version by 802.1x, this will allow a conversation that has to do with username and password and so on. But this is done by another device...
+
+BUT 802.1x will also allow for layer 3 authentication. 
+
+for this to work the switch or router will have to be connected to the AAA server. 
+
+> AAA = Authentication (who are you) Authorisation (what you can do) Accounting (what did you do)
+
+the AAA is a third party server that has a database of all the users. you can just use one or two of the A's or use them partly so when you enter and leave and so on.
+
+TACAS = Cisco authentication thing 
+
+But Cisco are moving to ISE (identity services engine)
+
+ISE can see if you are using a company laptop or a BYOD and then what software you have installed. 
+
+RADIUS is the industry standard of the AAA server. 
+
+note : the firewall is normally behind a router so that the firewall is not at the edge of the network. 
+
+```
+aaa new-model
+```
+FOR THIS COMMAND YOU DONT LEAVE IT
+
+FOR ANY SECURITY STUFF YOU WILL HAVE TO FINISH AND TEST BEFORE YOU LEAVE
+```
+username username password password
+```
+```
+Radius serves *conf-name*
+address ipv4 *hostname* key *string*
+
+aaa group server radius group-name
+serer name conf-name
+
+aaa authentication login default group proup-name local
+```
+### SNMP overview 
+
+Simple Network Management Protocol
+
+this will collect information about devices, this can be any network device
+
+to get all the routers processor activity every hour then you would use SNMP. 
+
+"regularly poll network devices"
+
+can set up devices to server, or server to devices. normally you would poll the devices, but if something bad happens then you would send a message to the server then, this is a SNMP trap. 
+
+There are 3 versions
+* 1
+	* 
+* 2c
+	* collect bulk of information in one go
+	* can collect information from all 48 interfaces at once, v1 cannot do this. 
+	* state of ports 1 - 48 rather than, 1, 2, 3, 4...
+* 3
+	* much better authentication 
+	* and encryption 
+	* you can also get it to request changes without having to remove into the device. 
+
+> YOU CAN MAKE REQUEST CHANGES ON ALL VERSIONS, BUT YOU WOULD ONLY WANT TO USE V3!!!
+
+
+wa
+
+
 ## BGP
 
 ### Configuring single homed EBGP
