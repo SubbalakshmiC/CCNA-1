@@ -134,7 +134,7 @@ a network allows people access to information. for example allows you to access 
 		* e.g. SSDs will last longer and wont fail as much as hard drives
 #### Interoperating a network diagram
 
-* thick red lines = a physical Ethernet connection 
+* thicc red lines = a physical Ethernet connection 
 	* can be Ethernet or fibre
 * IP address 
 	* 32 bit binary number
