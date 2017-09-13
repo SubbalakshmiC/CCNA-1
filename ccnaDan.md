@@ -2546,6 +2546,7 @@ severity = 0 REALLY BAD, 7 debug
 |level|explanation|
 |-|-|
 emergency| system is unusable
+Alert | system nearly unusable 
 critical| immediate action needed
 error| critical condition
 warning| error condition
