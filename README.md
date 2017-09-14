@@ -154,7 +154,22 @@ debugging| debugging information
 
 ###### Routing table
 
-![routing table](/table.png)
+ | | admin distance | metric
+ |-|-|-|
+Directly connected | 0 | N/A |
+Static| 1 | N/A |
+EIGRP Route summary | 5 | N/A |
+BGP| 20 | N/A |
+internal EIGRP | 90 | Bandwidth and speed  |
+IGRP | 100 |   N/A  |
+OSPF | 110 | Cost  |
+IS-IS | 115 | N/A  |
+RIP | 120 | Hop count  |
+EGP | 140 | N/A  |
+ODR | 160 | N/A  |
+External EIGRP | 170 | N/A  |
+Internal BGP | 200 | N/A  |
+
 
 If you have any questions about the notes then just ask any of us. On the other hand you can just look at another set of notes as they may make more sense to you as they are all for you to use. 
 
