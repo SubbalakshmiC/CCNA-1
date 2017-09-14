@@ -399,14 +399,16 @@ Log message severity levels
     logging buffered <lvl name | lvl num>
     logging trap <lvl name | lvl num>
 
+0. Emergency
 1. Alert
-1. Emergency
-1. Critical
-1. Error
-1. Warning
-1. Notification
-1. Informational
-1. Debug
+2. Critical
+3. Error
+4. Warning
+5. Notification
+6. Informational
+7. Debug
+
+Eliminate a crisis, even when no-one is dead
 
 ### Configuring and verifying logging
 
