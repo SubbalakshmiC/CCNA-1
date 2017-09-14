@@ -137,7 +137,24 @@ Here are some useful tables that you may find good for quick reference
 |B: /16 255.255. x . \* |/17|/18|/19|/20|/21|/22|/23|/24|
 |C: /24 255.255.255. x |/25|/26|/27|/28|/29|/30|/31|/32|
 
+###### Syslog levels
 
+|level|explanation|
+|-|-|
+emergency| system is unusable
+Alert | system nearly unusable 
+critical| immediate action needed
+error| critical condition
+warning| error condition
+notification| normal but significant condition
+informational| informational message
+debugging| debugging information
+
+> Eliminate, A, Crisis, Even, When, No one, Is, Dead
+
+###### Routing table
+
+![routing table](/table.png)
 
 If you have any questions about the notes then just ask any of us. On the other hand you can just look at another set of notes as they may make more sense to you as they are all for you to use. 
 
